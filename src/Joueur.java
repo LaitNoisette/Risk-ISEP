@@ -1,13 +1,26 @@
 import java.util.Set;
 
 public class Joueur {
-private Set listeUnite;
 
-public Set getListeUnite() {
-	return this.listeUnite;
-}
+	private String nomJoueur;
+	private Set<Unite> listeUnite;
+	private boolean joueurDetruit = false;
+	private int pointUnite = 0;
 
-public void addUnite(Unite u) {
-	this.listeUnite.add(u);
-}
+	public Joueur(String nom, int nbrArmeeBase) {
+		this.nomJoueur = nom;
+
+		// Creation de l'armee du joueur
+		for (int i = 0; i < nbrArmeeBase; i++) {
+			this.listeUnite.add(Unite.nouveauSoldat());
+		}
+	}
+
+	public Set<Unite> getListeUnite() {
+		return this.listeUnite;
+	}
+
+	public void addUnite(Unite u) {
+		this.listeUnite.add(u);
+	}
 }
