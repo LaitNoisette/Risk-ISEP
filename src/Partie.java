@@ -1,5 +1,8 @@
 import java.util.Set;
 
+
+
+
 public class Partie {
 	private int nombreJoueurActif;
 	private Set<Joueur> listeJoueurs;
@@ -40,8 +43,12 @@ public class Partie {
 		}
 
 	}
+	
+
+   /*
 
 	public static void main(String[] args) {
-
+		
 	}
+	*/
 }
