@@ -1,11 +1,14 @@
 import java.util.Set;
 
+import javafx.scene.paint.Color;
+
 public class Joueur {
 
 	private String nomJoueur;
 	private Set<Unite> listeUnite;
 	private boolean joueurDetruit = false;
 	private int pointUnite = 0;
+	private Color couleur;
 
 	public Joueur(String nom, int nbrArmeeBase) {
 		this.nomJoueur = nom;
