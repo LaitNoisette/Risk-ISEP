@@ -157,6 +157,9 @@ SVGPath svg;
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		System.out.println("cc je compile");
+		
+		
+		
 		Application.launch(MenuPrincipal.class,args);
 		
 	}

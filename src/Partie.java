@@ -45,10 +45,12 @@ public class Partie {
 	}
 	
 
-   /*
+   
 
 	public static void main(String[] args) {
-		
+		Carte c=new Carte();
+		Territoire t1= new Territoire(c);
+		Territoire t2=new Territoire(c);
 	}
-	*/
+	
 }
