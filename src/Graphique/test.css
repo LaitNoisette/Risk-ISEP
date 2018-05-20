@@ -1,0 +1,88 @@
+.header {
+	-fx-background-color : #21323C;
+	/*-fx-opacity : 0.2;*/
+}
+
+.header_bottom {
+	-fx-background-color : #A5A49F;
+}
+
+.header_bottom2 {
+	-fx-background-color : #7A8F86;
+}
+
+.country:hover {
+	-fx-effect:innershadow(one-pass-box, #a3a3a3, 50, 0, 0, 0);
+	-fx-rotate-x:90;
+}
+
+#pane {
+	-fx-background-image: url("background_ocean.gif");
+	-fx-background-repeat: repeat;
+}
+
+.button_header{
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-background-color: transparent;
+    -fx-font-family:"TW Century MT", Helvetica, Arial, sans-serif;
+    -fx-font-size: 1.2em; /* 12 */
+    -fx-text-fill: #FFFFFF;
+}
+.button_header .label {
+	-fx-text-fill: #FFFFFF;
+}
+
+.menuItem {
+	-fx-background-color : #7D7E76;
+	-fx-border-color : #7D7E76;
+	/*-fx-padding : 0;*/
+}
+
+.menuItem .label {
+	-fx-background-color : #7D7E76;
+	-fx-border-width : 0;
+}
+
+#InfoTerritory {
+	-fx-border-color : #7D7E76;
+	-fx-border-width : 3,3,0,0;
+	/*-fx-border-style: solid solid none none;*/
+	-fx-border-insets : 8,8,8,8;
+	/*-fx-border-radius : 3,3,0,0;*/
+}
+
+#PictureTerritory {
+	-fx-background-color : #FFFFFF;
+	-fx-border-color : #7D7E76;
+	-fx-border-width : 3,3,0,0;
+	-fx-border-style: solid none solid none;
+}
+
+#InfoTerritory .IconCircleUnity {
+	-fx-fill : #FFFFFF;
+	-fx-stroke : #7D7E76;
+	-fx-stroke-width : 3,3,0,0;
+}
+
+/*.button_header:focused {
+    -fx-border-color: transparent, black;
+    -fx-border-width: 1, 1;
+    -fx-border-style: solid, segments(1, 2);
+    -fx-border-radius: 0, 0;
+    -fx-border-insets: 1 1 1 1, 0;
+}*/
+
+/*.button_header:focused {
+	-fx-background-color: #969A9F;
+}*/
+
+/* .button_header:hover  {
+	-fx-background-color: #5D5E59;
+}*/
+
+/*.button_header:pressed {
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}*/
