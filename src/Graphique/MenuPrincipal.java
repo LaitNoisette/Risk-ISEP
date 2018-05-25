@@ -127,6 +127,9 @@ public class MenuPrincipal extends Application /*implements EventHandler<ActionE
         FXMLDocumentController controller = (FXMLDocumentController) fxmlLoader.getController();
         // Création de la scène.
         Scene scene = new Scene(root, 1920, 1080); 
+        
+        stage.setMaximized(true);
+        stage.setFullScreen(true);
 	    
 		scene.getStylesheets().add("Graphique/test.css"); 
 	    stage.setTitle("FXML Welcome");

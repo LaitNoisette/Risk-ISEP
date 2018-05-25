@@ -66,6 +66,52 @@
 	-fx-stroke-width : 3,3,0,0;
 }
 
+
+
+#PlayerListTerritory > .viewport {
+   -fx-background-color: transparent;
+}
+
+#PlayerListTerritory {
+	-fx-border-color : #7D7E76;
+	-fx-border-width : 3,3,0,0;
+	-fx-border-style: solid none none none;
+    -fx-background-color: transparent;
+}
+
+#PlayerListTerritory .scroll-bar:vertical .track {
+   -fx-background-radius: 2em;
+	-fx-border-radius:2em;
+}
+
+#PlayerListTerritory .scroll-bar:vertical {
+   -fx-background-color: #21323C;
+   -fx-padding:10 0 10 0;
+}
+
+#PlayerListTerritory .scroll-bar:vertical .thumb {
+   -fx-background-radius: 10;
+   -fx-background-insets: 5;
+   -fx-background-color: #7D7E76;
+}
+
+
+#PlayerListTerritory .increment-button, #PlayerListTerritory .decrement-button, #PlayerListTerritory .increment-arrow, #PlayerListTerritory .decrement-arrow {
+	-fx-padding:0 10 0 0;
+}
+
+#GridListTerritory {
+	-fx-grid-lines-visible: false;
+}
+
+.SeparatorInfoPlayer {
+	
+
+	
+}
+
+
+
 /*.button_header:focused {
     -fx-border-color: transparent, black;
     -fx-border-width: 1, 1;

@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import com.sun.javafx.event.EventQueue;
 
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -49,6 +50,7 @@ public class FXMLDocumentController implements Initializable {
 	@FXML private Text Territory_NameTerritory;
 	
 	private boolean isOpened_Info_Territory = false;
+	private TranslateTransition translateTransition_Info_Territory = new TranslateTransition(); 
 	
 	@FXML
 	private void handleMouseAction(MouseEvent event) {	
@@ -63,6 +65,33 @@ public class FXMLDocumentController implements Initializable {
 		Territory_Picture.setStyle("-fx-background-image: url(\"resources/img/country/"+idFromClick+".jpg\");-fx-background-size: 440 152;-fx-background-position: center;");
 		// On active le panel
 		Info_Territory.setVisible(true);
+		
+		Info_Territory.setLayoutX(-500);
+		
+		if (!isOpened_Info_Territory) { 
+		      
+		    //Setting the duration of the transition  
+			translateTransition_Info_Territory.setDuration(Duration.millis(250)); 
+		      
+		    //Setting the node for the transition 
+			translateTransition_Info_Territory.setNode(Info_Territory); 
+		      
+		    //Setting the value of the transition along the x axis. 
+			translateTransition_Info_Territory.setByX(500); 
+		      
+		    //Setting the cycle count for the transition Pas besoin de répéter
+			//translateTransition_Info_Territory.setCycleCount(2); 
+		      
+		    //Setting auto reverse value to false 
+			//translateTransition_Info_Territory.setAutoReverse(false); 
+		      
+		    //Playing the animation 
+			translateTransition_Info_Territory.play(); 
+		}
+		else {
+			translateTransition_Info_Territory.stop();
+		}
+	
 		isOpened_Info_Territory = true;
 		event.consume();	
 	}
@@ -77,8 +106,15 @@ public class FXMLDocumentController implements Initializable {
 		// On vérifie que le clic n'est pas sur un territoire
 		if (isOpened_Info_Territory) {
 			System.out.println("pouet");
-			Info_Territory.setVisible(false);
+	
+			translateTransition_Info_Territory.setByX(-500);
+			translateTransition_Info_Territory.play(); 
+			
+			//Info_Territory.setVisible(false); Pas besoin avec l'animation
 			isOpened_Info_Territory = false;
+			
+			
+			
 			event.consume();
 		}	
 	}
