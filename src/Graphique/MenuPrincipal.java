@@ -142,8 +142,10 @@ public class MenuPrincipal extends Application /*implements EventHandler<ActionE
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
+
 		System.out.println("cc je compile");
-		Application.launch(MenuPrincipal.class,args);		
+		
+	
+		Application.launch(MenuPrincipal.class,args);	
 	}
 }
