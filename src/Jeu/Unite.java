@@ -8,6 +8,7 @@ public class Unite {
 	private int prioriteATT;
 	private int prioriteDEF;
 	private int mvtTour;
+	private int mvtTourReel;
 	private boolean uniteDetruit = false;
 
 	public Unite(String nom, int cout, int puisMin, int puisMax, int prioATT, int prioDEF, int mvtTour) {
@@ -18,6 +19,13 @@ public class Unite {
 		this.prioriteATT = prioATT;
 		this.prioriteDEF = prioDEF;
 		this.mvtTour = mvtTour;
+	}
+	
+	public void reinitialiserDeplacement() {
+		this.mvtTourReel=this.mvtTour;
+	}
+	public void diminuerDeplacementUnite() {
+		this.mvtTourReel--;
 	}
 
 	public static Unite nouveauSoldat() {

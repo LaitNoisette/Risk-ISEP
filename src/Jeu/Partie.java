@@ -52,8 +52,12 @@ public class Partie {
 			while(listeTerritoireCarteIterator.hasNext()) {
 				for (Joueur j : this.listeJoueurs) {
 					if(listeTerritoireCarteIterator.hasNext()) {
-						listeTerritoireCarteIterator.next().setProprietaire(j);
+						Territoire t=	listeTerritoireCarteIterator.next();
+						t.setProprietaire(j);
+						j.getListeTerritoire().add(t);
+					
 						listeTerritoireCarteIterator.remove();
+						
 					}
 				}	
 			}
@@ -65,6 +69,41 @@ public class Partie {
 
 		}
 
+	}
+	
+	public void gererProprietaireTerritoire() {
+		//this.carteJeu
+	}
+	
+	//Fonction recuperant les proprio d'une region
+	public void gererProprietaireRegion() {
+		
+		boolean joueurProprietaireRegionExistant=false;
+		
+		//Parcourt chaque region
+		for (Region r : this.carteJeu.getListeRegion()) {
+			//Verifie pour chaque joueur si la region lui appartient
+			for (Joueur j : this.listeJoueurs) {
+				boolean retourJoueurProprietaire;
+				retourJoueurProprietaire= r.definirJoueurProprietaire(j);
+				if(retourJoueurProprietaire) {
+					joueurProprietaireRegionExistant=true;
+				}
+			}
+			
+			//Pas de proprietaire pour le territoire
+			if(!joueurProprietaireRegionExistant) {
+				r.setProprietaire(null);
+			}
+		}
+		
+	}
+	
+	public void gererRenfort() {
+		for (Joueur joueur : this.listeJoueurs) {
+			joueur.gererRenfort();
+			
+		}
 	}
 	
 	public void affichageTest() {
