@@ -13,6 +13,8 @@ import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import Jeu.Carte;
+import Jeu.Partie;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -112,6 +114,10 @@ public class MenuPrincipal extends Application /*implements EventHandler<ActionE
 	    stage.show();
 	}*/
 	
+	
+	public static FXMLDocumentController controller;
+	public static Partie partie;
+	
 	@Override
 	public void start(Stage stage) throws Exception {
 		// Localisation du fichier FXML.
@@ -121,10 +127,17 @@ public class MenuPrincipal extends Application /*implements EventHandler<ActionE
 		ResourceBundle bundle = null;
         // Création du loader.
         FXMLLoader fxmlLoader = new FXMLLoader(url, bundle);
+        
+     // Accès au contrôleur.
+        FXMLDocumentController controller = (FXMLDocumentController) fxmlLoader.getController();
+        MenuPrincipal.controller=(FXMLDocumentController) fxmlLoader.getController();
+        
+        //controller.setPartie(new Partie(3, Carte.CarteTestNY()));
         // Chargement du FXML.
         BorderPane root = (BorderPane) fxmlLoader.load();
-        // Accès au contrôleur.
-        FXMLDocumentController controller = (FXMLDocumentController) fxmlLoader.getController();
+        
+        
+        //fxmlLoader.setController(new FXMLDocumentController(new Partie(3, Carte.CarteTestNY())));
         // Création de la scène.
         Scene scene = new Scene(root, 1920, 1080); 
         
@@ -141,11 +154,15 @@ public class MenuPrincipal extends Application /*implements EventHandler<ActionE
 	}
 	
 	public static void main(String[] args) {
+		Partie p=new Partie(3, Carte.CarteTestNY());
 		// TODO Auto-generated method stub
+		FXMLDocumentController.partieController=p;
 
 		System.out.println("cc je compile");
 		
-	
 		Application.launch(MenuPrincipal.class,args);	
+		//MenuPrincipal.controller.setPartie(p);
+		
+
 	}
 }

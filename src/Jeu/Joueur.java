@@ -1,3 +1,5 @@
+package Jeu;
+import java.util.HashSet;
 import java.util.Set;
 
 import javafx.scene.paint.Color;
@@ -5,7 +7,7 @@ import javafx.scene.paint.Color;
 public class Joueur {
 
 	private String nomJoueur;
-	private Set<Unite> listeUnite;
+	private Set<Unite> listeUnite=new HashSet<Unite>();
 	private boolean joueurDetruit = false;
 	private int pointUnite = 0;
 	private Color couleur;

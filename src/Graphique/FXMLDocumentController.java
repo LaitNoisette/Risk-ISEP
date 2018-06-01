@@ -1,8 +1,12 @@
 package Graphique;
+import Jeu.*;
 
 import java.io.File;
+
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javax.naming.PartialResultException;
 
 import com.sun.javafx.event.EventQueue;
 
@@ -39,7 +43,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class FXMLDocumentController implements Initializable {
-	
+	private Partie partie;
 	@FXML private SVGPath Country1;
 	@FXML private SVGPath Country2;
 	@FXML private SVGPath Country3;
@@ -52,8 +56,22 @@ public class FXMLDocumentController implements Initializable {
 	private boolean isOpened_Info_Territory = false;
 	private TranslateTransition translateTransition_Info_Territory = new TranslateTransition(); 
 	
+	public static Partie partieController;
+	
+	/*
+	public FXMLDocumentController(Partie p) {
+		this.partie=p;
+	}
+	*/
+	
+	public void setPartie(Partie p) {
+		this.partie=p;
+	}
+	
 	@FXML
 	private void handleMouseAction(MouseEvent event) {	
+		//this.partie=new Partie(3, Carte.CarteTestNY());
+		FXMLDocumentController.partieController.affichageTest();
 		// On récupère l'id du territoire
 		@SuppressWarnings("unused")
 		String idFromClick;
@@ -103,6 +121,7 @@ public class FXMLDocumentController implements Initializable {
 	
 	@FXML
 	private void handleMouseClickOutsideInfoTerritory(MouseEvent event) {
+		//this.partie=new Partie(3, Carte.CarteTestNY());
 		// On vérifie que le clic n'est pas sur un territoire
 		if (isOpened_Info_Territory) {
 			System.out.println("pouet");
@@ -121,6 +140,7 @@ public class FXMLDocumentController implements Initializable {
 	
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+		
 		Info_Territory.setVisible(false);
 		/* Initialisation des musiques */
 		String musicFile = "src/ost/ost1.mp3";     // For example
