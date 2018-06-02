@@ -13,6 +13,8 @@ import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import Jeu.Carte;
+import Jeu.Partie;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -39,6 +41,10 @@ public class MenuPrincipal extends Application {
 		this.resolutionWidth=1920;
 	}
 	
+	
+	public static FXMLDocumentController controller;
+	public static Partie partie;
+	
 	@Override
 	public void start(Stage stage) throws Exception {
 		// Localisation du fichier FXML.
@@ -48,10 +54,17 @@ public class MenuPrincipal extends Application {
 		ResourceBundle bundle = null;
         // Création du loader.
         FXMLLoader fxmlLoader = new FXMLLoader(url, bundle);
-        // Chargement du FXML.
-        BorderPane root = (BorderPane) fxmlLoader.load();
+        
         // Accès au contrôleur.
         FXMLDocumentController controller = (FXMLDocumentController) fxmlLoader.getController();
+        MenuPrincipal.controller=(FXMLDocumentController) fxmlLoader.getController();
+        
+        //controller.setPartie(new Partie(3, Carte.CarteTestNY()));
+        // Chargement du FXML.
+        BorderPane root = (BorderPane) fxmlLoader.load();
+        
+        
+        //fxmlLoader.setController(new FXMLDocumentController(new Partie(3, Carte.CarteTestNY())));
         // Création de la scène.
         Scene scene = new Scene(root, this.resolutionWidth, this.resolutionHeight); 
         
@@ -75,8 +88,11 @@ public class MenuPrincipal extends Application {
 	}
 	
 	public static void main(String[] args) {
+		Partie p=new Partie(3, Carte.CarteTestNY());
+		FXMLDocumentController.partieController=p;
 		System.out.println("cc je compile");
 		Application.launch(MenuPrincipal.class,args);	
+		//MenuPrincipal.controller.setPartie(p);
 	}
 	
 	public int getResolutionWidth() {

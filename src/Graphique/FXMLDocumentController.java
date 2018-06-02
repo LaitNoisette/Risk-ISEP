@@ -10,6 +10,7 @@ import java.util.Set;
 
 import com.sun.javafx.event.EventQueue;
 
+import Jeu.Partie;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -74,6 +75,9 @@ public class FXMLDocumentController implements Initializable {
 	private boolean isPanelOpened = false;
 
 	private boolean renfort=true;
+	
+	private Partie partie;
+	public static Partie partieController;
 	
 	/**
      * Initialisation de l'interface du controller
@@ -352,4 +356,7 @@ public class FXMLDocumentController implements Initializable {
 	    Platform.exit();
 	}
 	
+	public void setPartie(Partie p) {
+		this.partie=p;
+	}
 }
