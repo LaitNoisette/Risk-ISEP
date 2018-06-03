@@ -13,6 +13,7 @@ import com.sun.javafx.event.EventQueue;
 import com.sun.javafx.geom.Rectangle;
 
 import Jeu.Partie;
+import Jeu.Territoire;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
@@ -109,9 +110,9 @@ public class FXMLDocumentController implements Initializable {
 
 	private Partie partie;
 	public static Partie partieController;
-
+	//Permet de stocker le territoire sur lequel on a a clique
+	public static Territoire territoireSelectionne;
 	String idMouseEnteredTerritory;
-	
 	public boolean debutPartie = true;
 
 	/**
@@ -179,6 +180,10 @@ public class FXMLDocumentController implements Initializable {
 			// Container SVG
 			ContainerSVG.addEventFilter(MouseEvent.MOUSE_PRESSED, translateNode.getOnMousePressedEventHandler());
 			ContainerSVG.addEventFilter(MouseEvent.MOUSE_DRAGGED, translateNode.getOnMouseDraggedEventHandler());
+			
+			//Initialisation premier joueur exemple le nom
+			//this.partieController.getJoueurEnCours().getNom();
+	
 		}	
 	}
 
@@ -235,6 +240,14 @@ public class FXMLDocumentController implements Initializable {
 			}
 		}
 
+		this.territoireSelectionne=this.partieController.getCarte().recupererTerritoireNOM(idFromClickPrefixFinal);
+		//System.out.println(this.territoireSelectionne.getNom());
+		System.out.println(idFromClickPrefixFinal);
+		
+		if(this.territoireSelectionne!=null) {
+			System.out.println("Nom Territoire : "+this.territoireSelectionne.getNom()+" Nom Region : "+this.territoireSelectionne.getRegion().getNom()+" Nom Proprietaire : "+this.territoireSelectionne.getProprietaire().getNom()+" Nombre Unite Total : "+this.territoireSelectionne.getNbrTotalUniteTerritoire());
+		}
+
 		// On change le texte en fonction du territoire cliqué
 		Info_Territory_NameTerritory.setText(idFromClickPrefixFinal);
 
@@ -274,7 +287,10 @@ public class FXMLDocumentController implements Initializable {
 	 */
 	@FXML
 	private void handleButtonAttackAction(ActionEvent event) {
-		Info_Territory_Attack.setVisible(true);
+		if(FXMLDocumentController.territoireSelectionne.getProprietaire().equals(this.partieController.getJoueurEnCours())) {
+			Info_Territory_Attack.setVisible(true);
+		}
+		
 	}
 
 	/**
@@ -396,7 +412,7 @@ public class FXMLDocumentController implements Initializable {
 						String prefixn = tokensn[0];
 						// On remplace les " " par des "_" pour la comparaison
 						if (prefixn.equals(Info_Territory_NameTerritory.getText().replace(" ", "_"))) {
-							System.out.println(prefixn + "*" + Info_Territory_NameTerritory.getText());
+							//System.out.println(prefixn + "*" + Info_Territory_NameTerritory.getText());
 							n.setStyle("-fx-effect:innershadow(one-pass-box, #a3a3a3, 50, 0, 0, 0);");
 						} else {
 							n.setStyle("");
@@ -417,10 +433,10 @@ public class FXMLDocumentController implements Initializable {
 	private void closeGameAction() {
 		Platform.exit();
 	}
-
+	/*
 	public void setPartie(Partie p) {
 		this.partie = p;
-	}
+	}*/
 
 	public AnchorPane getContainerSVG() {
 		return this.ContainerSVG;

@@ -77,6 +77,7 @@ public class Joueur {
 
 	public boolean addUniteSoldat() {
 		if(this.pointUniteJoueur>=1) {
+			this.pointUniteJoueur-=1;
 			return true;
 		}
 		return false;
@@ -85,6 +86,7 @@ public class Joueur {
 	
 	public boolean addUniteCanon() {
 		if(this.pointUniteJoueur>=7) {
+			this.pointUniteJoueur-=7;
 			return true;
 		}
 		return false;
@@ -93,6 +95,7 @@ public class Joueur {
 	
 	public boolean addUniteCavalier() {
 		if(this.pointUniteJoueur>=3) {
+			this.pointUniteJoueur-=3;
 			return true;
 		}
 		return false;

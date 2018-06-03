@@ -9,6 +9,11 @@ import java.util.Set;
 public class Partie {
 	private int nombreJoueurActif;
 	private Set<Joueur> listeJoueurs=new HashSet<Joueur>();
+	private Set<Joueur> listeJoueursDetruit=new HashSet<Joueur>();
+	//Gere ordre des tours des joueurs
+	private Iterator<Joueur> tourJoueur;
+	//Joueur en cours de jeu
+	private Joueur joueurEnCours;
 	private Carte carteJeu;
 	private boolean finPartie = false;
 
@@ -55,7 +60,6 @@ public class Partie {
 						Territoire t=	listeTerritoireCarteIterator.next();
 						t.setProprietaire(j);
 						j.getListeTerritoire().add(t);
-					
 						listeTerritoireCarteIterator.remove();
 						
 					}
@@ -66,9 +70,32 @@ public class Partie {
 			
 			
 			
-
+//Creation iterator pour gerer les tours des joueurs 
+			this.tourJoueur=this.listeJoueurs.iterator();
+			this.gererTourJoueur();
+			
 		}
 
+	}
+	
+	public Joueur getJoueurEnCours() {
+		return this.joueurEnCours;
+	}
+	
+	public Carte getCarte() {
+		return this.carteJeu;
+	}
+	public void gererTourJoueur() {
+		if(this.tourJoueur.hasNext()) {
+			this.joueurEnCours=this.tourJoueur.next();
+		}
+		else {
+			if(this.listeJoueurs.size()>1) {
+				this.tourJoueur=this.listeJoueurs.iterator();
+				this.gererTourJoueur();
+			}
+			
+		}
 	}
 	
 	public void gererProprietaireTerritoire() {
@@ -104,6 +131,20 @@ public class Partie {
 			joueur.gererRenfort();
 			
 		}
+	}
+	
+	public void reinitialiserDeplacementUniteJoueur() {
+		for (Territoire t : this.carteJeu.getAllTerritoire()) {
+			for (Unite u : t.getListeUniteSoldat()) {
+				u.reinitialiserDeplacement();
+			}
+			for (Unite u : t.getListeUniteCavalier()) {
+				u.reinitialiserDeplacement();
+			}
+			for (Unite u : t.getListeUniteCanon()) {
+				u.reinitialiserDeplacement();
+			}
+		} 
 	}
 	
 	public void affichageTest() {

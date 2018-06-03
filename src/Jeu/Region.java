@@ -12,6 +12,9 @@ public class Region {
 	public Region(String n,Set<Territoire> lT) {
 		this.nom=n;
 		this.listeTerritoire=lT;
+		for (Territoire territoire : lT) {
+			territoire.setRegion(this);
+		}
 	}
 	
 	//Constructeur pour region la plus grande
@@ -19,6 +22,10 @@ public class Region {
 		this.nom=n;
 		this.listeTerritoire=lT;
 		this.plusGrandeRegion=plusGRegion;
+	}
+	
+	public String getNom() {
+		return this.nom;
 	}
 	
 	public Joueur getProprietaire() {
@@ -93,4 +100,24 @@ public class Region {
 	public static Region RegionTestCarteNY() {
 		return new Region("Test",Territoire.listeTerritoireTestRegion());
 	}
+	//Createur region carte NY
+		public static Region RegionStatenIslandCarteNY() {
+			return new Region("Staten Island",Territoire.listeTerritoireRegionStatenIsland());
+		}
+		//Createur region carte NY
+				public static Region RegionBrooklynCarteNY() {
+					return new Region("Brooklyn",Territoire.listeTerritoireRegionBrooklyn());
+				}
+				//Createur region carte NY
+				public static Region RegionQueensCarteNY() {
+					return new Region("Queens",Territoire.listeTerritoireRegionQueens());
+				}
+				//Createur region carte NY
+				public static Region RegionManhattanCarteNY() {
+					return new Region("Manhattan",Territoire.listeTerritoireRegionManhattan());
+				}
+				//Createur region carte NY
+				public static Region RegionBronxCarteNY() {
+					return new Region("Bronx",Territoire.listeTerritoireRegionBronx());
+				}
 }
