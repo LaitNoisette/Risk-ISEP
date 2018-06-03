@@ -9,6 +9,7 @@ import java.util.Set;
 public class Partie {
 	private int nombreJoueurActif;
 	private Set<Joueur> listeJoueurs=new HashSet<Joueur>();
+	private Set<Joueur> listeJoueursDetruit=new HashSet<Joueur>();
 	private Carte carteJeu;
 	private boolean finPartie = false;
 
@@ -55,7 +56,6 @@ public class Partie {
 						Territoire t=	listeTerritoireCarteIterator.next();
 						t.setProprietaire(j);
 						j.getListeTerritoire().add(t);
-					
 						listeTerritoireCarteIterator.remove();
 						
 					}
@@ -104,6 +104,20 @@ public class Partie {
 			joueur.gererRenfort();
 			
 		}
+	}
+	
+	public void reinitialiserDeplacementUniteJoueur() {
+		for (Territoire t : this.carteJeu.getAllTerritoire()) {
+			for (Unite u : t.getListeUniteSoldat()) {
+				u.reinitialiserDeplacement();
+			}
+			for (Unite u : t.getListeUniteCavalier()) {
+				u.reinitialiserDeplacement();
+			}
+			for (Unite u : t.getListeUniteCanon()) {
+				u.reinitialiserDeplacement();
+			}
+		} 
 	}
 	
 	public void affichageTest() {

@@ -37,6 +37,7 @@ public class Territoire {
 		return this.listeUniteCanon;
 	}
 	
+	
 	public void setProprietaire(Joueur j) {
 		this.proprietaire=j;
 	}
@@ -61,6 +62,19 @@ public class Territoire {
 		return nbUnitTerritoire;
 	}
 	
+	public Set<Unite> getListeTypeUnite(String typeUnite) {
+		if(typeUnite.equals("Soldat")) {
+			return this.listeUniteSoldat;
+		}
+		else if (typeUnite.equals("Cavalier")) {
+		return this.listeUniteCavalier;
+		}
+		else if(typeUnite.equals("Canon")) {
+			return this.listeUniteCanon;
+		}
+		return null;
+	}
+	
 	public void ajouterUniteSoldat() {
 		if(this.proprietaire.addUniteSoldat()) {
 			this.listeUniteSoldat.add(Unite.nouveauSoldat());
@@ -80,6 +94,52 @@ public class Territoire {
 		}
 		
 	}
+	
+	//Place unite dans la bonne liste
+	public void accueillirUnite(Unite u) {
+		if(u.getNom().equals("Soldat")) {
+			this.listeUniteSoldat.add(u);
+		}
+		else if(u.getNom().equals("Cavalier")) {
+			this.listeUniteCavalier.add(u);
+		}
+		else if(u.getNom().equals("Canon")) {
+			this.listeUniteCanon.add(u);
+		}
+	}
+	
+	//Retire unite de la bonne liste
+	public void retirerUniteReserve(Unite u) {
+		if(u.getNom().equals("Soldat")) {
+			this.listeUniteSoldat.remove(u);
+		}
+		else if(u.getNom().equals("Cavalier")) {
+			this.listeUniteCavalier.remove(u);
+		}
+		else if(u.getNom().equals("Canon")) {
+			this.listeUniteCanon.remove(u);
+		}
+	}
+	
+	//Deplace une unite entre deux territoire
+	public void deplacementUniteTerritoire(Territoire tDestination, Unite uDeplacer) {
+		if(uDeplacer.deplacementUnitePossible()) {
+			uDeplacer.diminuerDeplacementUnite();
+			tDestination.accueillirUnite(uDeplacer);
+			this.retirerUniteReserve(uDeplacer);
+		}
+		
+	}
+	
+	//Joueur conquiert un territoire ennemi
+	public void conquerirTerritoire(Joueur conquerant) {
+		if(!this.getProprietaire().equals(conquerant)) {
+			this.getProprietaire().getListeTerritoire().remove(this);
+			this.proprietaire=conquerant;
+			conquerant.getListeTerritoire().add(this);
+		}
+	}
+	
 	
 	
 	//Retourne la liste des territoires d'une region 

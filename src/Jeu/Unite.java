@@ -7,7 +7,9 @@ public class Unite {
 	private int puissanceMax;
 	private int prioriteATT;
 	private int prioriteDEF;
+	//Reference du nombre de deplacement
 	private int mvtTour;
+	//Deplacement restant a l'unite pendant ce tour
 	private int mvtTourReel;
 	private boolean uniteDetruit = false;
 
@@ -21,13 +23,28 @@ public class Unite {
 		this.mvtTour = mvtTour;
 	}
 	
+	public String getNom() {
+		return this.getNom();
+	}
+	
 	public void reinitialiserDeplacement() {
 		this.mvtTourReel=this.mvtTour;
 	}
+	
 	public void diminuerDeplacementUnite() {
 		this.mvtTourReel--;
 	}
+	
+	public boolean deplacementUnitePossible() {
+		if(this.mvtTourReel>=1) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 
+	
 	public static Unite nouveauSoldat() {
 		return new Unite("Soldat", 1, 1, 6, 2, 1, 2);
 	}
