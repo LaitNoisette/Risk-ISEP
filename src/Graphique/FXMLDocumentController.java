@@ -11,6 +11,7 @@ import java.util.Set;
 import com.sun.javafx.event.EventQueue;
 
 import Jeu.Partie;
+import Jeu.Territoire;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -82,8 +83,10 @@ public class FXMLDocumentController implements Initializable {
 
 	private boolean renfort=false;
 	
-	private Partie partie;
+	//private Partie partie;
 	public static Partie partieController;
+	//Permet de stocker le territoire sur lequel on a a clique
+	public static Territoire territoireSelectionne;
 	
 	/**
      * Initialisation de l'interface du controller
@@ -122,7 +125,10 @@ public class FXMLDocumentController implements Initializable {
 		
 		// Ajout des filtres pour espionner les mouvements pour bouger le panel Container SVG
 		ContainerSVG.addEventFilter(MouseEvent.MOUSE_PRESSED, translateNode.getOnMousePressedEventHandler());
-		ContainerSVG.addEventFilter(MouseEvent.MOUSE_DRAGGED, translateNode.getOnMouseDraggedEventHandler());		
+		ContainerSVG.addEventFilter(MouseEvent.MOUSE_DRAGGED, translateNode.getOnMouseDraggedEventHandler());
+		
+		//Initialisation premier joueur exemple le nom
+		//this.partieController.getJoueurEnCours().getNom();
 	}
 	
 	@FXML
@@ -140,10 +146,25 @@ public class FXMLDocumentController implements Initializable {
 		String idFromClickPrefixFinal =  "";
 		// On vérifique la chaîne n'est pas nulle (pas de "_" dans la chaîne avant de split)
 		if (tokens2.length >= 1) {
-			for (String t : tokens2)
-				idFromClickPrefixFinal += t + " ";
+			int i=1;
+			for (String t : tokens2) {
+				if(i >=tokens2.length) {
+					idFromClickPrefixFinal +=t;
+				}
+				else {
+					idFromClickPrefixFinal += t + " ";
+				}
+				i++;
+			}
+				
 		}
-
+		this.territoireSelectionne=this.partieController.getCarte().recupererTerritoireNOM(idFromClickPrefixFinal);
+		//System.out.println(this.territoireSelectionne.getNom());
+		System.out.println(idFromClickPrefixFinal);
+		
+		if(this.territoireSelectionne!=null) {
+			System.out.println("Nom Territoire : "+this.territoireSelectionne.getNom()+" Nom Region : "+this.territoireSelectionne.getRegion().getNom()+" Nom Proprietaire : "+this.territoireSelectionne.getProprietaire().getNom()+" Nombre Unite Total : "+this.territoireSelectionne.getNbrTotalUniteTerritoire());
+		}
 		// On change le texte en fonction du territoire cliqué
 		Territory_NameTerritory.setText(idFromClickPrefixFinal);
 		
@@ -197,7 +218,10 @@ public class FXMLDocumentController implements Initializable {
      */
 	@FXML
 	private void handleButtonAttackAction(ActionEvent event) {
-		Info_Territory_Attack.setVisible(true);
+		if(FXMLDocumentController.territoireSelectionne.getProprietaire().equals(this.partieController.getJoueurEnCours())) {
+			Info_Territory_Attack.setVisible(true);
+		}
+		
 	}
 	
 	private void transitionDisplayMenu(StackPane stackpane, boolean direction) {
@@ -378,8 +402,9 @@ public class FXMLDocumentController implements Initializable {
 	private void closeGameAction() {
 	    Platform.exit();
 	}
-	
+	/*
 	public void setPartie(Partie p) {
 		this.partie=p;
 	}
+	*/
 }

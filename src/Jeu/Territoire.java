@@ -7,6 +7,7 @@ public class Territoire {
 	private String nom;
 	//private Set<Territoire> territoireAdjacent=new HashSet<Territoire>();
 	private Carte carte=null;
+	private Region region=null;
 	
 	private Set<Unite> listeUniteSoldat=new HashSet<Unite>();
 	private Set<Unite> listeUniteCavalier=new HashSet<Unite>();
@@ -25,6 +26,10 @@ public class Territoire {
 		return this.proprietaire;
 	}
 	
+	public Region getRegion() {
+		return this.region;
+	}
+	
 	public Set<Unite> getListeUniteSoldat(){
 		return this.listeUniteSoldat;
 	}
@@ -40,6 +45,10 @@ public class Territoire {
 	
 	public void setProprietaire(Joueur j) {
 		this.proprietaire=j;
+	}
+	
+	public void setRegion(Region r) {
+		this.region=r;
 	}
 	
 	public void ajouterAdjacence(Territoire tAdjacent) {
@@ -155,6 +164,69 @@ public class Territoire {
 		return territoireRegion;
 	}
 	
+	//Retourne la liste des territoires d'une region 
+		public static Set<Territoire> listeTerritoireRegionStatenIsland() {
+			Set<Territoire> territoireRegion= new HashSet<Territoire>();
+			territoireRegion.add(new Territoire("Port Richmond"));
+			territoireRegion.add(new Territoire("Westerleigh"));
+			territoireRegion.add(new Territoire("Arden Heights"));
+			
+			
+			//Ajouter adjacence entre territoire
+			
+			return territoireRegion;
+		}
+		
+		//Retourne la liste des territoires d'une region 
+				public static Set<Territoire> listeTerritoireRegionBrooklyn() {
+					Set<Territoire> territoireRegion= new HashSet<Territoire>();
+					territoireRegion.add(new Territoire("Port Richmond"));
+					territoireRegion.add(new Territoire("Westerleigh"));
+					territoireRegion.add(new Territoire("Territory3"));
+					
+					
+					//Ajouter adjacence entre territoire
+					
+					return territoireRegion;
+				}
+				//Retourne la liste des territoires d'une region 
+				public static Set<Territoire> listeTerritoireRegionQueens() {
+					Set<Territoire> territoireRegion= new HashSet<Territoire>();
+					territoireRegion.add(new Territoire("Port Richmond"));
+					territoireRegion.add(new Territoire("Westerleigh"));
+					territoireRegion.add(new Territoire("Territory3"));
+					
+					
+					//Ajouter adjacence entre territoire
+					
+					return territoireRegion;
+				}
+				
+				//Retourne la liste des territoires d'une region 
+				public static Set<Territoire> listeTerritoireRegionManhattan() {
+					Set<Territoire> territoireRegion= new HashSet<Territoire>();
+					territoireRegion.add(new Territoire("Port Richmond"));
+					territoireRegion.add(new Territoire("Westerleigh"));
+					territoireRegion.add(new Territoire("Territory3"));
+					
+					
+					//Ajouter adjacence entre territoire
+					
+					return territoireRegion;
+				}
+				
+				//Retourne la liste des territoires d'une region 
+				public static Set<Territoire> listeTerritoireRegionBronx() {
+					Set<Territoire> territoireRegion= new HashSet<Territoire>();
+					territoireRegion.add(new Territoire("Port Richmond"));
+					territoireRegion.add(new Territoire("Westerleigh"));
+					territoireRegion.add(new Territoire("Territory3"));
+					
+					
+					//Ajouter adjacence entre territoire
+					
+					return territoireRegion;
+				}
 	
 	
 	

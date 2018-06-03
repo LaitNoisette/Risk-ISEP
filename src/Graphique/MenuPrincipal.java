@@ -15,6 +15,7 @@ import java.util.ResourceBundle;
 
 import Jeu.Carte;
 import Jeu.Partie;
+import Jeu.Territoire;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -88,7 +89,16 @@ public class MenuPrincipal extends Application {
 	}
 	
 	public static void main(String[] args) {
-		Partie p=new Partie(3, Carte.CarteTestNY());
+		Partie p=new Partie(3, Carte.CarteNY());
+		
+		/*
+		for (Territoire T : p.getCarte().getAllTerritoire()) {
+			System.out.println(T.getNom());
+		}
+		
+		*/
+		System.out.println(p.getCarte().recupererTerritoireNOM("Port Richmond").getNom());
+		
 		FXMLDocumentController.partieController=p;
 		System.out.println("cc je compile");
 		Application.launch(MenuPrincipal.class,args);	
