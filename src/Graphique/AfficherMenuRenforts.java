@@ -1,8 +1,19 @@
 package Graphique;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
@@ -12,23 +23,28 @@ import javafx.scene.text.Text;
 /**
  * Affiche tous les renforts que le joueur doit placer sur les territoires qu'il possède
  */
-public class AfficherMenuRenforts {
+public class AfficherMenuRenforts extends FXMLDocumentController{
 	private StackPane Info_TerritoryPlayer;
 	private ScrollPane ScrollPaneAddBackups;
 	private GridPane Info_TerritoryPlayer_GridPane;
+	double defaultHeight;
+	double defaultHeightEvent = this.defaultHeight;
+	
+	public static FXMLDocumentController controller;
 	
 	/**
      * Constructeur
      */
-	public AfficherMenuRenforts(StackPane stp, ScrollPane sp, GridPane gp) {
+	public AfficherMenuRenforts(FXMLDocumentController ctrl, StackPane stp, ScrollPane sp, GridPane gp, double prefH) {
 		this.Info_TerritoryPlayer = stp;
 		this.ScrollPaneAddBackups=sp;
 		this.Info_TerritoryPlayer_GridPane=gp;
+		this.defaultHeight=prefH;
 	}
 	
 	public void DisplayInformations () {
-		final int row = 9;
-		double defaultHeight = Info_TerritoryPlayer.getPrefHeight();
+		final int row = 10;
+		//double defaultHeight = Info_TerritoryPlayer.getPrefHeight();
 		
 		GridPane GridPaneAddBackupsManual = new GridPane();
 		Text Labelr0c0 = new Text();
@@ -36,7 +52,7 @@ public class AfficherMenuRenforts {
 		
 		ScrollPaneAddBackups.setVisible(true);
 		Info_TerritoryPlayer_GridPane.setVisible(true);
-		Info_TerritoryPlayer.setPrefHeight(defaultHeight);
+		Info_TerritoryPlayer.setPrefHeight(this.defaultHeight);
 		// Ajout du Scroll Pane
 		Info_TerritoryPlayer_GridPane.addRow(row, ScrollPaneAddBackups);
 		ScrollPaneAddBackups.getStyleClass().add("PlayerListTerritory");
@@ -74,7 +90,7 @@ public class AfficherMenuRenforts {
 		GridPaneAddBackupsManual.getRowConstraints().get(0).setPrefHeight(40);
 		
 		// Pour chaque territoire que le joueur possède, on ajoute les différents éléments du menu
-		for (int h=0;h<4;h++) {
+		for (int h=0;h<15;h++) {
 			// 5 = 1 separateur + 1 label descriptif + 3 labels (3 unités)
 			for (int i=0;i<5;i++) {	
 				RowConstraints r = new RowConstraints();
@@ -92,14 +108,49 @@ public class AfficherMenuRenforts {
 				// Label descriptif du territoire et de la région
 				else if (i==1) {
 					Text t = new Text();
-					t.setText("[Nom du Territoire] ([Région]) :");
+					t.setText("Williamsburg ([Région]) :");
 					GridPane.setConstraints(t, 0, h*5+1+i);
 					GridPane.setMargin(t, new Insets(0, 0, 0, 20));
 					GridPaneAddBackupsManual.getChildren().add(t);	
 					t.getStyleClass().add("AddUnityLabel");
+					t.getStyleClass().add("CursorHand");
 					GridPaneAddBackupsManual.getRowConstraints().get(h*5+1+i).setPrefHeight(40);
-					t.setId("NomTerritoire_Region__"+h);
-					System.out.println(t.getId());
+					t.setId("Williamsburg__Region__"+h);
+					//System.out.println(t.getId());
+					AnchorPane ContainerSVG = AfficherMenuRenforts.controller.getContainerSVG();
+					StackPane InfoTerritory = AfficherMenuRenforts.controller.getInfoTerritory();
+					
+					t.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+						@Override
+						public void handle(MouseEvent event) {
+							// On récupère le nom du territoire
+							String idFromClick = event.getPickResult().getIntersectedNode().getId();
+							String[] tokens = idFromClick.split("__");
+							String idFromClickPrefix = tokens[0];
+							 
+							ObservableList<Node> ListNodes = ContainerSVG.getChildren();
+							for (Node n:ListNodes) {
+								if (n.getId()!=null) {									
+									String[] tokensn = n.getId().split("__");
+									String prefixn = tokensn[0];
+									if (prefixn.equals(idFromClickPrefix)) {										
+										Bounds primScreenBounds = n.getBoundsInParent();
+										ContainerSVG.setTranslateX(-primScreenBounds.getMinX()-(primScreenBounds.getWidth() - ContainerSVG.getPrefWidth())/2);
+										ContainerSVG.setTranslateY(-primScreenBounds.getMinY()-((int)primScreenBounds.getHeight() - (int)ContainerSVG.getPrefHeight()) / 2 - (ContainerSVG.getPrefHeight()-defaultHeight));
+										ContainerSVG.setScaleX(1);
+										ContainerSVG.setScaleY(1);
+										n.setStyle("-fx-effect:innershadow(one-pass-box, #a3a3a3, 50, 0, 0, 0);");
+										controller.setInfoTerritory(prefixn);
+										InfoTerritory.setVisible(true);
+										controller.setTerritorySelectedBackup(true);
+										break;
+									}
+								}
+							}	
+
+						}
+			        });
 				}
 				// 3 labels pour les 3 unités
 				else {
@@ -109,21 +160,21 @@ public class AfficherMenuRenforts {
 							t2.setText("[Nb] [Nom Unité1] ([Coût = X])");
 							GridPane.setMargin(t2, new Insets(0, 0, 0, 40));
 							t2.getStyleClass().add("AddUnityLabel");
-							t2.setId("NomTerritoire_Region__"+h+"__Unite__"+j+"__Label");
-							System.out.println(t2.getId());
+							t2.setId("NomTerritoire__Region__"+h+"__Unite__"+j+"__Label");							
+							//System.out.println(t2.getId());
 						}
 						else if (j==1) {
 							t2.setText("+");
 							t2.getStyleClass().add("buttonPlusAddUnity");
-							t2.setId("NomTerritoire_Region__"+h+"__Unite__"+j+"__Plus");
-							System.out.println(t2.getId());
+							t2.setId("NomTerritoire__Region__"+h+"__Unite__"+j+"__Plus");
+							//System.out.println(t2.getId());
 						}
 						else {
 							t2.setText("[Nb]");
 							GridPane.setMargin(t2, new Insets(0, 0, 0, 20));
 							t2.getStyleClass().add("AddUnityLabel");
-							t2.setId("NomTerritoire_Region__"+h+"__Unite__"+j+"__Nb");
-							System.out.println(t2.getId());
+							t2.setId("NomTerritoire__Region__"+h+"__Unite__"+j+"__Nb");
+							//System.out.println(t2.getId());
 						}
 						GridPane.setConstraints(t2, j, h*5+1+i);	
 						GridPaneAddBackupsManual.getChildren().add(t2);	
@@ -131,5 +182,27 @@ public class AfficherMenuRenforts {
 				}					
 			}
 		}
+	}
+	
+	static void deleteRow(GridPane grid, final int row) {
+	    Set<Node> deleteNodes = new HashSet<>();
+	    
+	    for (Node child : grid.getChildren()) {
+	        // Récupération de l'index du child
+	        Integer rowIndex = GridPane.getRowIndex(child);
+
+	        // Vérification si c'est les valeurs de l'index sont nulles
+	        int r = rowIndex == null ? 0 : rowIndex;
+
+	        if (r > row) {
+	            // Supression ligne par ligne
+	            GridPane.setRowIndex(child, r-1);
+	        } else if (r == row) {
+	            // Récupération des bonnes lignes pour supression
+	            deleteNodes.add(child);
+	        }
+	    }
+	    // Supression du node
+	    grid.getChildren().removeAll(deleteNodes);
 	}
 }

@@ -3,16 +3,20 @@ package Graphique;
 import java.io.File;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Set;
 
 import com.sun.javafx.event.EventQueue;
+import com.sun.javafx.geom.Rectangle;
 
 import Jeu.Partie;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -25,6 +29,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Camera;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -35,6 +40,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
@@ -49,8 +55,10 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
@@ -58,129 +66,198 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class FXMLDocumentController implements Initializable {
-	@FXML private BorderPane Body;
-	@FXML private BorderPane header;
-	@FXML private SVGPath Territory1;
-	@FXML private SVGPath Territory2;
-	@FXML private MenuItem CloseButton;
-	@FXML private Slider sliderVolumeOST;
-	@FXML private StackPane Info_Territory;
-	@FXML private StackPane Info_Territory_Attack;
-	@FXML private StackPane Info_TerritoryPlayer;
-	@FXML private Pane Territory_Picture;
-	@FXML private Pane BodyMap;
-	@FXML private Text Territory_NameTerritory;
-	@FXML private AnchorPane ContainerSVG;
-	@FXML private ScrollPane ListTerritoryAttack, ScrollPaneAddBackups;
-	@FXML private GridPane Grid_Info_Territory, Info_TerritoryPlayer_GridPane;
-	@FXML private Button InfoTerritoryPlayer_CloseButton, InfoTerritory_CloseButton, InfoTerritoryAttack_CloseButton;
-	@FXML private GridPane IconPlayers;
-	@FXML private GridPane GridPaneAddBackups;
-	
+	@FXML
+	private BorderPane Body;
+	@FXML
+	private BorderPane header;
+	@FXML
+	private MenuItem CloseButton;
+	@FXML
+	private Slider sliderVolumeOST;
+	@FXML
+	private StackPane Info_Territory;
+	@FXML
+	private StackPane Info_Territory_Attack;
+	@FXML
+	private StackPane Info_TerritoryPlayer;
+	@FXML
+	private Pane Info_Territory_Picture;
+	@FXML
+	private Pane BodyMap;
+	@FXML
+	private Text Info_Territory_NameTerritory;
+	@FXML
+	private AnchorPane ContainerSVG;
+	@FXML
+	private ScrollPane ListTerritoryAttack, ScrollPaneAddBackups;
+	@FXML
+	private GridPane Grid_Info_Territory, Info_TerritoryPlayer_GridPane;
+	@FXML
+	private Button InfoTerritoryPlayer_CloseButton, InfoTerritory_CloseButton, InfoTerritoryAttack_CloseButton;
+	@FXML
+	private GridPane IconPlayers;
+	@FXML
+	private GridPane GridPaneAddBackups;
+	@FXML
+	private AnchorPane video;
+
 	private boolean isAnimationEnded = false;
 	private boolean isPanelOpened = false;
+	private boolean isTerritorySelectedBackup = false;
 
-	private boolean renfort=false;
-	
+	private boolean renfort = true;
+
 	private Partie partie;
 	public static Partie partieController;
+
+	String idMouseEnteredTerritory;
 	
+	public boolean debutPartie = true;
+
 	/**
-     * Initialisation de l'interface du controller
-     */
+	 * Initialisation de l'interface du controller
+	 */
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		TranslateNode translateNode = new TranslateNode(ContainerSVG);
-		
-		// Initialisation des musiques
-		String musicFile = "src/ost/ost1.mp3"; 
-		 
-		Media sound = new Media(new File(musicFile).toURI().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(sound);
-        mediaPlayer.setOnEndOfMedia(new Runnable() {
-            public void run() {
-            	mediaPlayer.seek(Duration.ZERO);
-            }
-        });
-        mediaPlayer.setVolume(0);
-        sliderVolumeOST.setValue(0);
-        mediaPlayer.play();
-          
-		sliderVolumeOST.valueProperty().addListener((observable, oldValue, newValue) -> {
-			mediaPlayer.setVolume((double)newValue);
-        });
-		
-		// Placement du menu d'informations du joueur actuel
-		Info_TerritoryPlayer.setLayoutX((double)BodyMap.getPrefWidth()-Info_TerritoryPlayer.getPrefWidth());
-		
-		// Initialisation de l'affichage des menus
-		Info_Territory.setLayoutX(0);
-		Info_Territory_Attack.setLayoutX(0);
-		Info_Territory.setVisible(false);
-		Info_Territory_Attack.setVisible(false);
-		Info_TerritoryPlayer.setVisible(false);
-		
-		// Ajout des filtres pour espionner les mouvements pour bouger le panel Container SVG
-		ContainerSVG.addEventFilter(MouseEvent.MOUSE_PRESSED, translateNode.getOnMousePressedEventHandler());
-		ContainerSVG.addEventFilter(MouseEvent.MOUSE_DRAGGED, translateNode.getOnMouseDraggedEventHandler());		
+		if (!debutPartie) {
+			Info_Territory_Attack.setVisible(false);
+			Info_Territory.setVisible(false);
+			Info_TerritoryPlayer.setVisible(false);
+			IconPlayers.setVisible(false);
+			ContainerSVG.setVisible(false);
+			video.setVisible(true);
+			
+			MediaPlayer player = new MediaPlayer(new Media(getClass().getResource("backgroundLaunch.mp4").toExternalForm()));
+			player.setVolume(0.1);
+	        MediaView mediaView = new MediaView(player);
+	        mediaView.setFitHeight(1080);
+	        mediaView.setFitWidth(1920);
+	        mediaView.setPreserveRatio(true);
+	        video.getChildren().add(mediaView);
+	        
+	        player.setOnEndOfMedia(new Runnable() {
+				public void run() {
+					player.seek(Duration.ZERO);
+				}
+			});
+	        
+	        player.play();
+		}
+		else {
+			video.setVisible(false);
+			TranslateNode translateNode = new TranslateNode(ContainerSVG);
+
+			// Initialisation des musiques
+			String musicFile = "src/ost/ost1.mp3";
+
+			Media sound = new Media(new File(musicFile).toURI().toString());
+			MediaPlayer mediaPlayer = new MediaPlayer(sound);
+			mediaPlayer.setOnEndOfMedia(new Runnable() {
+				public void run() {
+					mediaPlayer.seek(Duration.ZERO);
+				}
+			});
+			mediaPlayer.setVolume(0);
+			sliderVolumeOST.setValue(0);
+			mediaPlayer.play();
+
+			sliderVolumeOST.valueProperty().addListener((observable, oldValue, newValue) -> {
+				mediaPlayer.setVolume((double) newValue);
+			});
+
+			// Placement du menu d'informations du joueur actuel
+			Info_TerritoryPlayer.setLayoutX((double) BodyMap.getPrefWidth() - Info_TerritoryPlayer.getPrefWidth());
+
+			// Initialisation de l'affichage des menus
+			Info_Territory.setLayoutX(0);
+			Info_Territory_Attack.setLayoutX(0);
+			Info_Territory.setVisible(false);
+			Info_Territory_Attack.setVisible(false);
+			Info_TerritoryPlayer.setVisible(false);
+
+			// Ajout des filtres pour espionner les mouvements pour bouger le panel
+			// Container SVG
+			ContainerSVG.addEventFilter(MouseEvent.MOUSE_PRESSED, translateNode.getOnMousePressedEventHandler());
+			ContainerSVG.addEventFilter(MouseEvent.MOUSE_DRAGGED, translateNode.getOnMouseDraggedEventHandler());
+		}	
 	}
-	
+
 	@FXML
-	private void handleMouseAction(MouseEvent event) {			
+	private void handleMouseAction(MouseEvent event) {
+		debutPartie=!debutPartie;
 		// On récupère l'id du territoire
 		String idFromClick;
 		System.out.println(event.getPickResult().getIntersectedNode().getId()); // https://stackoverflow.com/questions/24302636/better-way-for-getting-id-of-the-clicked-object-in-javafx-controller
-		idFromClick = event.getPickResult().getIntersectedNode().getId();	
+		idFromClick = event.getPickResult().getIntersectedNode().getId();
 		// On split la chaîne de caractère pour ne garder que le prefix
 		String[] tokens = idFromClick.split("__");
 		String idFromClickPrefix = tokens[0];
-		
-		// On split la chaîne de caractère à nouveau pour supprimer tous les "_" par des " "
-		String[] tokens2 = idFromClickPrefix.split("_");
-		String idFromClickPrefixFinal =  "";
-		// On vérifique la chaîne n'est pas nulle (pas de "_" dans la chaîne avant de split)
-		if (tokens2.length >= 1) {
-			for (String t : tokens2)
-				idFromClickPrefixFinal += t + " ";
-		}
 
-		// On change le texte en fonction du territoire cliqué
-		Territory_NameTerritory.setText(idFromClickPrefixFinal);
-		
-		// On change l'image en fonction du territoire cliqué
-		Territory_Picture.setStyle("-fx-background-image: url(\"resources/img/country/"+idFromClickPrefix+".jpg\");-fx-background-size: 440 152;-fx-background-position: center;");	
-		
+		setInfoTerritory(idFromClickPrefix);
+
 		// On active le panel avec transition
 		if (!Info_Territory.isVisible()) {
 			System.out.println(" Panel ouvert ");
-			
 			Info_Territory.setVisible(true);
 			Info_Territory.setLayoutX(0);
-			isPanelOpened = true;
-			//transitionDisplayMenu(Info_Territory, true);
-			//isAnimationEnded = false;
-		}	
-		/*else if (Info_Territory.isVisible()) {
-			System.out.println(" Panel fermé ");
-			Info_Territory.setVisible(false);			
-		}*/
+			event.getPickResult().getIntersectedNode()
+					.setStyle("-fx-effect:innershadow(one-pass-box, #a3a3a3, 50, 0, 0, 0);");
+		}
+
+		// Si le territoire cliqué appartient au joueur, que le panel des territoires du
+		// joueur actuel est ouvert
+		// et que l'on est en renforts, alors on positionne le Scroll Pane
+		if (Info_TerritoryPlayer.isVisible() && renfort) {
+			int positionTerritorySelected = 4;
+			int nbTerritoryOfPlayer = 15; // A COMPLETER DYNAMIQUEMENT
+			ScrollPaneAddBackups.setVvalue((double) positionTerritorySelected / nbTerritoryOfPlayer - 0.01);
+		} else {
+			ScrollPaneAddBackups.setVvalue(0);
+		}
 	}
-	
+
+	public void setInfoTerritory(String idSelectedTerritory) {
+		// On split la chaîne de caractère à nouveau pour supprimer tous les "_" par des
+		// " "
+		String[] tokens2 = idSelectedTerritory.split("_");
+		String idFromClickPrefixFinal = "";
+		// On vérifique la chaîne n'est pas nulle (pas de "_" dans la chaîne avant de
+		// split)
+		if (tokens2.length >= 1) {
+			int i = 1;
+			for (String t : tokens2) {
+				if (i >= tokens2.length) {
+					idFromClickPrefixFinal += t;
+				} else {
+					idFromClickPrefixFinal += t + " ";
+				}
+				i++;
+			}
+		}
+
+		// On change le texte en fonction du territoire cliqué
+		Info_Territory_NameTerritory.setText(idFromClickPrefixFinal);
+
+		// On change l'image en fonction du territoire cliqué
+		Info_Territory_Picture.setStyle("-fx-background-image: url(\"resources/img/country/" + idSelectedTerritory
+				+ ".jpg\");-fx-background-size: 440 152;-fx-background-position: center;");
+
+	}
+
 	/**
-     * Event appelé en cas de Scroll dans le pane contenant les SVG
-     */
+	 * Event appelé en cas de Scroll dans le pane contenant les SVG
+	 */
 	@FXML
 	private void onScrollEventHandler(ScrollEvent event) {
-		renfort=!renfort;
 		AnimatedZoomOperator zoomOperator = new AnimatedZoomOperator();
 		double zoomFactor = 2;
-		
-		// Si molette vers le bas, on a un dezoom 
-		if (event.getDeltaY() < 0) {	
-			//if (ContainerSVG.getScaleX() >= 1)
+
+		// Si molette vers le bas, on a un dezoom
+		if (event.getDeltaY() < 0) {
+			// if (ContainerSVG.getScaleX() >= 1)
 			// On prend l'inverse pour avoir un facteur < 1
-			zoomFactor = 1 / zoomFactor;   
-        }
+			zoomFactor = 1 / zoomFactor;
+		}
 		// Si molette vers le haut, on zoom
 		else if (event.getDeltaY() > 0) {
 			zoomOperator.zoom(ContainerSVG, zoomFactor, event.getSceneX(), event.getSceneY());
@@ -189,197 +266,185 @@ public class FXMLDocumentController implements Initializable {
 		// Permet de dézoomer en cas de deux zooms trop rapides
 		if (ContainerSVG.getScaleX() > 1)
 			zoomOperator.zoom(ContainerSVG, zoomFactor, event.getSceneX(), event.getSceneY());
-       
+
 	}
-	
+
 	/**
-     * Event appelé pour afficher le menu d'attaque
-     */
+	 * Event appelé pour afficher le menu d'attaque
+	 */
 	@FXML
 	private void handleButtonAttackAction(ActionEvent event) {
 		Info_Territory_Attack.setVisible(true);
 	}
-	
-	private void transitionDisplayMenu(StackPane stackpane, boolean direction) {
-		TranslateTransition translateTransition = new TranslateTransition(); 
-		
-		/*stackpane.setVisible(true);
-		
-		stackpane.setLayoutX(-500);
-	      
-	    //Setting the duration of the transition  
-		translateTransition.setDuration(Duration.millis(250)); 
-	      
-	    //Setting the node for the transition 
-		translateTransition.setNode(stackpane); 
-	      
-	    //Setting the value of the transition along the x axis. 
-		translateTransition.setByX(500); 
-	      
-	    //Setting the cycle count for the transition Pas besoin de répéter
-		//translateTransition_Info_Territory.setCycleCount(2); 
-	      
-	    //Setting auto reverse value to false 
-		//translateTransition_Info_Territory.setAutoReverse(false);*/
-		
-		
-		//stackpane.setVisible(true);
-		translateTransition.setNode(stackpane); 
-		translateTransition.setDuration(Duration.millis(250)); 	
-		
-		if (!direction) {		
-			translateTransition.setByX(-500); 		
-		}
-		else {			
-			stackpane.setLayoutX(-500);
-			translateTransition.setByX(500);
-		}
-		
-	    //Playing the animation 
-		translateTransition.play(); 
-		
-		translateTransition.setOnFinished(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-            	isAnimationEnded = true;          	
-            	if(!direction) {
-            		stackpane.setVisible(false);
-            	}
-            }
-		});		
 
-	}
-	
-	private void transitionHideMenu(StackPane stackpane, TranslateTransition translatetransition) {
-		/*translatetransition.setDuration(Duration.millis(250)); 	 
-		translatetransition.setNode(stackpane); 
-		translatetransition.setByX(-500);
-		translatetransition.play();	*/
-	}
-	
 	/**
-     * Permet de centrer la carte si l'utilsateur a perdu la carte, car les développeurs sont incompétents
-     */
+	 * Permet de centrer la carte si l'utilsateur a perdu la carte, car les
+	 * développeurs sont incompétents
+	 */
 	@FXML
 	private void onActionCenterMapButtonHandler(ActionEvent event) {
 		ContainerSVG.setTranslateX(0);
 		ContainerSVG.setTranslateY(0);
 	}
-	
+
 	/**
-     * Fermer le panel en cas de clic sur la croix (haut à gauche)
-     */
+	 * Fermer le panel en cas de clic sur la croix (haut à gauche)
+	 */
 	@FXML
-	private void onActionPaneCloseHandler(ActionEvent event) {	
-		Node node = (Node) event.getSource(); 
+	private void onActionPaneCloseHandler(ActionEvent event) {
+		Node node = (Node) event.getSource();
 
 		// Taille fixe, l'UI ne changera pas
-		Node newNode = node.getParent().getParent();	
+		Node newNode = node.getParent().getParent();
 		newNode.setVisible(false);
 
-		// Si c'est le panel d'informations du joueur, on réaffiche l'icône pour voir les informations du joueur
-		if (Objects.equals((String)node.getId(), new String("InfoTerritoryPlayer_CloseButton")))
+		// Si c'est le panel d'informations du joueur, on réaffiche l'icône pour voir
+		// les informations du joueur
+		if (Objects.equals((String) node.getId(), new String("InfoTerritoryPlayer_CloseButton")))
 			IconPlayers.setVisible(true);
+		else if (Objects.equals((String) node.getId(), new String("InfoTerritory_CloseButton")))
+			Info_Territory_Attack.setVisible(false);
 	}
-	
+
 	@FXML
 	private void onMouseClickedPaneOpenInfoPlayerHandler(MouseEvent event) {
-		final int row = 9;
-		double defaultHeight = Info_TerritoryPlayer.getPrefHeight();
-		Node node = (Node) event.getSource();  
+		// Position dans le Grid Pane du Scroll Pane
+		final int row = 10;
+		Node node = (Node) event.getSource();
 		Info_TerritoryPlayer.setVisible(true);
 		System.out.println(event.getPickResult().getIntersectedNode().getId());
-		node.getParent().setVisible(false);	
-		
-		//GridPaneAddBackups.getChildren().add(GridPaneAddBackups);
-		
-		if (!ScrollPaneAddBackups.isVisible() && renfort) {
-			AfficherMenuRenforts afficherMenuRenforts = new AfficherMenuRenforts(Info_TerritoryPlayer, ScrollPaneAddBackups, Info_TerritoryPlayer_GridPane);
+		// On rend invisible l'Anchor Pane contenant les icônes des joueurs
+		node.getParent().setVisible(false);
+
+		AfficherMenuRenforts afficherMenuRenforts = new AfficherMenuRenforts(AfficherMenuRenforts.controller = this,
+				Info_TerritoryPlayer, ScrollPaneAddBackups, Info_TerritoryPlayer_GridPane, Body.getPrefHeight());
+
+		// Si le joueur actuel clique sur son icône et que c'est le moment des renforts,
+		// il peut en ajouter
+		// et voir un résumé de toutes ses unités ainsi que sa mission secrète
+		if (!ScrollPaneAddBackups.isVisible() && renfort) { // AJOUTER VERIF POUR MISSION SECRETE
 			afficherMenuRenforts.DisplayInformations();
-			
-			//GridPaneAddBackupsManual.setStyle("-fx-grid-lines-visible: true;");
-		}
-		else {
+			// GridPaneAddBackupsManual.setStyle("-fx-grid-lines-visible: true;");
+		} else {
 			ScrollPaneAddBackups.setVisible(false);
-			deleteRow(Info_TerritoryPlayer_GridPane,row);
-			//Info_TerritoryPlayer.setPrefHeight(550);
-			//System.out.println(Info_TerritoryPlayer_GridPane.getRowIndex(ScrollPaneAddBackups));
+			AfficherMenuRenforts.deleteRow(Info_TerritoryPlayer_GridPane, row);
+			Info_TerritoryPlayer.setPrefHeight(Info_Territory.getPrefHeight());
+			// System.out.println(Info_TerritoryPlayer_GridPane.getRowIndex(ScrollPaneAddBackups));
 		}
 	}
-	
-	static void deleteRow(GridPane grid, final int row) {
-	    Set<Node> deleteNodes = new HashSet<>();
-	    for (Node child : grid.getChildren()) {
-	        // get index from child
-	        Integer rowIndex = GridPane.getRowIndex(child);
 
-	        // handle null values for index=0
-	        int r = rowIndex == null ? 0 : rowIndex;
-
-	        if (r > row) {
-	            // decrement rows for rows after the deleted row
-	            GridPane.setRowIndex(child, r-1);
-	        } else if (r == row) {
-	            // collect matching rows for deletion
-	            deleteNodes.add(child);
-	        }
-	    }
-
-	    // remove nodes from row
-	    grid.getChildren().removeAll(deleteNodes);
-	}
-	
-	
 	/**
-     * Event permettant d'appliquer un effet de hover sur un ou plusieurs territoires ayant le même prefix
-     * NB : Appliquer l'effet directement dans le CSS était impossible sur plusieurs territoires
-     */
+	 * Event permettant d'appliquer un effet de hover sur un ou plusieurs
+	 * territoires ayant le même prefix NB : Appliquer l'effet directement dans le
+	 * CSS était impossible sur plusieurs territoires
+	 */
 	@FXML
 	private void onMouseEnteredTerritoryHandler(MouseEvent event) {
-		Node node = (Node) event.getSource();  
+		Node node = (Node) event.getSource();
 		
-		// Récupération une liste de tous les SVG (territoires) contenus dans ContainerSVG
+		// On récupère l'id du territoire, qui est sauvegardé pour la fermeture (event onMouseExitedTerritoryHandler)
+		idMouseEnteredTerritory = node.getId();
+
+		// Récupération une liste de tous les SVG (territoires) contenus dans
+		// ContainerSVG
 		ObservableList<Node> ListNodes = ContainerSVG.getChildren();
-		
+
 		// Split du nom du territoire cliqué pour ne récupérer que le prefix
 		String[] tokens = node.getId().split("__");
 		String prefix = tokens[0];
-		
-		/*for (String t : tokens)
-			  System.out.println(t);*/
-		
-		// Pour chaque territoire, si l'id n'est pas nul (décor) et que le prefix du territoire testé est égal
+
+		/*
+		 * for (String t : tokens) System.out.println(t);
+		 */
+
+		for (Node n : ListNodes) {
+			n.setStyle("");
+		}
+
+		// Pour chaque territoire, si l'id n'est pas nul (décor) et que le prefix du
+		// territoire testé est égal
 		// au prefix du territoire cliqué, on applique l'effet CSS de hover
-		for (Node n:ListNodes) {
-			if (n.getId()!=null) {
+		for (Node n : ListNodes) {
+			if (n.getId() != null) {
 				String[] tokensn = n.getId().split("__");
 				String prefixn = tokensn[0];
 				if (prefixn.equals(prefix)) {
 					n.setStyle("-fx-effect:innershadow(one-pass-box, #a3a3a3, 50, 0, 0, 0);");
 				}
 			}
-		}	
+		}
 	}
-	
+
 	/**
-     * Event permettant d'annuler l'effet CSS de hover
-     */
+	 * Event permettant d'annuler l'effet CSS de hover, en le laissant si la fenêtre correspondant à ce territoire 
+	 * est ouverte
+	 */
 	@FXML
 	private void onMouseExitedTerritoryHandler(MouseEvent event) {
 		ObservableList<Node> ListNodes = ContainerSVG.getChildren();
+		Node node = (Node) event.getSource();
+		
+		if (idMouseEnteredTerritory != null) {
+			// Split du nom du territoire cliqué pour ne récupérer que le prefix
+			String[] tokens = node.getId().split("__");
+			String prefix = tokens[0];
 
-		for (Node n:ListNodes)
-			n.setStyle("");
+			if (Info_Territory.isVisible()) {
+				for (Node n : ListNodes) {
+					if (n.getId() != null) {
+						String[] tokensn = n.getId().split("__");
+						String prefixn = tokensn[0];
+						// On remplace les " " par des "_" pour la comparaison
+						if (prefixn.equals(Info_Territory_NameTerritory.getText().replace(" ", "_"))) {
+							System.out.println(prefixn + "*" + Info_Territory_NameTerritory.getText());
+							n.setStyle("-fx-effect:innershadow(one-pass-box, #a3a3a3, 50, 0, 0, 0);");
+						} else {
+							n.setStyle("");
+						}
+					}
+				}
+			} else {
+				for (Node n : ListNodes)
+					n.setStyle("");
+			}
+		}
 	}
-	
+
 	/**
-     * Event appelé en cas d'appui sur "Quitter le jeu" ou raccourci "Ctrl + A"
-     */
+	 * Event appelé en cas d'appui sur "Quitter le jeu" ou raccourci "Ctrl + A"
+	 */
 	@FXML
 	private void closeGameAction() {
-	    Platform.exit();
+		Platform.exit();
 	}
-	
+
 	public void setPartie(Partie p) {
-		this.partie=p;
+		this.partie = p;
+	}
+
+	public AnchorPane getContainerSVG() {
+		return this.ContainerSVG;
+	}
+
+	public StackPane getInfoTerritory() {
+		return this.Info_Territory;
+	}
+
+	public void setTerritorySelectedBackup(boolean selected) {
+		this.isTerritorySelectedBackup = selected;
+	}
+
+	public static ArrayList<Node> getAllNodes(Parent root) {
+		ArrayList<Node> nodes = new ArrayList<Node>();
+		addAllDescendents(root, nodes);
+		return nodes;
+	}
+
+	private static void addAllDescendents(Parent parent, ArrayList<Node> nodes) {
+		for (Node node : parent.getChildrenUnmodifiable()) {
+			nodes.add(node);
+			if (node instanceof Parent)
+				addAllDescendents((Parent) node, nodes);
+		}
 	}
 }
