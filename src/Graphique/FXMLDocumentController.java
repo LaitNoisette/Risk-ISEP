@@ -22,6 +22,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Camera;
 import javafx.scene.Node;
 import javafx.scene.PerspectiveCamera;
@@ -31,6 +32,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Separator;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -39,9 +41,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -49,6 +53,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -70,11 +75,12 @@ public class FXMLDocumentController implements Initializable {
 	@FXML private GridPane Grid_Info_Territory, Info_TerritoryPlayer_GridPane;
 	@FXML private Button InfoTerritoryPlayer_CloseButton, InfoTerritory_CloseButton, InfoTerritoryAttack_CloseButton;
 	@FXML private GridPane IconPlayers;
+	@FXML private GridPane GridPaneAddBackups;
 	
 	private boolean isAnimationEnded = false;
 	private boolean isPanelOpened = false;
 
-	private boolean renfort=true;
+	private boolean renfort=false;
 	
 	private Partie partie;
 	public static Partie partieController;
@@ -165,6 +171,7 @@ public class FXMLDocumentController implements Initializable {
      */
 	@FXML
 	private void onScrollEventHandler(ScrollEvent event) {
+		renfort=!renfort;
 		AnimatedZoomOperator zoomOperator = new AnimatedZoomOperator();
 		double zoomFactor = 2;
 		
@@ -277,22 +284,26 @@ public class FXMLDocumentController implements Initializable {
 	@FXML
 	private void onMouseClickedPaneOpenInfoPlayerHandler(MouseEvent event) {
 		final int row = 9;
+		double defaultHeight = Info_TerritoryPlayer.getPrefHeight();
 		Node node = (Node) event.getSource();  
 		Info_TerritoryPlayer.setVisible(true);
 		System.out.println(event.getPickResult().getIntersectedNode().getId());
-		node.getParent().setVisible(false);
-		if (renfort) 
-			ScrollPaneAddBackups.setVisible(true);
+		node.getParent().setVisible(false);	
+		
+		//GridPaneAddBackups.getChildren().add(GridPaneAddBackups);
+		
+		if (!ScrollPaneAddBackups.isVisible() && renfort) {
+			AfficherMenuRenforts afficherMenuRenforts = new AfficherMenuRenforts(Info_TerritoryPlayer, ScrollPaneAddBackups, Info_TerritoryPlayer_GridPane);
+			afficherMenuRenforts.DisplayInformations();
+			
+			//GridPaneAddBackupsManual.setStyle("-fx-grid-lines-visible: true;");
+		}
 		else {
 			ScrollPaneAddBackups.setVisible(false);
-			
-			//Info_TerritoryPlayer.getChildren().clear();
 			deleteRow(Info_TerritoryPlayer_GridPane,row);
-			//Info_TerritoryPlayer.getChildren().lastIndexOf(Info_TerritoryPlayer);
-			//Info_TerritoryPlayer.getChildren().remove(ScrollPaneAddBackups);
-			Info_TerritoryPlayer.setPrefHeight(Info_Territory_Attack.getLayoutY());
+			//Info_TerritoryPlayer.setPrefHeight(550);
+			//System.out.println(Info_TerritoryPlayer_GridPane.getRowIndex(ScrollPaneAddBackups));
 		}
-			
 	}
 	
 	static void deleteRow(GridPane grid, final int row) {
@@ -317,17 +328,27 @@ public class FXMLDocumentController implements Initializable {
 	    grid.getChildren().removeAll(deleteNodes);
 	}
 	
+	
+	/**
+     * Event permettant d'appliquer un effet de hover sur un ou plusieurs territoires ayant le même prefix
+     * NB : Appliquer l'effet directement dans le CSS était impossible sur plusieurs territoires
+     */
 	@FXML
 	private void onMouseEnteredTerritoryHandler(MouseEvent event) {
 		Node node = (Node) event.getSource();  
+		
+		// Récupération une liste de tous les SVG (territoires) contenus dans ContainerSVG
 		ObservableList<Node> ListNodes = ContainerSVG.getChildren();
 		
+		// Split du nom du territoire cliqué pour ne récupérer que le prefix
 		String[] tokens = node.getId().split("__");
 		String prefix = tokens[0];
 		
 		/*for (String t : tokens)
 			  System.out.println(t);*/
 		
+		// Pour chaque territoire, si l'id n'est pas nul (décor) et que le prefix du territoire testé est égal
+		// au prefix du territoire cliqué, on applique l'effet CSS de hover
 		for (Node n:ListNodes) {
 			if (n.getId()!=null) {
 				String[] tokensn = n.getId().split("__");
@@ -339,13 +360,15 @@ public class FXMLDocumentController implements Initializable {
 		}	
 	}
 	
+	/**
+     * Event permettant d'annuler l'effet CSS de hover
+     */
 	@FXML
 	private void onMouseExitedTerritoryHandler(MouseEvent event) {
 		ObservableList<Node> ListNodes = ContainerSVG.getChildren();
 
 		for (Node n:ListNodes)
 			n.setStyle("");
-		
 	}
 	
 	/**

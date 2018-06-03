@@ -113,9 +113,8 @@
 	-fx-padding:0 20 0 20;
 }
 
-.SeparatorInfoPlayer *.line{
+.SeparatorInfoPlayer .line{
 	-fx-border-color: #dedebc;
-	-fx-padding:0 10 0 10;
 }
 
 .buttonAdd {
@@ -134,4 +133,23 @@
   -fx-font-size: 0;
   -fx-text-fill: #dedebc;
   -fx-cursor: hand;
+}
+
+.firstRowAddUnityLabel, .AddUnityLabel {
+	-fx-fill: #dedebc;
+	-fx-font: 15px "Segoe UI";
+}
+
+.firstRowAddUnityNumber {
+	-fx-text-alignment: center;
+}
+
+.firstRowAddUnityLabel {
+	-fx-font-weight: Bold;
+}
+
+.buttonPlusAddUnity {
+	-fx-fill: #dedebc;
+	-fx-font: 36px "Segoe UI";
+	-fx-cursor: hand;
 }

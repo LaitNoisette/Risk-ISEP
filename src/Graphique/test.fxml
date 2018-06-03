@@ -213,7 +213,7 @@
                               <Font name="Segoe UI Bold" size="29.0" />
                            </font>
                         </Text>
-                        <Text fx:id="Territory_NameRegion1" fill="#dedebc" strokeType="OUTSIDE" strokeWidth="0.0" text="Territoires contrôlés : " wrappingWidth="242.6708984375" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+                        <Text fx:id="Territory_NameRegion1" fill="#dedebc" strokeType="OUTSIDE" strokeWidth="0.0" text="Territoires contrôlés : [X] " wrappingWidth="242.6708984375" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
                            <font>
                               <Font name="Segoe UI" size="20.0" />
                            </font>
@@ -254,7 +254,7 @@
                               <Font name="Segoe UI" size="15.0" />
                            </font>
                         </Text>
-                        <Text fx:id="Territory_NameRegion11" fill="#dedebc" strokeType="OUTSIDE" strokeWidth="0.0" text="Régions contrôlées : " wrappingWidth="259.6708984375" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+                        <Text fx:id="Territory_NameRegion11" fill="#dedebc" strokeType="OUTSIDE" strokeWidth="0.0" text="Régions contrôlées : [X]" wrappingWidth="259.6708984375" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
                            <font>
                               <Font name="Segoe UI" size="20.0" />
                            </font>
@@ -269,18 +269,17 @@
                         </Text>
                         <ScrollPane fx:id="ScrollPaneAddBackups" hbarPolicy="NEVER" prefHeight="527.0" prefWidth="398.0" styleClass="PlayerListTerritory" vbarPolicy="ALWAYS" GridPane.columnSpan="3" GridPane.hgrow="NEVER" GridPane.rowIndex="9" GridPane.vgrow="NEVER">
                            <content>
-                              <GridPane id="GridListTerritory" prefHeight="245.0" prefWidth="377.0">
+                              <GridPane id="GridListTerritory" fx:id="GridPaneAddBackups" prefHeight="202.0" prefWidth="377.0">
                                 <columnConstraints>
                                   <ColumnConstraints hgrow="NEVER" maxWidth="291.0" minWidth="10.0" prefWidth="284.0" />
                                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="119.0" minWidth="10.0" prefWidth="20.0" />
                                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="73.0" />
                                 </columnConstraints>
                                 <rowConstraints>
-                                  <RowConstraints maxHeight="130.0" minHeight="0.0" prefHeight="40.0" vgrow="NEVER" />
+                                  <RowConstraints maxHeight="130.0" minHeight="0.0" prefHeight="40.0" valignment="CENTER" vgrow="NEVER" />
                                   <RowConstraints maxHeight="130.0" minHeight="0.0" prefHeight="13.0" vgrow="NEVER" />
                                     <RowConstraints maxHeight="35.0" minHeight="35.0" prefHeight="35.0" vgrow="NEVER" />
                                   <RowConstraints maxHeight="35.0" minHeight="35.0" prefHeight="35.0" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="35.0" minHeight="35.0" prefHeight="35.0" vgrow="SOMETIMES" />
                                     <RowConstraints maxHeight="35.0" minHeight="35.0" prefHeight="35.0" vgrow="SOMETIMES" />
                                     <RowConstraints maxHeight="35.0" minHeight="35.0" prefHeight="35.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
@@ -362,7 +361,7 @@
                                     </Text>
                                     <Text fx:id="NTR1_button1" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="buttonAdd" text="+" textAlignment="CENTER" wrappingWidth="35.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                                        <font>
-                                          <Font size="36.0" />
+                                          <Font name="Segoe UI" size="36.0" />
                                        </font>
                                     </Text>
                                  </children>
