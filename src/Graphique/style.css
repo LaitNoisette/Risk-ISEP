@@ -1,0 +1,155 @@
+#BorderPane {
+	-fx-background-image: url("BackgroundGame.jpg");
+}
+
+.header, .menuColor {
+	/*-fx-background-color : #21323C;*/
+	-fx-background-color: rgba(33,50,60,0.97);
+	/*-fx-opacity : 0.2;*/
+}
+
+/*.Territory:hover {
+ 	-fx-effect:innershadow(one-pass-box, #a3a3a3, 50, 0, 0, 0);
+}*/
+
+#ContainerSVG {
+	-fx-background-image: url("background_ocean.gif");
+	-fx-background-repeat: repeat;
+}
+
+.button_header{
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-background-color: transparent;
+    -fx-font-family:"TW Century MT", Helvetica, Arial, sans-serif;
+    -fx-font-size: 1.2em; /* 12 */
+    -fx-text-fill: #FFFFFF;
+}
+.button_header .label {
+	-fx-text-fill: #FFFFFF;
+}
+
+.menuItem {
+	-fx-background-color : #7D7E76;
+	-fx-border-color : #7D7E76;
+	/*-fx-padding : 0;*/
+}
+
+.menuItem .label {
+	-fx-background-color : #7D7E76;
+	-fx-border-width : 0;
+}
+
+#InfoTerritory {
+	/*-fx-border-color : #7D7E76;*/
+	-fx-border-color : #7D7E76;
+	-fx-border-width : 3,3,0,0;
+	-fx-border-insets : 8,8,8,8;
+}
+
+#PictureTerritory {
+	-fx-background-color : #FFFFFF;
+	-fx-border-color : #7D7E76;
+	-fx-border-width : 3,3,0,0;
+	-fx-border-style: solid none solid none;
+}
+
+.IconCircleUnity{
+	-fx-fill : #FFFFFF;
+	-fx-stroke : #7D7E76;
+	-fx-stroke-width : 3,3,0,0;
+}
+
+.CirclePlayer {
+	-fx-fill : black;
+	-fx-stroke : #7D7E76;
+	-fx-stroke-width : 3,3,0,0;	
+}
+
+.textCirclePlayer {
+	-fx-fill: white;
+	-fx-font-size: 25px;
+	-fx-text-alignment: center;
+}
+
+.PlayerListTerritory > .viewport {
+   -fx-background-color: transparent;
+}
+
+.PlayerListTerritory {
+	-fx-border-color : #7D7E76;
+	-fx-border-width : 3,3,0,0;
+	-fx-border-style: solid none none none;
+    -fx-background-color: transparent;
+}
+
+.PlayerListTerritory .scroll-bar:vertical .track {
+   -fx-background-radius: 2em;
+	-fx-border-radius:2em;
+}
+
+.PlayerListTerritory .scroll-bar:vertical {
+   -fx-background-color: #21323C;
+   -fx-padding:10 0 10 0;
+}
+
+.PlayerListTerritory .scroll-bar:vertical .thumb {
+   -fx-background-radius: 10;
+   -fx-background-insets: 5;
+   -fx-background-color: #dedebc;
+}
+
+
+.PlayerListTerritory .increment-button, .PlayerListTerritory .decrement-button, .PlayerListTerritory .increment-arrow, .PlayerListTerritory .decrement-arrow {
+	-fx-padding:0 10 0 0;
+}
+
+#GridListTerritory {
+	-fx-grid-lines-visible: false;
+}
+
+.SeparatorInfoPlayer {
+	-fx-padding:0 20 0 20;
+}
+
+.SeparatorInfoPlayer .line{
+	-fx-border-color: #dedebc;
+}
+
+.buttonAdd {
+	-fx-fill: #dedebc;
+	-fx-cursor: hand;
+}
+
+.buttonClose {
+  -fx-background-color: #dedebc, #21323C;
+  -fx-background-radius: 16.4, 15;
+  -fx-background-insets: -1.4, 0;
+  -fx-border-radius: 15;
+  -fx-border-width: 2;
+  -fx-border-color: dimgrey;
+  -fx-padding: 0;
+  -fx-font-size: 0;
+  -fx-text-fill: #dedebc;
+  -fx-cursor: hand;
+}
+
+.firstRowAddUnityLabel, .AddUnityLabel {
+	-fx-fill: #dedebc;
+	-fx-font: 15px "Segoe UI";
+}
+
+.firstRowAddUnityNumber {
+	-fx-text-alignment: center;
+}
+
+.firstRowAddUnityLabel {
+	-fx-font-weight: Bold;
+}
+
+.buttonPlusAddUnity {
+	-fx-fill: #dedebc;
+	-fx-font: 36px "Segoe UI";
+	-fx-cursor: hand;
+}

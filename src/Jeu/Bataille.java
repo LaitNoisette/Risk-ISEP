@@ -118,7 +118,6 @@ public class Bataille {
 			}
 		}
 		return false;
-
 	}
 
 	public void jouerBataille() {
