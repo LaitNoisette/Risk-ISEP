@@ -5,6 +5,7 @@ public class Unite {
 	private int cout;
 	private int puissanceMin;
 	private int puissanceMax;
+	private int puissanceBataille=0;
 	private int prioriteATT;
 	private int prioriteDEF;
 	//Reference du nombre de deplacement
@@ -25,6 +26,22 @@ public class Unite {
 	
 	public String getNom() {
 		return this.getNom();
+	}
+	
+	public int getPuissanceMin() {
+		return this.puissanceMin;
+	}
+	
+	public int getPuissanceMax() {
+		return this.puissanceMax;
+	}
+	
+	public void setPuissanceBataille(int puissanceBataille) {
+		this.puissanceBataille=puissanceBataille;
+	}
+	
+	public void reinitialiserPuissanceBataille() {
+		this.puissanceBataille=this.puissanceMin;
 	}
 	
 	public void reinitialiserDeplacement() {

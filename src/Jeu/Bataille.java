@@ -2,10 +2,13 @@ package Jeu;
 
 import java.util.Iterator;
 import java.util.Set;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Bataille {
 
 	private Territoire territoireDEF;
+	private Unite def1=null;
+	private Unite def2=null;
 
 	// private Joueur joueurAtt;
 	private Territoire territoireATT;
@@ -29,7 +32,7 @@ public class Bataille {
 
 	// Gestion des unités de l'attaquant en fonction
 	public void ajouterUniteAttaque(String typeUnite) {
-		if (this.choixTypeUniteDisponible(typeUnite)) {
+		if (territoireATT.choixTypeUniteDisponible(typeUnite)) {
 
 			Set<Unite> listeUnite = territoireATT.getListeTypeUnite(typeUnite);
 			// Boolean n'ajoutant qu'une unite
@@ -64,10 +67,163 @@ public class Bataille {
 		}
 
 	}
+	
+	
+	public void ajouterUniteDefense() {
+		//Choix unite defense 1
+		//Cavalier
+		if(territoireDEF.choixTypeUniteDisponible("Cavalier")) {
+			Set<Unite> listeUnite = territoireDEF.getListeTypeUnite("Cavalier");
+			// Boolean n'ajoutant qu'une unite
+			boolean ajout1UniteEnCours = true;
+			// Unite ajoute en attaque
+			if (listeUnite != null) {
+				Iterator<Unite> listeUniteIterator = listeUnite.iterator();
+					while (listeUniteIterator.hasNext()) {
+						Unite u = listeUniteIterator.next();
+						
+							if (this.def1 == null && ajout1UniteEnCours) {
+								this.def1=u;
+								listeUnite.remove(u);
+								listeUniteIterator.remove();
+								ajout1UniteEnCours = false;
+							} 
+						
+					}
+				
+			}
+		}
+		//Canon
+		else if (territoireDEF.choixTypeUniteDisponible("Canon")) {
+			Set<Unite> listeUnite = territoireDEF.getListeTypeUnite("Canon");
+			// Boolean n'ajoutant qu'une unite
+			boolean ajout1UniteEnCours = true;
+			// Unite ajoute en attaque
+			if (listeUnite != null) {
+				Iterator<Unite> listeUniteIterator = listeUnite.iterator();
+					while (listeUniteIterator.hasNext()) {
+						Unite u = listeUniteIterator.next();
+						
+							if (this.def1 == null && ajout1UniteEnCours) {
+								this.def1=u;
+								listeUnite.remove(u);
+								listeUniteIterator.remove();
+								ajout1UniteEnCours = false;
+							}
+						
+					}
+				
+			}
+		}
+		//Soldat
+		else if(territoireDEF.choixTypeUniteDisponible("Soldat")){
+			Set<Unite> listeUnite = territoireDEF.getListeTypeUnite("Soldat");
+			// Boolean n'ajoutant qu'une unite
+			boolean ajout1UniteEnCours = true;
+			// Unite ajoute en attaque
+			if (listeUnite != null) {
+				Iterator<Unite> listeUniteIterator = listeUnite.iterator();
+					while (listeUniteIterator.hasNext()) {
+						Unite u = listeUniteIterator.next();
+						
+							if (this.def1 == null && ajout1UniteEnCours) {
+								this.def1=u;
+								listeUnite.remove(u);
+								listeUniteIterator.remove();
+								ajout1UniteEnCours = false;
+							} 
+						
+					}
+				
+			}
+		}
+		
+		//Choix unite defense 2
+		//Cavalier
+				if(territoireDEF.choixTypeUniteDisponible("Cavalier")) {
+					Set<Unite> listeUnite = territoireDEF.getListeTypeUnite("Cavalier");
+					// Boolean n'ajoutant qu'une unite
+					boolean ajout1UniteEnCours = true;
+					// Unite ajoute en attaque
+					if (listeUnite != null) {
+						Iterator<Unite> listeUniteIterator = listeUnite.iterator();
+							while (listeUniteIterator.hasNext()) {
+								Unite u = listeUniteIterator.next();
+								
+									if (this.def2 == null && ajout1UniteEnCours) {
+										this.def2=u;
+										listeUnite.remove(u);
+										listeUniteIterator.remove();
+										ajout1UniteEnCours = false;
+									} 
+								
+							}
+						
+					}
+				}
+				//Canon
+				else if (territoireDEF.choixTypeUniteDisponible("Canon")) {
+					Set<Unite> listeUnite = territoireDEF.getListeTypeUnite("Canon");
+					// Boolean n'ajoutant qu'une unite
+					boolean ajout1UniteEnCours = true;
+					// Unite ajoute en attaque
+					if (listeUnite != null) {
+						Iterator<Unite> listeUniteIterator = listeUnite.iterator();
+							while (listeUniteIterator.hasNext()) {
+								Unite u = listeUniteIterator.next();
+								
+									if (this.def2 == null && ajout1UniteEnCours) {
+										this.def2=u;
+										listeUnite.remove(u);
+										listeUniteIterator.remove();
+										ajout1UniteEnCours = false;
+									}
+								
+							}
+						
+					}
+				}
+				//Soldat
+				else if(territoireDEF.choixTypeUniteDisponible("Soldat")){
+					Set<Unite> listeUnite = territoireDEF.getListeTypeUnite("Soldat");
+					// Boolean n'ajoutant qu'une unite
+					boolean ajout1UniteEnCours = true;
+					// Unite ajoute en attaque
+					if (listeUnite != null) {
+						Iterator<Unite> listeUniteIterator = listeUnite.iterator();
+							while (listeUniteIterator.hasNext()) {
+								Unite u = listeUniteIterator.next();
+								
+									if (this.def2 == null && ajout1UniteEnCours) {
+										this.def2=u;
+										listeUnite.remove(u);
+										listeUniteIterator.remove();
+										ajout1UniteEnCours = false;
+									} 
+								
+							}
+						
+					}
+				}
+		
+		
+	}
 
 	public void setAtt1(Unite att1) {
 		if (territoireATT.getNbrTotalUniteTerritoire() > 1) {
 			this.att1 = att1;
+		}
+	}
+	
+	public void setAtt2(Unite att2) {
+		if (territoireATT.getNbrTotalUniteTerritoire() > 1) {
+			this.att2 = att2;
+		}
+	}
+
+	public void setAtt3(Unite att3) {
+		if (territoireATT.getNbrTotalUniteTerritoire() > 1) {
+			this.att3 = att3;
 		}
 	}
 	
@@ -83,18 +239,36 @@ public class Bataille {
 		this.territoireATT.getListeTypeUnite(this.att3.getNom()).add(att3);
 		this.att3=null;
 	}
-
-	public void setAtt2(Unite att2) {
-		if (territoireATT.getNbrTotalUniteTerritoire() > 1) {
-			this.att2 = att2;
+	
+	public void puissanceUniteBataille() {
+		if(this.att1!=null) {
+			this.att1.setPuissanceBataille(calculPuissance(this.att1.getPuissanceMin(), this.att1.getPuissanceMax()));
+		}
+		
+		if(this.att2!=null) {
+			this.att2.setPuissanceBataille(calculPuissance(this.att2.getPuissanceMin(), this.att2.getPuissanceMax()));
+		}
+		
+		if(this.att3!=null) {
+			this.att3.setPuissanceBataille(calculPuissance(this.att3.getPuissanceMin(), this.att3.getPuissanceMax()));
+		}
+		
+		
+		if(this.def1!=null) {
+			this.def1.setPuissanceBataille(calculPuissance(this.def1.getPuissanceMin(), this.def1.getPuissanceMax()));
+		}
+		
+		if(this.def2!=null) {
+			this.def2.setPuissanceBataille(calculPuissance(this.def2.getPuissanceMin(), this.def2.getPuissanceMax()));
 		}
 	}
-
-	public void setAtt3(Unite att3) {
-		if (territoireATT.getNbrTotalUniteTerritoire() > 1) {
-			this.att3 = att3;
-		}
+	
+	public int calculPuissance(int min,int max) {
+		int randomNum=ThreadLocalRandom.current().nextInt(min, max+1);
+		return randomNum;
 	}
+
+
 
 	public Boolean choixTypeUniteDisponible(String typeUnite) {
 
@@ -119,14 +293,36 @@ public class Bataille {
 		}
 		return false;
 	}
+	
+	public void trierDefenseur() {
+		
+	}
+	
+	public void trierAttaquant() {
+		
+	}
 
 	public void jouerBataille() {
-
+		this.ajouterUniteDefense();
+		this.puissanceUniteBataille();
+		
+		//Parcourir chaque attaquant et prendre le plus puissant avec la priorité la plus faible
+		
+		
+		//Parcourir chaque defenseur et prendre le plus puissant avec la priorité la plus faible
+		
+		
+		//Bataille
+		//Detruire les unite ayant perdus
+		
+		//Rendre unite restante territoire
+		
 		// Bataille reussi
 		// Consommation deplacement unite
 		// Changement territoire unite
 		//
 		// this.att1.
+		
 	}
 
 }

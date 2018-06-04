@@ -165,6 +165,7 @@ public class FXMLDocumentController implements Initializable {
 		if(this.territoireSelectionne!=null) {
 			System.out.println("Nom Territoire : "+this.territoireSelectionne.getNom()+" Nom Region : "+this.territoireSelectionne.getRegion().getNom()+" Nom Proprietaire : "+this.territoireSelectionne.getProprietaire().getNom()+" Nombre Unite Total : "+this.territoireSelectionne.getNbrTotalUniteTerritoire());
 		}
+		
 		// On change le texte en fonction du territoire cliqué
 		Territory_NameTerritory.setText(idFromClickPrefixFinal);
 		

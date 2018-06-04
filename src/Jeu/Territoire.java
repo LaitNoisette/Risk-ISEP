@@ -150,6 +150,31 @@ public class Territoire {
 	}
 	
 	
+	public Boolean choixTypeUniteDisponible(String typeUnite) {
+
+		if (typeUnite.equals("Soldat")) {
+			if (this.getListeUniteSoldat().size() > 0) {
+				return true;
+			} else {
+				return false;
+			}
+		} else if (typeUnite.equals("Cavalier")) {
+			if (this.getListeUniteCavalier().size() > 0) {
+				return true;
+			} else {
+				return false;
+			}
+		} else if (typeUnite.equals("Canon")) {
+			if (this.getListeUniteCanon().size() > 0) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		return false;
+	}
+	
+	
 	
 	//Retourne la liste des territoires d'une region 
 	public static Set<Territoire> listeTerritoireTestRegion() {
