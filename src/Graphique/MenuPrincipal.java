@@ -89,7 +89,7 @@ public class MenuPrincipal extends Application {
 	}
 	
 	public static void main(String[] args) {
-		Partie p=new Partie(3, Carte.CarteNY());
+		Partie p=new Partie(2, Carte.CarteNY());
 		
 		/*
 		for (Territoire T : p.getCarte().getAllTerritoire()) {
@@ -97,7 +97,7 @@ public class MenuPrincipal extends Application {
 		}
 		
 		*/
-		System.out.println(p.getCarte().recupererTerritoireNOM("Port Richmond").getNom());
+		//System.out.println(p.getCarte().recupererTerritoireNOM("Port Richmond").getNom());
 		
 		FXMLDocumentController.partieController=p;
 		System.out.println("cc je compile");

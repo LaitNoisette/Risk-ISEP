@@ -25,7 +25,7 @@ public class Unite {
 	}
 	
 	public String getNom() {
-		return this.getNom();
+		return this.nomUnite;
 	}
 	
 	public int getPuissanceMin() {
@@ -34,6 +34,10 @@ public class Unite {
 	
 	public int getPuissanceMax() {
 		return this.puissanceMax;
+	}
+	
+	public int getCout() {
+		return this.cout;
 	}
 	
 	public void setPuissanceBataille(int puissanceBataille) {
