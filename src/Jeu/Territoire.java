@@ -5,7 +5,7 @@ import java.util.Set;
 public class Territoire {
 	private Joueur proprietaire = null;
 	private String nom;
-	//private Set<Territoire> territoireAdjacent=new HashSet<Territoire>();
+	private Set<Territoire> territoireAdjacent=new HashSet<Territoire>();
 	private Carte carte=null;
 	private Region region=null;
 	
@@ -49,6 +49,10 @@ public class Territoire {
 	
 	public void setRegion(Region r) {
 		this.region=r;
+	}
+	
+	public void ajouterListeTerritoireAdjacent(Territoire t) {
+		this.territoireAdjacent.add(t);
 	}
 	
 	public void ajouterAdjacence(Territoire tAdjacent) {
@@ -130,6 +134,8 @@ public class Territoire {
 		}
 	}
 	
+	
+	
 	//Deplace une unite entre deux territoire
 	public void deplacementUniteTerritoire(Territoire tDestination, Unite uDeplacer) {
 		if(uDeplacer.deplacementUnitePossible()) {
@@ -205,22 +211,30 @@ public class Territoire {
 		//Retourne la liste des territoires d'une region 
 				public static Set<Territoire> listeTerritoireRegionBrooklyn() {
 					Set<Territoire> territoireRegion= new HashSet<Territoire>();
-					territoireRegion.add(new Territoire("Port Richmond"));
-					territoireRegion.add(new Territoire("Westerleigh"));
-					territoireRegion.add(new Territoire("Territory3"));
-					
+					territoireRegion.add(new Territoire("Fort Hamilton"));
+					territoireRegion.add(new Territoire("Coney Island"));
+					territoireRegion.add(new Territoire("Barren Island"));
+					territoireRegion.add(new Territoire("Canarsie"));
+					territoireRegion.add(new Territoire("Midwood"));
+					territoireRegion.add(new Territoire("Red Hook"));
+					territoireRegion.add(new Territoire("Williamsburg"));
 					
 					//Ajouter adjacence entre territoire
 					
 					return territoireRegion;
 				}
 				//Retourne la liste des territoires d'une region 
+				//MANQUE 1 REGION DOUBLON NOM
 				public static Set<Territoire> listeTerritoireRegionQueens() {
 					Set<Territoire> territoireRegion= new HashSet<Territoire>();
-					territoireRegion.add(new Territoire("Port Richmond"));
-					territoireRegion.add(new Territoire("Westerleigh"));
-					territoireRegion.add(new Territoire("Territory3"));
-					
+					territoireRegion.add(new Territoire("Astoria"));
+					territoireRegion.add(new Territoire("Jackson Heights"));
+					territoireRegion.add(new Territoire("Lindenwood"));
+					territoireRegion.add(new Territoire("Somerville"));
+					territoireRegion.add(new Territoire("Springfield"));
+					territoireRegion.add(new Territoire("Hillcrest"));
+					territoireRegion.add(new Territoire("Whitestone"));
+					territoireRegion.add(new Territoire("Oakland Gardens"));
 					
 					//Ajouter adjacence entre territoire
 					
@@ -230,10 +244,10 @@ public class Territoire {
 				//Retourne la liste des territoires d'une region 
 				public static Set<Territoire> listeTerritoireRegionManhattan() {
 					Set<Territoire> territoireRegion= new HashSet<Territoire>();
-					territoireRegion.add(new Territoire("Port Richmond"));
-					territoireRegion.add(new Territoire("Westerleigh"));
-					territoireRegion.add(new Territoire("Territory3"));
-					
+					territoireRegion.add(new Territoire("Chinatown"));
+					territoireRegion.add(new Territoire("Hells Kitchen"));
+					territoireRegion.add(new Territoire("Turtle Bay"));
+					territoireRegion.add(new Territoire("Harlem"));
 					
 					//Ajouter adjacence entre territoire
 					
@@ -243,11 +257,11 @@ public class Territoire {
 				//Retourne la liste des territoires d'une region 
 				public static Set<Territoire> listeTerritoireRegionBronx() {
 					Set<Territoire> territoireRegion= new HashSet<Territoire>();
-					territoireRegion.add(new Territoire("Port Richmond"));
-					territoireRegion.add(new Territoire("Westerleigh"));
-					territoireRegion.add(new Territoire("Territory3"));
-					
-					
+					territoireRegion.add(new Territoire("Parkchester"));
+					territoireRegion.add(new Territoire("Belmont"));
+					territoireRegion.add(new Territoire("Bronxdale"));
+					territoireRegion.add(new Territoire("Longwood"));
+					territoireRegion.add(new Territoire("Rikers Island"));
 					//Ajouter adjacence entre territoire
 					
 					return territoireRegion;

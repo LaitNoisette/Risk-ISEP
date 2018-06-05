@@ -286,16 +286,7 @@ public class FXMLDocumentController implements Initializable {
 		}
 
 		FXMLDocumentController.territoireSelectionne = this.partieController.getCarte().recupererTerritoireNOM(idFromClickPrefixFinal);
-		Info_Territory_NameTerritory.setText(FXMLDocumentController.territoireSelectionne.getNom());
-		Info_Territory_NameRegion.setText(FXMLDocumentController.territoireSelectionne.getRegion().getNom());
-		Info_Territory_NameUnity__1.setText(Unite.nouveauSoldat().getNom());
-		Info_Territory_NbUnity__1.setText(""+FXMLDocumentController.territoireSelectionne.getListeUniteSoldat().size());
 		
-		Info_Territory_NameUnity__2.setText(Unite.nouveauCavalier().getNom());
-		Info_Territory_NbUnity__2.setText(""+FXMLDocumentController.territoireSelectionne.getListeUniteCavalier().size());
-		
-		Info_Territory_NameUnity__3.setText(Unite.nouveauCanon().getNom());
-		Info_Territory_NbUnity__3.setText(""+FXMLDocumentController.territoireSelectionne.getListeUniteCanon().size());
 		
 		// System.out.println(this.territoireSelectionne.getNom());
 		System.out.println(idFromClickPrefixFinal);
@@ -305,6 +296,16 @@ public class FXMLDocumentController implements Initializable {
 					+ this.territoireSelectionne.getRegion().getNom() + " Nom Proprietaire : "
 					+ this.territoireSelectionne.getProprietaire().getNom() + " Nombre Unite Total : "
 					+ this.territoireSelectionne.getNbrTotalUniteTerritoire());
+			Info_Territory_NameTerritory.setText(FXMLDocumentController.territoireSelectionne.getNom());
+			Info_Territory_NameRegion.setText(FXMLDocumentController.territoireSelectionne.getRegion().getNom());
+			Info_Territory_NameUnity__1.setText(Unite.nouveauSoldat().getNom());
+			Info_Territory_NbUnity__1.setText(""+FXMLDocumentController.territoireSelectionne.getListeUniteSoldat().size());
+			
+			Info_Territory_NameUnity__2.setText(Unite.nouveauCavalier().getNom());
+			Info_Territory_NbUnity__2.setText(""+FXMLDocumentController.territoireSelectionne.getListeUniteCavalier().size());
+			
+			Info_Territory_NameUnity__3.setText(Unite.nouveauCanon().getNom());
+			Info_Territory_NbUnity__3.setText(""+FXMLDocumentController.territoireSelectionne.getListeUniteCanon().size());
 		}
 
 		// On change le texte en fonction du territoire cliqué
@@ -315,6 +316,8 @@ public class FXMLDocumentController implements Initializable {
 		// On change l'image en fonction du territoire cliqué
 		Info_Territory_Picture.setStyle("-fx-background-image: url(\"resources/img/country/" + idSelectedTerritory
 				+ ".jpg\");-fx-background-size: 440 152;-fx-background-position: center;");
+		
+		
 
 	}
 

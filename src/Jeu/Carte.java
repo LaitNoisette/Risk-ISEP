@@ -75,7 +75,15 @@ public class Carte {
 	public static Carte CarteNY() {
 		Set<Region> lR= new HashSet<Region>();
 		lR.add(Region.RegionStatenIslandCarteNY());
+		lR.add(Region.RegionBronxCarteNY());
+		lR.add(Region.RegionBrooklynCarteNY());
+		lR.add(Region.RegionManhattanCarteNY());
+		lR.add(Region.RegionQueensCarteNY());
 		Carte carteNY=new Carte("NY", lR);
+		
+		carteNY.ajouterAdjacenceTerritoireRegionStatenIslandCarteNY();
+		carteNY.ajouterAdjacenceTerritoireRegionBronxCarteNY();
+		carteNY.ajouterAdjacenceTerritoireRegionManhattanCarteNY();
 		
 		for (Region region : carteNY.listeRegion) {
 			if(region.getPlusGrandeRegion()) {
@@ -86,5 +94,69 @@ public class Carte {
 		}
 		
 		return carteNY;
+	}
+	
+	public void ajouterAdjacenceTerritoireRegionStatenIslandCarteNY() {
+		//Region interne
+		this.recupererTerritoireNOM("Port Richmond").ajouterListeTerritoireAdjacent(this.recupererTerritoireNOM("Westerleigh"));
+		
+		this.recupererTerritoireNOM("Westerleigh").ajouterListeTerritoireAdjacent(this.recupererTerritoireNOM("Port Richmond"));
+		this.recupererTerritoireNOM("Westerleigh").ajouterListeTerritoireAdjacent(this.recupererTerritoireNOM("Arden Heights"));
+		
+		this.recupererTerritoireNOM("Arden Heights").ajouterListeTerritoireAdjacent(this.recupererTerritoireNOM("Westerleigh"));
+		
+		//Lien autre region
+		this.recupererTerritoireNOM("Arden Heights").ajouterListeTerritoireAdjacent(this.recupererTerritoireNOM("Chinatown"));
+		this.recupererTerritoireNOM("Arden Heights").ajouterListeTerritoireAdjacent(this.recupererTerritoireNOM("Fort Hamilton"));
+	}
+	
+	public void ajouterAdjacenceTerritoireRegionManhattanCarteNY() {
+		//Region interne
+		this.recupererTerritoireNOM("Chinatown").ajouterListeTerritoireAdjacent(this.recupererTerritoireNOM("Hells Kitchen"));
+		this.recupererTerritoireNOM("Chinatown").ajouterListeTerritoireAdjacent(this.recupererTerritoireNOM("Turtle Bay"));
+		
+		this.recupererTerritoireNOM("Hells Kitchen").ajouterListeTerritoireAdjacent(this.recupererTerritoireNOM("Chinatown"));
+		this.recupererTerritoireNOM("Hells Kitchen").ajouterListeTerritoireAdjacent(this.recupererTerritoireNOM("Turtle Bay"));
+		this.recupererTerritoireNOM("Hells Kitchen").ajouterListeTerritoireAdjacent(this.recupererTerritoireNOM("Harlem"));
+		
+		this.recupererTerritoireNOM("Turtle Bay").ajouterListeTerritoireAdjacent(this.recupererTerritoireNOM("Chinatown"));
+		this.recupererTerritoireNOM("Turtle Bay").ajouterListeTerritoireAdjacent(this.recupererTerritoireNOM("Hells Kitchen"));
+		this.recupererTerritoireNOM("Turtle Bay").ajouterListeTerritoireAdjacent(this.recupererTerritoireNOM("Harlem"));
+		
+		this.recupererTerritoireNOM("Harlem").ajouterListeTerritoireAdjacent(this.recupererTerritoireNOM("Turtle Bay"));
+		this.recupererTerritoireNOM("Harlem").ajouterListeTerritoireAdjacent(this.recupererTerritoireNOM("Hells Kitchen"));
+		
+		//Lien autre region
+		this.recupererTerritoireNOM("Chinatown").ajouterListeTerritoireAdjacent(this.recupererTerritoireNOM("Arden Heights"));
+		
+		this.recupererTerritoireNOM("Hells Kitchen").ajouterListeTerritoireAdjacent(this.recupererTerritoireNOM("Red Hook"));
+		
+		this.recupererTerritoireNOM("Harlem").ajouterListeTerritoireAdjacent(this.recupererTerritoireNOM("Parkchester"));
+		this.recupererTerritoireNOM("Harlem").ajouterListeTerritoireAdjacent(this.recupererTerritoireNOM("Belmont"));
+		this.recupererTerritoireNOM("Harlem").ajouterListeTerritoireAdjacent(this.recupererTerritoireNOM("Bronxdale"));
+	}
+	
+	public void ajouterAdjacenceTerritoireRegionBronxCarteNY() {
+		//Region interne
+		this.recupererTerritoireNOM("Parkchester").ajouterListeTerritoireAdjacent(this.recupererTerritoireNOM("Belmont"));
+		
+		this.recupererTerritoireNOM("Belmont").ajouterListeTerritoireAdjacent(this.recupererTerritoireNOM("Parkchester"));
+		this.recupererTerritoireNOM("Belmont").ajouterListeTerritoireAdjacent(this.recupererTerritoireNOM("Bronxdale"));
+		this.recupererTerritoireNOM("Belmont").ajouterListeTerritoireAdjacent(this.recupererTerritoireNOM("Longwood"));
+		this.recupererTerritoireNOM("Belmont").ajouterListeTerritoireAdjacent(this.recupererTerritoireNOM("Rikers Island"));
+		
+		this.recupererTerritoireNOM("Bronxdale").ajouterListeTerritoireAdjacent(this.recupererTerritoireNOM("Belmont"));
+		this.recupererTerritoireNOM("Bronxdale").ajouterListeTerritoireAdjacent(this.recupererTerritoireNOM("Rikers Island"));
+		
+		this.recupererTerritoireNOM("Rikers Island").ajouterListeTerritoireAdjacent(this.recupererTerritoireNOM("Bronxdale"));
+		this.recupererTerritoireNOM("Rikers Island").ajouterListeTerritoireAdjacent(this.recupererTerritoireNOM("Belmont"));
+		this.recupererTerritoireNOM("Rikers Island").ajouterListeTerritoireAdjacent(this.recupererTerritoireNOM("Longwood"));
+		
+		this.recupererTerritoireNOM("Longwood").ajouterListeTerritoireAdjacent(this.recupererTerritoireNOM("Belmont"));
+		this.recupererTerritoireNOM("Longwood").ajouterListeTerritoireAdjacent(this.recupererTerritoireNOM("Rikers Island"));
+		
+		//Lien autre region
+		this.recupererTerritoireNOM("Chinatown").ajouterListeTerritoireAdjacent(this.recupererTerritoireNOM("Arden Heights"));
+		
 	}
 }
