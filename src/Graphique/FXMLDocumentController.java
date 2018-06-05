@@ -14,12 +14,14 @@ import com.sun.javafx.geom.Rectangle;
 
 import Jeu.Partie;
 import Jeu.Territoire;
+import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -33,7 +35,10 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -64,6 +69,7 @@ import javafx.scene.shape.SVGPath;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import javafx.util.Duration;
 
 public class FXMLDocumentController implements Initializable {
@@ -100,7 +106,11 @@ public class FXMLDocumentController implements Initializable {
 	@FXML
 	private GridPane GridPaneAddBackups;
 	@FXML
-	private AnchorPane video;
+	private AnchorPane video, GridMenuIndex;
+	@FXML
+	private Text TitleHome;
+	@FXML
+	private ComboBox<String> ChoiceIconPlayer;
 
 	private boolean isAnimationEnded = false;
 	private boolean isPanelOpened = false;
@@ -136,6 +146,16 @@ public class FXMLDocumentController implements Initializable {
 	        mediaView.setPreserveRatio(true);
 	        video.getChildren().add(mediaView);
 	        
+	        TitleHome.setLayoutX(-500);
+	        FadeTransition ft = new FadeTransition(Duration.millis(5000), TitleHome);
+ 	        ft.setFromValue(0);
+ 	        ft.setToValue(1);
+ 	        ft.play();	        
+
+    		TranslateTransition tt = new TranslateTransition(Duration.millis(5000), TitleHome);
+	        tt.setByY(-1000);
+	        tt.play();
+	        
 	        player.setOnEndOfMedia(new Runnable() {
 				public void run() {
 					player.seek(Duration.ZERO);
@@ -143,6 +163,52 @@ public class FXMLDocumentController implements Initializable {
 			});
 	        
 	        player.play();
+	        
+	        String img1 = "file:BackgroundGame.jpg";
+	        String img2 = "file:background_ocean.jpg";
+	        ObservableList<String> options = FXCollections.observableArrayList();
+	        options.addAll(img1, img2);
+	        //final ComboBox<String> comboBox = new ComboBox(options);
+	        //ChoiceIconPlayer.setCellFactory(c -> new StatusListCell());
+	        
+	        /*Image icon;
+	        String iconPath = "../resources.img.player.Player__1.png";
+            icon = new Image(getClass().getClassLoader().getResourceAsStream(iconPath));
+            ImageView iconImageView = new ImageView(icon);
+            iconImageView.setFitHeight(30);
+            iconImageView.setPreserveRatio(true);
+            setGraphic(iconImageView);*/
+	        /*String item = "Testfdsf";
+	        ChoiceIconPlayer
+            ChoiceIconPlayer.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+                @Override
+                public ListCell<String> call(ListView<String> p) {
+                    return new ListCell<String>() {
+                        @Override
+                        protected void updateItem(String item, boolean empty) {
+                            super.updateItem(item, empty);
+                            setText("ble");
+                            Image icon = new Image(getClass().getResourceAsStream("./BackgroundGame.jpg"));
+                            //Image icon = new Image(getClass().getClassLoader().getResourceAsStream("./BackgroundGame.jpg"));
+                            System.out.println("test0");
+                            if (item == null || empty) {
+                                setGraphic(null);
+                            } 
+                            else {                           
+                            	System.out.println("test");
+                                int iconNumber = this.getIndex() + 1;
+                                String iconPath = "./BackgroundGame.jpg";
+                                //icon = new Image(getClass().getClassLoader().getResourceAsStream(iconPath));
+                                icon = new Image(getClass().getResourceAsStream(iconPath));
+                                ImageView iconImageView = new ImageView(icon);
+                                iconImageView.setFitHeight(30);
+                                iconImageView.setPreserveRatio(true);
+                                setGraphic(iconImageView);
+                            }
+                        }
+                    };
+                }
+            });*/
 		}
 		else {
 			video.setVisible(false);
@@ -185,6 +251,22 @@ public class FXMLDocumentController implements Initializable {
 			//this.partieController.getJoueurEnCours().getNom();
 	
 		}	
+	}
+	
+	public class StatusListCell extends ListCell<String> {
+	    protected void updateItem(String item, boolean empty){
+	        super.updateItem(item, empty);
+	        setGraphic(null);
+	        setText(null);
+	        if(item!=null){
+	            ImageView imageView = new ImageView(new Image(item));
+	            imageView.setFitWidth(40);
+	            imageView.setFitHeight(40);
+	            setGraphic(imageView);
+	            setText("a");
+	        }
+	    }
+
 	}
 
 	@FXML
