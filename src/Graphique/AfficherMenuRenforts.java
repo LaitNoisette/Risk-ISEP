@@ -91,7 +91,7 @@ public class AfficherMenuRenforts extends FXMLDocumentController{
 		
 		GridPaneAddBackupsManual.getChildren().add(Labelr0c0);		
 		GridPaneAddBackupsManual.getChildren().add(Labelr0c3);			
-		GridPaneAddBackupsManual.getRowConstraints().get(0).setPrefHeight(40);
+		GridPaneAddBackupsManual.getRowConstraints().get(0).setPrefHeight(35);
 		
 		// Pour chaque territoire que le joueur possède, on ajoute les différents éléments du menu
 		int h=0;
@@ -102,7 +102,6 @@ public class AfficherMenuRenforts extends FXMLDocumentController{
 			for (int i=0;i<5;i++) {	
 				RowConstraints r = new RowConstraints();
 				GridPaneAddBackupsManual.getRowConstraints().add(r);
-				
 				// Séparateur
 				if (i==0) {
 					Separator separator = new Separator();
@@ -122,7 +121,8 @@ public class AfficherMenuRenforts extends FXMLDocumentController{
 					GridPaneAddBackupsManual.getChildren().add(t);	
 					t.getStyleClass().add("AddUnityLabel");
 					t.getStyleClass().add("CursorHand");
-					GridPaneAddBackupsManual.getRowConstraints().get(h*5+1+i).setPrefHeight(40);
+					//GridPaneAddBackupsManual.getRowConstraints().get(h*5+1+i).setPrefHeight(35);
+					GridPaneAddBackupsManual.getRowConstraints().get(h*5+1+i).setPrefHeight(35);
 					//t.setId("Williamsburg__Region__"+h);
 					t.setId(territoire.getNom()+"__"+territoire.getRegion().getNom()+"__"+h);
 					//System.out.println(t.getId());
@@ -163,6 +163,7 @@ public class AfficherMenuRenforts extends FXMLDocumentController{
 				}
 				// 3 labels pour les 3 unités
 				else {
+					GridPaneAddBackupsManual.getRowConstraints().get(h*5+1+i).setPrefHeight(35);
 					Unite uReference=null;
 					int nbUniteTerritoire=0;
 					//Gestion nom unite en fonction de la boucle
@@ -218,7 +219,7 @@ public class AfficherMenuRenforts extends FXMLDocumentController{
 			}
 			h++;
 		}	
-		
+			//GridPaneAddBackupsManual.setGridLinesVisible(true);
 	}
 	
 	static void deleteRow(GridPane grid, final int row) {

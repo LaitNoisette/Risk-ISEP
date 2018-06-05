@@ -49,7 +49,7 @@ public class MenuPrincipal extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 		// Localisation du fichier FXML.
-		URL url = getClass().getResource("test.fxml");
+		URL url = getClass().getResource("ui.fxml");
 		// Chargement du bundle:
         //ResourceBundle bundle = ResourceBundle.getBundle("test/strings");
 		ResourceBundle bundle = null;

@@ -7,7 +7,7 @@
 }
 
 #BorderPane {
-	-fx-background-image: url("BackgroundGame.jpg");
+	-fx-background-image: url("../resources/img/background/BackgroundGame.jpg");
 }
 
 .header, .menuColor {
@@ -21,7 +21,7 @@
 }*/
 
 #ContainerSVG {
-	-fx-background-image: url("background_ocean.gif");
+	-fx-background-image: url("../resources/img/background/BackgroundOcean.gif");
 	-fx-background-repeat: repeat;
 }
 
@@ -61,7 +61,7 @@
 	-fx-border-color : #7D7E76;
 	-fx-border-width : 3,3,0,0;
 	-fx-border-style: solid none solid none;
-}
+	}
 
 .IconCircleUnity{
 	-fx-fill : #000000;
@@ -161,4 +161,36 @@
 	-fx-fill: #dedebc;
 	-fx-font: 36px "Segoe UI";
 	-fx-cursor: hand;
+}
+
+#ButtonTourSuivant {
+	-fx-font: 22px "Segoe UI";
+	-fx-cursor: hand;
+	-fx-text-fill: #dedebc;
+	-fx-background-color: #21323C;
+}
+
+#ButtonLancerPartie {
+	-fx-font: 70px "Segoe UI";
+	-fx-font-weight: Bold;
+	-fx-cursor: hand;
+	-fx-text-fill: #dedebc;
+	-fx-background-color: #21323C;
+}
+
+#ButtonTourSuivant:hover, ButtonLancerPartie:hover {
+	-fx-background-color: #436578;
+}
+
+#MainMenu {
+	/*-fx-background-color: rgba(33,50,60,0.95);*/
+}
+
+.LabelPseudoIndex {
+	-fx-font: 50px "Segoe UI";
+	-fx-fill: #dedebc;
+}
+
+.TextAreaIndex {
+	-fx-pading: 0 30px 0 30px;
 }
