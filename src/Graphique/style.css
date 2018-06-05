@@ -2,6 +2,10 @@
 	-fx-cursor: hand;
 }
 
+.effectHover {
+	-fx-effect:innershadow(one-pass-box, #a3a3a3, 50, 0, 0, 0);
+}
+
 #BorderPane {
 	-fx-background-image: url("BackgroundGame.jpg");
 }

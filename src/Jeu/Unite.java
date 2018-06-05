@@ -5,6 +5,7 @@ public class Unite {
 	private int cout;
 	private int puissanceMin;
 	private int puissanceMax;
+	private int puissanceBataille=0;
 	private int prioriteATT;
 	private int prioriteDEF;
 	//Reference du nombre de deplacement
@@ -24,7 +25,27 @@ public class Unite {
 	}
 	
 	public String getNom() {
-		return this.getNom();
+		return this.nomUnite;
+	}
+	
+	public int getPuissanceMin() {
+		return this.puissanceMin;
+	}
+	
+	public int getPuissanceMax() {
+		return this.puissanceMax;
+	}
+	
+	public int getCout() {
+		return this.cout;
+	}
+	
+	public void setPuissanceBataille(int puissanceBataille) {
+		this.puissanceBataille=puissanceBataille;
+	}
+	
+	public void reinitialiserPuissanceBataille() {
+		this.puissanceBataille=this.puissanceMin;
 	}
 	
 	public void reinitialiserDeplacement() {
@@ -46,15 +67,15 @@ public class Unite {
 
 	
 	public static Unite nouveauSoldat() {
-		return new Unite("Soldat", 1, 1, 6, 2, 1, 2);
+		return new Unite("Machine Gun", 1, 1, 6, 2, 1, 2);
 	}
 
 	public static Unite nouveauCavalier() {
-		return new Unite("Cavalier", 3, 2, 7, 1, 3, 3);
+		return new Unite("Modern Armor", 3, 2, 7, 1, 3, 3);
 	}
 
 	public static Unite nouveauCanon() {
-		return new Unite("Canon", 7, 4, 9, 3, 2, 1);
+		return new Unite("Modern AT", 7, 4, 9, 3, 2, 1);
 	}
 
 }

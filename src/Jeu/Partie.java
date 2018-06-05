@@ -72,7 +72,10 @@ public class Partie {
 			
 //Creation iterator pour gerer les tours des joueurs 
 			this.tourJoueur=this.listeJoueurs.iterator();
-			this.gererTourJoueur();
+			//this.gererTourJoueur();
+			if(this.tourJoueur.hasNext()) {
+				this.joueurEnCours=this.tourJoueur.next();
+			}
 			
 		}
 
@@ -85,7 +88,13 @@ public class Partie {
 	public Carte getCarte() {
 		return this.carteJeu;
 	}
+	
+	//permet de passer le tour
 	public void gererTourJoueur() {
+		//Le joueur ne peut pas passer le premier tour tant qu'il n'a pas respecte les conditions
+		if(!this.joueurEnCours.getPremierTourJoueur()) {
+			
+		
 		if(this.tourJoueur.hasNext()) {
 			this.joueurEnCours=this.tourJoueur.next();
 		}
@@ -95,6 +104,7 @@ public class Partie {
 				this.gererTourJoueur();
 			}
 			
+		}
 		}
 	}
 	

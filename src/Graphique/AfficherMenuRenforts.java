@@ -3,6 +3,8 @@ package Graphique;
 import java.util.HashSet;
 import java.util.Set;
 
+import Jeu.Territoire;
+import Jeu.Unite;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -74,7 +76,9 @@ public class AfficherMenuRenforts extends FXMLDocumentController{
 		
 		// Configuration des labels de la première ligne qui sont fixes
 		Labelr0c0.setText("Nombre de points disponibles :");
-		Labelr0c3.setText("[Nb]");
+		//Labelr0c3.setText("[Nb]");
+		Labelr0c3.setText(""+FXMLDocumentController.partieController.getJoueurEnCours().getPointUnite()+"");
+		
 		Labelr0c0.getStyleClass().add("firstRowAddUnityLabel");
 		Labelr0c3.getStyleClass().addAll("firstRowAddUnityLabel", "firstRowAddUnityNumber");
 
@@ -90,7 +94,10 @@ public class AfficherMenuRenforts extends FXMLDocumentController{
 		GridPaneAddBackupsManual.getRowConstraints().get(0).setPrefHeight(40);
 		
 		// Pour chaque territoire que le joueur possède, on ajoute les différents éléments du menu
-		for (int h=0;h<15;h++) {
+		int h=0;
+			for (Territoire territoire : FXMLDocumentController.partieController.getJoueurEnCours().getListeTerritoire()) {
+				
+			
 			// 5 = 1 separateur + 1 label descriptif + 3 labels (3 unités)
 			for (int i=0;i<5;i++) {	
 				RowConstraints r = new RowConstraints();
@@ -108,14 +115,16 @@ public class AfficherMenuRenforts extends FXMLDocumentController{
 				// Label descriptif du territoire et de la région
 				else if (i==1) {
 					Text t = new Text();
-					t.setText("Williamsburg ([Région]) :");
+					//t.setText("Williamsburg ([Région]) :");
+					t.setText(territoire.getNom()+" ("+territoire.getRegion().getNom()+") :");
 					GridPane.setConstraints(t, 0, h*5+1+i);
 					GridPane.setMargin(t, new Insets(0, 0, 0, 20));
 					GridPaneAddBackupsManual.getChildren().add(t);	
 					t.getStyleClass().add("AddUnityLabel");
 					t.getStyleClass().add("CursorHand");
 					GridPaneAddBackupsManual.getRowConstraints().get(h*5+1+i).setPrefHeight(40);
-					t.setId("Williamsburg__Region__"+h);
+					//t.setId("Williamsburg__Region__"+h);
+					t.setId(territoire.getNom()+"__"+territoire.getRegion().getNom()+"__"+h);
 					//System.out.println(t.getId());
 					AnchorPane ContainerSVG = AfficherMenuRenforts.controller.getContainerSVG();
 					StackPane InfoTerritory = AfficherMenuRenforts.controller.getInfoTerritory();
@@ -140,7 +149,7 @@ public class AfficherMenuRenforts extends FXMLDocumentController{
 										ContainerSVG.setTranslateY(-primScreenBounds.getMinY()-((int)primScreenBounds.getHeight() - (int)ContainerSVG.getPrefHeight()) / 2 - (ContainerSVG.getPrefHeight()-defaultHeight));
 										ContainerSVG.setScaleX(1);
 										ContainerSVG.setScaleY(1);
-										n.setStyle("-fx-effect:innershadow(one-pass-box, #a3a3a3, 50, 0, 0, 0);");
+										n.getStyleClass().add("effectHover");
 										controller.setInfoTerritory(prefixn);
 										InfoTerritory.setVisible(true);
 										controller.setTerritorySelectedBackup(true);
@@ -154,26 +163,52 @@ public class AfficherMenuRenforts extends FXMLDocumentController{
 				}
 				// 3 labels pour les 3 unités
 				else {
+					Unite uReference=null;
+					int nbUniteTerritoire=0;
+					//Gestion nom unite en fonction de la boucle
+					if(i==2) {
+						uReference=Unite.nouveauSoldat();
+						//Liste Soldat 
+						nbUniteTerritoire=territoire.getListeUniteSoldat().size();
+					}
+					else if(i==3) {
+						uReference=Unite.nouveauCavalier();
+						//Liste Cavalier 
+						nbUniteTerritoire=territoire.getListeUniteCavalier().size();
+					}
+					else if(i==4) {
+						uReference=Unite.nouveauCanon();
+						//Liste Canon
+						nbUniteTerritoire=territoire.getListeUniteCanon().size();
+					}
 					for (int j=0;j<3;j++) {
+						
+						
 						Text t2 = new Text();
 						if (j==0) {
-							t2.setText("[Nb] [Nom Unité1] ([Coût = X])");
+							//t2.setText("[Nb] [Nom Unité1] ([Coût = X])");
+							
+							t2.setText(""+nbUniteTerritoire+" "+uReference.getNom()+" (Coût = "+Integer.toString(uReference.getCout())+")");
 							GridPane.setMargin(t2, new Insets(0, 0, 0, 40));
 							t2.getStyleClass().add("AddUnityLabel");
-							t2.setId("NomTerritoire__Region__"+h+"__Unite__"+j+"__Label");							
+							//t2.setId("NomTerritoire__Region__"+h+"__Unite__"+j+"__Label");	
+							
+							t2.setId(territoire.getNom()+"__"+territoire.getRegion().getNom()+"__"+h+"__"+uReference.getNom()+"__"+j+"__Label");
 							//System.out.println(t2.getId());
 						}
 						else if (j==1) {
 							t2.setText("+");
 							t2.getStyleClass().add("buttonPlusAddUnity");
-							t2.setId("NomTerritoire__Region__"+h+"__Unite__"+j+"__Plus");
+							//t2.setId("NomTerritoire__Region__"+h+"__Unite__"+j+"__Plus");
+							t2.setId(territoire.getNom()+"__"+territoire.getRegion().getNom()+"__"+h+"__"+uReference.getNom()+"__"+j+"__Plus");
 							//System.out.println(t2.getId());
 						}
 						else {
-							t2.setText("[Nb]");
+							t2.setText("Nb");
 							GridPane.setMargin(t2, new Insets(0, 0, 0, 20));
 							t2.getStyleClass().add("AddUnityLabel");
-							t2.setId("NomTerritoire__Region__"+h+"__Unite__"+j+"__Nb");
+							//t2.setId("NomTerritoire__Region__"+h+"__Unite__"+j+"__Nb");
+							t2.setId(territoire.getNom()+"__"+territoire.getRegion().getNom()+"__"+h+"__"+uReference.getNom()+"__"+j+"__Nb");
 							//System.out.println(t2.getId());
 						}
 						GridPane.setConstraints(t2, j, h*5+1+i);	
@@ -181,7 +216,9 @@ public class AfficherMenuRenforts extends FXMLDocumentController{
 					}
 				}					
 			}
-		}
+			h++;
+		}	
+		
 	}
 	
 	static void deleteRow(GridPane grid, final int row) {

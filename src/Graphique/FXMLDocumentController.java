@@ -8,13 +8,18 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import com.sun.javafx.event.EventQueue;
 import com.sun.javafx.geom.Rectangle;
 
 import Jeu.Partie;
 import Jeu.Territoire;
+import Jeu.Unite;
 import javafx.animation.FadeTransition;
+import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
+import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
@@ -92,8 +97,6 @@ public class FXMLDocumentController implements Initializable {
 	@FXML
 	private Pane BodyMap;
 	@FXML
-	private Text Info_Territory_NameTerritory;
-	@FXML
 	private AnchorPane ContainerSVG;
 	@FXML
 	private ScrollPane ListTerritoryAttack, ScrollPaneAddBackups;
@@ -106,11 +109,50 @@ public class FXMLDocumentController implements Initializable {
 	@FXML
 	private GridPane GridPaneAddBackups;
 	@FXML
-	private AnchorPane video, GridMenuIndex;
-	@FXML
+	private AnchorPane video;
+	@FXML 
 	private Text TitleHome;
+	
+	//Infos Territoire
 	@FXML
-	private ComboBox<String> ChoiceIconPlayer;
+	private Text Info_Territory_NameTerritory;
+	@FXML
+	private Text Info_Territory_NameRegion;
+	
+	@FXML
+	private Text Info_Territory_NbUnity__1;
+	@FXML
+	private Text Info_Territory_NameUnity__1;
+	
+	@FXML
+	private Text Info_Territory_NbUnity__2;
+	@FXML
+	private Text Info_Territory_NameUnity__2;
+	
+	@FXML
+	private Text Info_Territory_NbUnity__3;
+	@FXML
+	private Text Info_Territory_NameUnity__3;
+	
+	// Info Joueur
+	@FXML
+	private Text Info_TerritoryPlayer_Pseudo;
+	@FXML
+	private Text Info_TerritoryPlayer_NbTerritory;
+	@FXML
+	private Text Info_TerritoryPlayer_NbRegion;
+	@FXML
+	private Text Info_TerritoryPlayer_NbUnity__1;
+	@FXML
+	private Text Info_TerritoryPlayer_NameUnity__1;
+	@FXML
+	private Text Info_TerritoryPlayer_NbUnity__2;
+	@FXML
+	private Text Info_TerritoryPlayer_NameUnity__2;
+	@FXML
+	private Text Info_TerritoryPlayer_NbUnity__3;
+	@FXML
+	private Text Info_TerritoryPlayer_NameUnity__3;
 
 	private boolean isAnimationEnded = false;
 	private boolean isPanelOpened = false;
@@ -120,7 +162,7 @@ public class FXMLDocumentController implements Initializable {
 
 	private Partie partie;
 	public static Partie partieController;
-	//Permet de stocker le territoire sur lequel on a a clique
+	// Permet de stocker le territoire sur lequel on a a clique
 	public static Territoire territoireSelectionne;
 	String idMouseEnteredTerritory;
 	public boolean debutPartie = true;
@@ -137,8 +179,9 @@ public class FXMLDocumentController implements Initializable {
 			IconPlayers.setVisible(false);
 			ContainerSVG.setVisible(false);
 			video.setVisible(true);
-			
-			MediaPlayer player = new MediaPlayer(new Media(getClass().getResource("backgroundLaunch.mp4").toExternalForm()));
+
+			MediaPlayer player = new MediaPlayer(
+					new Media(getClass().getResource("backgroundLaunch.mp4").toExternalForm()));
 			player.setVolume(0.1);
 	        MediaView mediaView = new MediaView(player);
 	        mediaView.setFitHeight(1080);
@@ -246,11 +289,29 @@ public class FXMLDocumentController implements Initializable {
 			// Container SVG
 			ContainerSVG.addEventFilter(MouseEvent.MOUSE_PRESSED, translateNode.getOnMousePressedEventHandler());
 			ContainerSVG.addEventFilter(MouseEvent.MOUSE_DRAGGED, translateNode.getOnMouseDraggedEventHandler());
+
+			// Initialisation premier joueur exemple le nom
+			// this.partieController.getJoueurEnCours().getNom();
+
+			// Nom du joueur
+			Info_TerritoryPlayer_Pseudo.setText(FXMLDocumentController.partieController.getJoueurEnCours().getNom());
 			
-			//Initialisation premier joueur exemple le nom
-			//this.partieController.getJoueurEnCours().getNom();
-	
-		}	
+			// On définit la couleur des territoires appartenant au joueur actuel
+			ArrayList<Node> nodes = new ArrayList<Node>();			
+			addAllDescendents(ContainerSVG, nodes);	
+			for (Territoire territoire : FXMLDocumentController.partieController.getJoueurEnCours().getListeTerritoire()) {
+				for (Node n : nodes) {
+					if (n.getId()!=null) {
+						String[] tokens = n.getId().split("__");
+						String prefix = tokens[0];
+						if (prefix.equals(territoire.getNom().replaceAll(" ", "_"))) {
+							n.setStyle("-fx-fill:red");
+						}
+							
+					}		
+				}
+			}	
+		}
 	}
 	
 	public class StatusListCell extends ListCell<String> {
@@ -288,7 +349,7 @@ public class FXMLDocumentController implements Initializable {
 			Info_Territory.setVisible(true);
 			Info_Territory.setLayoutX(0);
 			event.getPickResult().getIntersectedNode()
-					.setStyle("-fx-effect:innershadow(one-pass-box, #a3a3a3, 50, 0, 0, 0);");
+					.getStyleClass().add("effectHover");
 		}
 
 		// Si le territoire cliqué appartient au joueur, que le panel des territoires du
@@ -297,6 +358,20 @@ public class FXMLDocumentController implements Initializable {
 		if (Info_TerritoryPlayer.isVisible() && renfort) {
 			int positionTerritorySelected = 4;
 			int nbTerritoryOfPlayer = 15; // A COMPLETER DYNAMIQUEMENT
+			nbTerritoryOfPlayer = FXMLDocumentController.partieController.getJoueurEnCours().getListeTerritoire()
+					.size();
+			Territoire t1 = this.partieController.getCarte().recupererTerritoireNOM(idFromClickPrefix);
+			
+			int i=0;
+			for (Territoire t : FXMLDocumentController.partieController.getJoueurEnCours().getListeTerritoire()) {
+				if (t != null) {
+					//System.out.println(t.getNom() + " = " + t1.getNom().replaceAll(" ", "_"));
+					/*if (t.getNom().replaceAll(" ", "_").equals(t1.getNom().replaceAll(" ", "_"))) {
+						positionTerritorySelected=i;
+					}*/
+					i++;
+				}			
+			}
 			ScrollPaneAddBackups.setVvalue((double) positionTerritorySelected / nbTerritoryOfPlayer - 0.01);
 		} else {
 			ScrollPaneAddBackups.setVvalue(0);
@@ -322,28 +397,44 @@ public class FXMLDocumentController implements Initializable {
 			}
 		}
 
-		this.territoireSelectionne=this.partieController.getCarte().recupererTerritoireNOM(idFromClickPrefixFinal);
-		//System.out.println(this.territoireSelectionne.getNom());
-		System.out.println(idFromClickPrefixFinal);
+		FXMLDocumentController.territoireSelectionne = this.partieController.getCarte().recupererTerritoireNOM(idFromClickPrefixFinal);
 		
-		if(this.territoireSelectionne!=null) {
-			System.out.println("Nom Territoire : "+this.territoireSelectionne.getNom()+" Nom Region : "+this.territoireSelectionne.getRegion().getNom()+" Nom Proprietaire : "+this.territoireSelectionne.getProprietaire().getNom()+" Nombre Unite Total : "+this.territoireSelectionne.getNbrTotalUniteTerritoire());
+		
+		// System.out.println(this.territoireSelectionne.getNom());
+		System.out.println(idFromClickPrefixFinal);
+
+		if (FXMLDocumentController.territoireSelectionne != null) {
+			System.out.println("Nom Territoire : " + this.territoireSelectionne.getNom() + " Nom Region : "
+					+ this.territoireSelectionne.getRegion().getNom() + " Nom Proprietaire : "
+					+ this.territoireSelectionne.getProprietaire().getNom() + " Nombre Unite Total : "
+					+ this.territoireSelectionne.getNbrTotalUniteTerritoire());
+			Info_Territory_NameTerritory.setText(FXMLDocumentController.territoireSelectionne.getNom());
+			Info_Territory_NameRegion.setText(FXMLDocumentController.territoireSelectionne.getRegion().getNom());
+			Info_Territory_NameUnity__1.setText(Unite.nouveauSoldat().getNom());
+			Info_Territory_NbUnity__1.setText(""+FXMLDocumentController.territoireSelectionne.getListeUniteSoldat().size());
+			
+			Info_Territory_NameUnity__2.setText(Unite.nouveauCavalier().getNom());
+			Info_Territory_NbUnity__2.setText(""+FXMLDocumentController.territoireSelectionne.getListeUniteCavalier().size());
+			
+			Info_Territory_NameUnity__3.setText(Unite.nouveauCanon().getNom());
+			Info_Territory_NbUnity__3.setText(""+FXMLDocumentController.territoireSelectionne.getListeUniteCanon().size());
 		}
 
 		// On change le texte en fonction du territoire cliqué
 		Info_Territory_NameTerritory.setText(idFromClickPrefixFinal);
 
+		// Info joueur
+
 		// On change l'image en fonction du territoire cliqué
 		Info_Territory_Picture.setStyle("-fx-background-image: url(\"resources/img/country/" + idSelectedTerritory
-				+ ".jpg\");-fx-background-size: 440 152;-fx-background-position: center;");
-
+				+ ".jpg\");-fx-background-size: 440 152;-fx-background-position: center;");	
 	}
 
 	/**
 	 * Event appelé en cas de Scroll dans le pane contenant les SVG
 	 */
 	@FXML
-	private void onScrollEventHandler(ScrollEvent event) {
+	private void onScrollEventHandler(ScrollEvent event) {			
 		AnimatedZoomOperator zoomOperator = new AnimatedZoomOperator();
 		double zoomFactor = 2;
 
@@ -369,7 +460,8 @@ public class FXMLDocumentController implements Initializable {
 	 */
 	@FXML
 	private void handleButtonAttackAction(ActionEvent event) {
-		if(FXMLDocumentController.territoireSelectionne.getProprietaire().equals(this.partieController.getJoueurEnCours())) {
+		if (FXMLDocumentController.territoireSelectionne.getProprietaire()
+				.equals(FXMLDocumentController.partieController.getJoueurEnCours())) {
 			Info_Territory_Attack.setVisible(true);
 		}
 		
@@ -414,6 +506,23 @@ public class FXMLDocumentController implements Initializable {
 		// On rend invisible l'Anchor Pane contenant les icônes des joueurs
 		node.getParent().setVisible(false);
 
+		// Info joueur
+		Info_TerritoryPlayer_NbTerritory.setText("Territoires contrôlés : "
+				+ FXMLDocumentController.partieController.getJoueurEnCours().getListeTerritoire().size());
+		Info_TerritoryPlayer_NbRegion.setText("Régions contrôlées : "
+				+ FXMLDocumentController.partieController.getJoueurEnCours().getListeRegion().size());
+
+		Info_TerritoryPlayer_NameUnity__1.setText(Unite.nouveauSoldat().getNom());
+		Info_TerritoryPlayer_NbUnity__1
+				.setText("" + FXMLDocumentController.partieController.getJoueurEnCours().getListeUniteSoldat().size());
+
+		Info_TerritoryPlayer_NameUnity__2.setText(Unite.nouveauCavalier().getNom());
+		Info_TerritoryPlayer_NbUnity__2.setText(
+				"" + FXMLDocumentController.partieController.getJoueurEnCours().getListeUniteCavalier().size());
+
+		Info_TerritoryPlayer_NameUnity__3.setText(Unite.nouveauCanon().getNom());
+		Info_TerritoryPlayer_NbUnity__3
+				.setText("" + FXMLDocumentController.partieController.getJoueurEnCours().getListeUniteCanon().size());
 		AfficherMenuRenforts afficherMenuRenforts = new AfficherMenuRenforts(AfficherMenuRenforts.controller = this,
 				Info_TerritoryPlayer, ScrollPaneAddBackups, Info_TerritoryPlayer_GridPane, Body.getPrefHeight());
 
@@ -439,8 +548,9 @@ public class FXMLDocumentController implements Initializable {
 	@FXML
 	private void onMouseEnteredTerritoryHandler(MouseEvent event) {
 		Node node = (Node) event.getSource();
-		
-		// On récupère l'id du territoire, qui est sauvegardé pour la fermeture (event onMouseExitedTerritoryHandler)
+
+		// On récupère l'id du territoire, qui est sauvegardé pour la fermeture (event
+		// onMouseExitedTerritoryHandler)
 		idMouseEnteredTerritory = node.getId();
 
 		// Récupération une liste de tous les SVG (territoires) contenus dans
@@ -456,7 +566,9 @@ public class FXMLDocumentController implements Initializable {
 		 */
 
 		for (Node n : ListNodes) {
-			n.setStyle("");
+			//n.setStyle("-fx-effect:null");
+			//n.getStyleClass().remove("effectHover");
+			n.getStyleClass().removeIf(style -> style.equals("effectHover"));
 		}
 
 		// Pour chaque territoire, si l'id n'est pas nul (décor) et que le prefix du
@@ -467,15 +579,16 @@ public class FXMLDocumentController implements Initializable {
 				String[] tokensn = n.getId().split("__");
 				String prefixn = tokensn[0];
 				if (prefixn.equals(prefix)) {
-					n.setStyle("-fx-effect:innershadow(one-pass-box, #a3a3a3, 50, 0, 0, 0);");
+					//n.setStyle("-fx-effect:innershadow(one-pass-box, #a3a3a3, 50, 0, 0, 0);");
+					n.getStyleClass().add("effectHover");
 				}
 			}
 		}
 	}
 
 	/**
-	 * Event permettant d'annuler l'effet CSS de hover, en le laissant si la fenêtre correspondant à ce territoire 
-	 * est ouverte
+	 * Event permettant d'annuler l'effet CSS de hover, en le laissant si la fenêtre
+	 * correspondant à ce territoire est ouverte
 	 */
 	@FXML
 	private void onMouseExitedTerritoryHandler(MouseEvent event) {
@@ -494,16 +607,17 @@ public class FXMLDocumentController implements Initializable {
 						String prefixn = tokensn[0];
 						// On remplace les " " par des "_" pour la comparaison
 						if (prefixn.equals(Info_Territory_NameTerritory.getText().replace(" ", "_"))) {
-							//System.out.println(prefixn + "*" + Info_Territory_NameTerritory.getText());
-							n.setStyle("-fx-effect:innershadow(one-pass-box, #a3a3a3, 50, 0, 0, 0);");
+							// System.out.println(prefixn + "*" + Info_Territory_NameTerritory.getText());
+							//n.styleProperty().set("effectHover");
+							n.getStyleClass().add("effectHover");
 						} else {
-							n.setStyle("");
+							n.getStyleClass().removeIf(style -> style.equals("effectHover"));
 						}
 					}
 				}
 			} else {
 				for (Node n : ListNodes)
-					n.setStyle("");
+					n.getStyleClass().removeIf(style -> style.equals("effectHover"));
 			}
 		}
 	}
@@ -516,9 +630,8 @@ public class FXMLDocumentController implements Initializable {
 		Platform.exit();
 	}
 	/*
-	public void setPartie(Partie p) {
-		this.partie = p;
-	}*/
+	 * public void setPartie(Partie p) { this.partie = p; }
+	 */
 
 	public AnchorPane getContainerSVG() {
 		return this.ContainerSVG;

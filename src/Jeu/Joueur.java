@@ -19,6 +19,7 @@ public class Joueur {
 	private Set<Region> listeRegion=new HashSet<Region>();
 	
 	private boolean joueurDetruit = false;
+	private boolean premierTour=true;
 	//private int pointUnite = 0;
 	private Color couleur;
 
@@ -26,11 +27,14 @@ public class Joueur {
 	
 	public Joueur(String nom, int nbrArmeeBase) {
 		this.nomJoueur = nom;
+		this.pointUniteJoueur=nbrArmeeBase;
 
 		// Creation de l'armee du joueur
+		/*
 		for (int i = 0; i < nbrArmeeBase; i++) {
 			this.listeUniteSoldat.add(Unite.nouveauSoldat());
 		}
+		*/
 	}
 	
 	public String getNom() {
@@ -41,6 +45,13 @@ public class Joueur {
 		return this.nbTerritoireCaptureTourPrecedent;
 	}
 	
+	public int getPointUnite() {
+		return this.pointUniteJoueur;
+	}
+	
+	public boolean getPremierTourJoueur() {
+		return this.premierTour;
+	}
 	
 	public Set<Region> getListeRegion(){
 		return this.listeRegion;
@@ -74,29 +85,55 @@ public class Joueur {
 	public void addUnite(Unite u) {
 		this.listeUnite.add(u);
 	}
+	
+	//Test le respect des conditions du joueurs pour passer son premier tour
+	public boolean conditionFinPremierTour() {
+		if(this.premierTour) {
+			//Le joueur ne doit plus avoir de points d'unite a depenser
+			if(this.pointUniteJoueur>0) {
+				return false;
+			}
+			else {
+				this.premierTour=false;
+				return true;
+			}
+		}
+		else {
+			//Premier tour du joueur passé
+			return true;
+		}
+	}
 
 	public boolean addUniteSoldat() {
 		if(this.pointUniteJoueur>=1) {
 			this.pointUniteJoueur-=1;
 			return true;
 		}
+		//Verifie si le joueur peut passer son premier tour
+		this.conditionFinPremierTour();
 		return false;
 		//this.listeUnite.add(Unite.nouveauSoldat());
 	}
 	
 	public boolean addUniteCanon() {
+		//Pas unite autre que soldat au premier tour 
+		if(!this.premierTour) {
 		if(this.pointUniteJoueur>=7) {
 			this.pointUniteJoueur-=7;
 			return true;
+		}
 		}
 		return false;
 		//this.listeUnite.add(Unite.nouveauCanon());
 	}
 	
 	public boolean addUniteCavalier() {
+		//Pas unite autre que soldat au premier tour 
+		if(!this.premierTour) {
 		if(this.pointUniteJoueur>=3) {
 			this.pointUniteJoueur-=3;
 			return true;
+		}
 		}
 		return false;
 		//this.listeUnite.add(Unite.nouveauCavalier());
