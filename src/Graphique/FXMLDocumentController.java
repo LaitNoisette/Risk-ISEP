@@ -33,6 +33,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Camera;
@@ -95,6 +96,8 @@ public class FXMLDocumentController implements Initializable {
 	@FXML
 	private Pane Info_Territory_Picture;
 	@FXML
+	private AnchorPane TourSuivant;
+	@FXML
 	private Pane BodyMap;
 	@FXML
 	private AnchorPane ContainerSVG;
@@ -110,6 +113,8 @@ public class FXMLDocumentController implements Initializable {
 	private GridPane GridPaneAddBackups;
 	@FXML
 	private AnchorPane video;
+	@FXML
+	private AnchorPane GridMenuIndex, LancerPartie;
 	@FXML 
 	private Text TitleHome;
 	
@@ -164,6 +169,7 @@ public class FXMLDocumentController implements Initializable {
 	private boolean isAnimationEnded = false;
 	private boolean isPanelOpened = false;
 	private boolean isTerritorySelectedBackup = false;
+	private boolean InitPane = false;
 
 	private boolean renfort = true;
 
@@ -172,187 +178,79 @@ public class FXMLDocumentController implements Initializable {
 	// Permet de stocker le territoire sur lequel on a a clique
 	public static Territoire territoireSelectionne;
 	String idMouseEnteredTerritory;
-	public boolean debutPartie = true;
+	
+	MediaPlayer playerIndex = new MediaPlayer(
+			new Media(getClass().getResource("../resources/video/backgroundLaunch.mp4").toExternalForm()));
+    MediaView mediaViewIndex = new MediaView(playerIndex);
 
 	/**
 	 * Initialisation de l'interface du controller
 	 */
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		if (!debutPartie) {
-			Info_Territory_Attack.setVisible(false);
-			Info_Territory.setVisible(false);
-			Info_TerritoryPlayer.setVisible(false);
-			IconPlayers.setVisible(false);
-			ContainerSVG.setVisible(false);
-			video.setVisible(true);
+			setVisibleInit();			
 
-			MediaPlayer player = new MediaPlayer(
-					new Media(getClass().getResource("backgroundLaunch.mp4").toExternalForm()));
-			player.setVolume(0.1);
-	        MediaView mediaView = new MediaView(player);
-	        mediaView.setFitHeight(1080);
-	        mediaView.setFitWidth(1920);
-	        mediaView.setPreserveRatio(true);
-	        video.getChildren().add(mediaView);
+			mediaViewIndex.setFitHeight(1080);
+			mediaViewIndex.setFitWidth(1920);
+			mediaViewIndex.setPreserveRatio(true);
+	        video.getChildren().add(mediaViewIndex);
 	        
-	        TitleHome.setLayoutX(-500);
-	        FadeTransition ft = new FadeTransition(Duration.millis(5000), TitleHome);
+	        //TitleHome.setLayoutX(-500);
+	        FadeTransition ft = new FadeTransition(Duration.millis(8000), TitleHome);
  	        ft.setFromValue(0);
  	        ft.setToValue(1);
  	        ft.play();	        
 
-    		TranslateTransition tt = new TranslateTransition(Duration.millis(5000), TitleHome);
-	        tt.setByY(-1000);
+    		TranslateTransition tt = new TranslateTransition(Duration.millis(8000), TitleHome);
+	        tt.setByY(-275);
 	        tt.play();
 	        
-	        player.setOnEndOfMedia(new Runnable() {
-				public void run() {
-					player.seek(Duration.ZERO);
+	        tt.setOnFinished(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent event) {
+					LancerPartie.setVisible(true);
 				}
-			});
+	        });
 	        
-	        player.play();
+	        setVolumeInGame(playerIndex);
 	        
-	        String img1 = "file:BackgroundGame.jpg";
-	        String img2 = "file:background_ocean.jpg";
-	        ObservableList<String> options = FXCollections.observableArrayList();
-	        options.addAll(img1, img2);
-	        //final ComboBox<String> comboBox = new ComboBox(options);
-	        //ChoiceIconPlayer.setCellFactory(c -> new StatusListCell());
-	        
-	        /*Image icon;
-	        String iconPath = "../resources.img.player.Player__1.png";
-            icon = new Image(getClass().getClassLoader().getResourceAsStream(iconPath));
-            ImageView iconImageView = new ImageView(icon);
-            iconImageView.setFitHeight(30);
-            iconImageView.setPreserveRatio(true);
-            setGraphic(iconImageView);*/
-	        /*String item = "Testfdsf";
-	        ChoiceIconPlayer
-            ChoiceIconPlayer.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
-                @Override
-                public ListCell<String> call(ListView<String> p) {
-                    return new ListCell<String>() {
-                        @Override
-                        protected void updateItem(String item, boolean empty) {
-                            super.updateItem(item, empty);
-                            setText("ble");
-                            Image icon = new Image(getClass().getResourceAsStream("./BackgroundGame.jpg"));
-                            //Image icon = new Image(getClass().getClassLoader().getResourceAsStream("./BackgroundGame.jpg"));
-                            System.out.println("test0");
-                            if (item == null || empty) {
-                                setGraphic(null);
-                            } 
-                            else {                           
-                            	System.out.println("test");
-                                int iconNumber = this.getIndex() + 1;
-                                String iconPath = "./BackgroundGame.jpg";
-                                //icon = new Image(getClass().getClassLoader().getResourceAsStream(iconPath));
-                                icon = new Image(getClass().getResourceAsStream(iconPath));
-                                ImageView iconImageView = new ImageView(icon);
-                                iconImageView.setFitHeight(30);
-                                iconImageView.setPreserveRatio(true);
-                                setGraphic(iconImageView);
-                            }
-                        }
-                    };
-                }
-            });*/
-		}
-		else {
-			video.setVisible(false);
-			TranslateNode translateNode = new TranslateNode(ContainerSVG);
-
-			// Initialisation des musiques
-			String musicFile = "src/ost/ost1.mp3";
-
-			Media sound = new Media(new File(musicFile).toURI().toString());
-			MediaPlayer mediaPlayer = new MediaPlayer(sound);
-			mediaPlayer.setOnEndOfMedia(new Runnable() {
-				public void run() {
-					mediaPlayer.seek(Duration.ZERO);
-				}
-			});
-			mediaPlayer.setVolume(0);
-			sliderVolumeOST.setValue(0);
-			mediaPlayer.play();
-
-			sliderVolumeOST.valueProperty().addListener((observable, oldValue, newValue) -> {
-				mediaPlayer.setVolume((double) newValue);
-			});
-
-			// Placement du menu d'informations du joueur actuel
-			Info_TerritoryPlayer.setLayoutX((double) BodyMap.getPrefWidth() - Info_TerritoryPlayer.getPrefWidth());
-
-			// Initialisation de l'affichage des menus
-			Info_Territory.setLayoutX(0);
-			Info_Territory_Attack.setLayoutX(0);
-			Info_Territory.setVisible(false);
-			Info_Territory_Attack.setVisible(false);
-			Info_TerritoryPlayer.setVisible(false);
-
-			// Ajout des filtres pour espionner les mouvements pour bouger le panel
-			// Container SVG
-			ContainerSVG.addEventFilter(MouseEvent.MOUSE_PRESSED, translateNode.getOnMousePressedEventHandler());
-			ContainerSVG.addEventFilter(MouseEvent.MOUSE_DRAGGED, translateNode.getOnMouseDraggedEventHandler());
-
-			// Initialisation premier joueur exemple le nom
-			// this.partieController.getJoueurEnCours().getNom();
-
-			// Nom du joueur
-			Info_TerritoryPlayer_Pseudo.setText(FXMLDocumentController.partieController.getJoueurEnCours().getNom());
-			
-			// On définit la couleur des territoires appartenant au joueur actuel
-			ArrayList<Node> nodes = new ArrayList<Node>();			
-			addAllDescendents(ContainerSVG, nodes);	
-			for (Territoire territoire : FXMLDocumentController.partieController.getJoueurEnCours().getListeTerritoire()) {
-				for (Node n : nodes) {
-					if (n.getId()!=null) {
-						String[] tokens = n.getId().split("__");
-						String prefix = tokens[0];
-						if (prefix.equals(territoire.getNom().replaceAll(" ", "_"))) {
-							n.setStyle("-fx-fill:red");
-						}
-							
-					}		
-				}
-			}	
-		}
+	        playerIndex.play();	      
 	}
 	
-	public class StatusListCell extends ListCell<String> {
-	    protected void updateItem(String item, boolean empty){
-	        super.updateItem(item, empty);
-	        setGraphic(null);
-	        setText(null);
-	        if(item!=null){
-	            ImageView imageView = new ImageView(new Image(item));
-	            imageView.setFitWidth(40);
-	            imageView.setFitHeight(40);
-	            setGraphic(imageView);
-	            setText("a");
-	        }
-	    }
-
-	}
-
 	@FXML
 	private void handleMouseAction(MouseEvent event) {
-		debutPartie=!debutPartie;
 		// On récupère l'id du territoire
 		String idFromClick;
-		System.out.println(event.getPickResult().getIntersectedNode().getId()); // https://stackoverflow.com/questions/24302636/better-way-for-getting-id-of-the-clicked-object-in-javafx-controller
+		//System.out.println(event.getPickResult().getIntersectedNode().getId()); // https://stackoverflow.com/questions/24302636/better-way-for-getting-id-of-the-clicked-object-in-javafx-controller
 		idFromClick = event.getPickResult().getIntersectedNode().getId();
 		// On split la chaîne de caractère pour ne garder que le prefix
 		String[] tokens = idFromClick.split("__");
 		String idFromClickPrefix = tokens[0];
 
 		setInfoTerritory(idFromClickPrefix);
+		
+		// On split la chaîne de caractère à nouveau pour supprimer tous les "_" par des
+				// " "
+				String[] tokens2 = idFromClickPrefix.split("_");
+				String idFromClickPrefixFinal = "";
+				// On vérifique la chaîne n'est pas nulle (pas de "_" dans la chaîne avant de
+				// split)
+				if (tokens2.length >= 1) {
+					int i = 1;
+					for (String t : tokens2) {
+						if (i >= tokens2.length) {
+							idFromClickPrefixFinal += t;
+						} else {
+							idFromClickPrefixFinal += t + " ";
+						}
+						i++;
+					}
+				}
 
 		// On active le panel avec transition
 		if (!Info_Territory.isVisible()) {
-			System.out.println(" Panel ouvert ");
+			//System.out.println(" Panel ouvert ");
 			Info_Territory.setVisible(true);
 			Info_Territory.setLayoutX(0);
 			event.getPickResult().getIntersectedNode()
@@ -367,19 +265,25 @@ public class FXMLDocumentController implements Initializable {
 			int nbTerritoryOfPlayer = 15; // A COMPLETER DYNAMIQUEMENT
 			nbTerritoryOfPlayer = FXMLDocumentController.partieController.getJoueurEnCours().getListeTerritoire()
 					.size();
-			Territoire t1 = this.partieController.getCarte().recupererTerritoireNOM(idFromClickPrefix);
+			this.partieController.getCarte().recupererTerritoireNOM(idFromClickPrefixFinal);
+			
+			String t1 = this.partieController.getCarte().recupererTerritoireNOM(idFromClickPrefixFinal).getNom();
 			
 			int i=0;
 			for (Territoire t : FXMLDocumentController.partieController.getJoueurEnCours().getListeTerritoire()) {
 				if (t != null) {
 					//System.out.println(t.getNom() + " = " + t1.getNom().replaceAll(" ", "_"));
-					/*if (t.getNom().replaceAll(" ", "_").equals(t1.getNom().replaceAll(" ", "_"))) {
+					if (t.getNom().replaceAll(" ", "_").equals(t1.replaceAll(" ", "_"))) {
 						positionTerritorySelected=i;
-					}*/
+						
+					}
 					i++;
 				}			
 			}
-			ScrollPaneAddBackups.setVvalue((double) positionTerritorySelected / nbTerritoryOfPlayer - 0.01);
+			System.out.println(positionTerritorySelected);
+			System.out.println(nbTerritoryOfPlayer);
+			ScrollPaneAddBackups.setVvalue((double)positionTerritorySelected / (double)nbTerritoryOfPlayer);
+			System.out.println(ScrollPaneAddBackups.getVvalue());
 		} else {
 			ScrollPaneAddBackups.setVvalue(0);
 		}
@@ -408,7 +312,7 @@ public class FXMLDocumentController implements Initializable {
 		
 		
 		// System.out.println(this.territoireSelectionne.getNom());
-		System.out.println(idFromClickPrefixFinal);
+		//System.out.println(idFromClickPrefixFinal);
 
 		if (FXMLDocumentController.territoireSelectionne != null) {
 			System.out.println("Nom Territoire : " + this.territoireSelectionne.getNom() + " Nom Region : "
@@ -433,8 +337,18 @@ public class FXMLDocumentController implements Initializable {
 		// Info joueur
 
 		// On change l'image en fonction du territoire cliqué
-		Info_Territory_Picture.setStyle("-fx-background-image: url(\"resources/img/country/" + idSelectedTerritory
-				+ ".jpg\");-fx-background-size: 440 152;-fx-background-position: center;");	
+		/*Info_Territory_Picture.setStyle("-fx-background-image: url(\"resources/img/country/" + idSelectedTerritory
+				+ ".jpg\");-fx-background-size: 440 152;-fx-background-position: center;");	*/
+		File f = new File("resources/img/territory/"+idSelectedTerritory+".jpg");
+		System.out.println(f);
+		if(f.exists() && !f.isDirectory()) { 
+			Info_Territory_Picture.setStyle("-fx-background-image: url(\"resources/img/territory/" + idSelectedTerritory
+					+ ".jpg\");-fx-background-size: 440 152;-fx-background-position: center;");	
+		}
+		else {
+			System.out.println("jkjk");
+			Info_Territory_Picture.setStyle("-fx-background-image: url(resources/img/territory/default.jpg);-fx-background-size: 440 152;-fx-background-position: center;");	
+		}
 	}
 
 	/**
@@ -509,7 +423,7 @@ public class FXMLDocumentController implements Initializable {
 		final int row = 10;
 		Node node = (Node) event.getSource();
 		Info_TerritoryPlayer.setVisible(true);
-		System.out.println(event.getPickResult().getIntersectedNode().getId());
+		//System.out.println(event.getPickResult().getIntersectedNode().getId());
 		// On rend invisible l'Anchor Pane contenant les icônes des joueurs
 		node.getParent().setVisible(false);
 
@@ -628,6 +542,94 @@ public class FXMLDocumentController implements Initializable {
 			}
 		}
 	}
+	
+	/**
+	 * Event appelé en cas d'appui sur le boutton "Tour suivant"
+	 */
+	@FXML
+	private void onActionTourSuivantHandler() {
+		// SALUT FRANCK TU PEUX RAJOUTER CE QUE TU VEUX ICI BISOUS
+	}
+	
+	/**
+	 * Event appelé en cas de changement de pseudo à l'accueil
+	 */
+	@FXML
+	private void onActionPseudoTextFieldHandler() {
+
+	}
+	
+	/**
+	 * Event appelé en cas de changement couleur à l'accueil
+	 */
+	@FXML
+	private void onActionColorPickerIndexHandler() {
+
+	}
+	
+	/**
+	 * Event appelé en cas de changement d'icône de joueur
+	 */
+	@FXML
+	private void onSplitMenuButtonIndexHandler() {
+
+	}
+	
+	/**
+	 * Event appelé en cas de changement d'icône de joueur
+	 */
+	@FXML
+	private void onActionLancerPartieHandler() {
+		setVisibleInit();
+		
+		TranslateNode translateNode = new TranslateNode(ContainerSVG);
+
+		// Initialisation des musiques
+		String musicFile = "src/resources/audio/ost1.mp3";
+
+		Media sound = new Media(new File(musicFile).toURI().toString());
+		MediaPlayer mediaPlayer = new MediaPlayer(sound);
+
+		setVolumeInGame(mediaPlayer);
+
+		// Placement du menu d'informations du joueur actuel
+		Info_TerritoryPlayer.setLayoutX((double) BodyMap.getPrefWidth() - Info_TerritoryPlayer.getPrefWidth());
+
+		// Initialisation de l'affichage des menus
+		Info_Territory.setLayoutX(0);
+		Info_Territory_Attack.setLayoutX(0);
+		Info_Territory.setVisible(false);
+		Info_Territory_Attack.setVisible(false);
+		Info_TerritoryPlayer.setVisible(false);
+
+		// Ajout des filtres pour espionner les mouvements pour bouger le panel
+		// Container SVG
+		ContainerSVG.addEventFilter(MouseEvent.MOUSE_PRESSED, translateNode.getOnMousePressedEventHandler());
+		ContainerSVG.addEventFilter(MouseEvent.MOUSE_DRAGGED, translateNode.getOnMouseDraggedEventHandler());
+
+		// Initialisation premier joueur exemple le nom
+		// this.partieController.getJoueurEnCours().getNom();
+
+		// Nom du joueur
+		Info_TerritoryPlayer_Pseudo.setText(FXMLDocumentController.partieController.getJoueurEnCours().getNom());
+		
+		// On définit la couleur des territoires appartenant au joueur actuel
+		ArrayList<Node> nodes = new ArrayList<Node>();			
+		addAllDescendents(ContainerSVG, nodes);	
+		for (Territoire territoire : FXMLDocumentController.partieController.getJoueurEnCours().getListeTerritoire()) {
+			for (Node n : nodes) {
+				if (n.getId()!=null) {
+					String[] tokens = n.getId().split("__");
+					String prefix = tokens[0];
+					if (prefix.equals(territoire.getNom().replaceAll(" ", "_"))) {
+						n.setStyle("-fx-fill:red");
+					}
+						
+				}		
+			}
+		}	
+	}
+	
 
 	/**
 	 * Event appelé en cas d'appui sur "Quitter le jeu" ou raccourci "Ctrl + A"
@@ -664,5 +666,42 @@ public class FXMLDocumentController implements Initializable {
 			if (node instanceof Parent)
 				addAllDescendents((Parent) node, nodes);
 		}
+	}
+	
+	private void setVisibleInit() {
+		LancerPartie.setVisible(false);
+		
+		Info_Territory_Attack.setVisible(this.InitPane);
+		Info_Territory.setVisible(this.InitPane);
+		Info_TerritoryPlayer.setVisible(this.InitPane);
+		IconPlayers.setVisible(this.InitPane);
+		ContainerSVG.setVisible(this.InitPane);
+		TourSuivant.setVisible(this.InitPane);
+		
+		GridMenuIndex.setVisible(!this.InitPane);	
+		video.setVisible(!this.InitPane);
+		
+		if (this.InitPane) 
+			playerIndex.stop();
+			
+		
+		this.InitPane=!this.InitPane;
+	}
+	
+	void setVolumeInGame(MediaPlayer mp) {
+		double defaultValue = 0.2;
+		
+		mp.setOnEndOfMedia(new Runnable() {
+			public void run() {
+				mp.seek(Duration.ZERO);
+			}
+		});
+		mp.setVolume(defaultValue);
+		sliderVolumeOST.setValue(defaultValue);
+		mp.play();
+
+		sliderVolumeOST.valueProperty().addListener((observable, oldValue, newValue) -> {
+			mp.setVolume((double) newValue);
+		});
 	}
 }
