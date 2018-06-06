@@ -341,14 +341,14 @@ public class FXMLDocumentController implements Initializable {
 		// On change l'image en fonction du territoire cliqué
 		/*Info_Territory_Picture.setStyle("-fx-background-image: url(\"resources/img/country/" + idSelectedTerritory
 				+ ".jpg\");-fx-background-size: 440 152;-fx-background-position: center;");	*/
-		File f = new File("resources/img/territory/"+idSelectedTerritory+".jpg");
-		System.out.println(f);
+		File f = new File("src/resources/img/territory/"+idSelectedTerritory+".jpg");
+
+		
 		if(f.exists() && !f.isDirectory()) { 
 			Info_Territory_Picture.setStyle("-fx-background-image: url(\"resources/img/territory/" + idSelectedTerritory
 					+ ".jpg\");-fx-background-size: 440 152;-fx-background-position: center;");	
 		}
 		else {
-			System.out.println("jkjk");
 			Info_Territory_Picture.setStyle("-fx-background-image: url(resources/img/territory/default.jpg);-fx-background-size: 440 152;-fx-background-position: center;");	
 		}
 	}
