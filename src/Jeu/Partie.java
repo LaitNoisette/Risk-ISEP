@@ -157,6 +157,47 @@ public class Partie {
 		} 
 	}
 	
+	public void reinitialiserNbrTerritoireConquisJoueur() {
+		for (Joueur joueur : listeJoueurs) {
+			joueur.reinitialiserNbrTerritoireConquisDernierTour();
+		}
+	}
+	
+	public void gererFinTour() {
+		this.joueurFinPartie();
+		finPartie=this.joueurPossedeTouteLaCarte();
+		if(!finPartie) {
+			this.gererProprietaireRegion();
+			this.gererRenfort();
+			this.reinitialiserDeplacementUniteJoueur();
+			this.reinitialiserNbrTerritoireConquisJoueur();
+			this.gererTourJoueur();
+		}
+	}
+	
+	//Test si il ne reste qu'un unique joueur
+	public boolean joueurPossedeTouteLaCarte() {
+		if(this.listeJoueurs.size()<=0) {
+			System.out.println("Fin de la partie");
+			return true;
+		}
+		return false;
+	}
+	
+	//Elimine les joueurs n'ayant plus de territoires 
+	public void joueurFinPartie() {
+		Iterator<Joueur> lJI=this.listeJoueurs.iterator();
+		
+		while(lJI.hasNext()) {
+			Joueur j=lJI.next();
+			if(j.getListeTerritoire().size()<=0) {
+				listeJoueursDetruit.add(j);
+				listeJoueurs.remove(j);
+				lJI.remove();
+			}
+		}
+	}
+	
 	public void affichageTest() {
 		System.out.println("l'affichge fonctionne, lien controlleur/jeu nb joueur :"+this.nombreJoueurActif+" la carte son  nom est "+this.carteJeu.getNom());
 	}

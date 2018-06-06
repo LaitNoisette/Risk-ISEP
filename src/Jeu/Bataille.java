@@ -295,16 +295,174 @@ public class Bataille {
 	}
 	
 	public void trierDefenseur() {
-		
+		if(this.def2!=null) {
+			if(this.def2.getPuissanceBataille()>this.def1.getPuissanceBataille()) {
+				Unite uTemp=this.def1;
+				this.def1=this.def2;
+				this.def2=uTemp;
+			}
+			else if(this.def2.getPuissanceBataille()==this.def1.getPuissanceBataille() && this.def2.getPrioriteDEF()<this.def1.getPrioriteDEF()) {
+				Unite uTemp=this.def1;
+				this.def1=this.def2;
+				this.def2=uTemp;
+			}
+		}
 	}
 	
 	public void trierAttaquant() {
 		
+		if(this.att3!=null) {
+			//Liste trois attaquant
+			Unite[] listeUniteATT=new Unite[3];
+			listeUniteATT[0]=this.att1;
+			listeUniteATT[1]=this.att2;
+			listeUniteATT[2]=this.att3;
+			
+			boolean triFini=false;
+			while(!triFini) {
+				triFini=true;
+				for(int i=0;i<(listeUniteATT.length-1);i++) {
+					if(listeUniteATT[i+1].getPuissanceBataille()>listeUniteATT[i].getPuissanceBataille()) {
+						Unite uTemp=listeUniteATT[i+1];
+						listeUniteATT[i+1]=listeUniteATT[i];
+						listeUniteATT[i]=uTemp;
+						triFini=false;
+					}
+					//Puissance equivalente on prend la priorite la plus basse
+					else if(listeUniteATT[i+1].getPuissanceBataille()==listeUniteATT[i].getPuissanceBataille() && listeUniteATT[i+1].getPrioriteATT()<listeUniteATT[i].getPrioriteATT()) {
+						Unite uTemp=listeUniteATT[i+1];
+						listeUniteATT[i+1]=listeUniteATT[i];
+						listeUniteATT[i]=uTemp;
+						triFini=false;
+					}
+					
+				}
+			}
+			
+		}
+		else if(this.att2!=null) {
+			if(this.att2.getPuissanceBataille()>this.att1.getPuissanceBataille()) {
+				Unite uTemp=this.att1;
+				this.def1=this.att2;
+				this.att2=uTemp;
+			}
+			else if(this.att2.getPuissanceBataille()==this.att1.getPuissanceBataille() && this.att2.getPrioriteDEF()<this.att1.getPrioriteDEF()) {
+				Unite uTemp=this.att1;
+				this.att1=this.att2;
+				this.att2=uTemp;
+			}
+		}
+		
+	}
+	
+	public boolean victoireAttaquant() {
+		if(this.def1==null && this.def2==null && this.territoireDEF.getNbrTotalUniteTerritoire()<=0) {
+			return true;
+		}
+		
+		return false;
+	}
+	//Bataille entre 2 unite
+	//Renvoie true si attaquant gagne
+	//Renvoie false si le defenseur gagne
+	public boolean batailleUnite(Unite att,Unite def) {
+		if(att.getPuissanceBataille()==def.getPuissanceBataille()) {
+		Set<Unite> listeUniteATT=this.territoireATT.getListeTypeUnite(att.getNom());
+		if(listeUniteATT.contains(att)) {
+			listeUniteATT.remove(att);
+		}
+		return false;
+		
+		}
+		else if(att.getPuissanceBataille()>def.getPuissanceBataille()) {
+			Set<Unite> listeUniteATT=this.territoireDEF.getListeTypeUnite(def.getNom());
+			if(listeUniteATT.contains(def)) {
+				listeUniteATT.remove(def);
+			}
+			return true;
+		}
+		else {
+			Set<Unite> listeUniteATT=this.territoireATT.getListeTypeUnite(att.getNom());
+			if(listeUniteATT.contains(att)) {
+				listeUniteATT.remove(att);
+			}
+			return false;
+		}
+	}
+	
+	public void gererUniteVictoireAttaquantPostBataille() {
+		if(this.att1!=null) {
+			this.att1.ajouterUniteConqueranteTerritoire(this.territoireDEF);
+		}
+		
+		if(this.att2!=null) {
+			this.att2.ajouterUniteConqueranteTerritoire(this.territoireDEF);
+
+		}
+		
+		if(this.att3!=null) {
+			this.att3.ajouterUniteConqueranteTerritoire(this.territoireDEF);
+		}
+	}
+	
+	public void gererUniteVictoireDefenseurPostBataille() {
+		if(this.att1!=null) {
+			this.att1.ajouterUniteConqueranteTerritoire(this.territoireATT);
+		}
+		
+		if(this.att2!=null) {
+			this.att2.ajouterUniteConqueranteTerritoire(this.territoireATT);
+
+		}
+		
+		if(this.att3!=null) {
+			this.att3.ajouterUniteConqueranteTerritoire(this.territoireATT);
+		}
+		
+		if(this.def1!=null) {
+			this.def1.ajouterUniteConqueranteTerritoire(this.territoireDEF);
+		}
+		
+		if(this.def2!=null) {
+			this.def1.ajouterUniteConqueranteTerritoire(this.territoireDEF);
+		}
 	}
 
 	public void jouerBataille() {
 		this.ajouterUniteDefense();
 		this.puissanceUniteBataille();
+		this.trierDefenseur();
+		this.trierAttaquant();
+		if(!victoireAttaquant()) {
+			if(this.att1!=null && this.def1!=null) {
+				if(this.batailleUnite(this.att1, this.def1)) {
+					this.def1=null;
+					
+				}
+				else {
+					this.att1=null;
+				}
+			}
+			
+			if(this.att2!=null && this.def2!=null) {
+				if(this.batailleUnite(this.att2, this.def2)) {
+					this.def2=null;
+					
+				}
+				else {
+					this.att2=null;
+				}
+			}
+			
+			if(victoireAttaquant()) {
+				this.territoireDEF.conquerirTerritoire(this.territoireATT.getProprietaire());
+				this.gererUniteVictoireAttaquantPostBataille();
+			}
+			else {
+				this.gererUniteVictoireDefenseurPostBataille();
+			}
+			
+		}
 		
 		//Parcourir chaque attaquant et prendre le plus puissant avec la priorité la plus faible
 		

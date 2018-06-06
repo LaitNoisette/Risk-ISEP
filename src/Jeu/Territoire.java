@@ -229,6 +229,7 @@ public class Territoire {
 					Set<Territoire> territoireRegion= new HashSet<Territoire>();
 					territoireRegion.add(new Territoire("Astoria"));
 					territoireRegion.add(new Territoire("Jackson Heights"));
+					territoireRegion.add(new Territoire("Glendale"));
 					territoireRegion.add(new Territoire("Lindenwood"));
 					territoireRegion.add(new Territoire("Somerville"));
 					territoireRegion.add(new Territoire("Springfield"));

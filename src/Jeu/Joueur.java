@@ -75,6 +75,47 @@ public class Joueur {
 		return this.listeUniteCanon;
 	}
 	
+	public int getNbrUniteSoldatTotal() {
+		int nbSoldat=0;
+		for (Territoire t : listeTerritoire) {
+			nbSoldat+=t.getListeUniteSoldat().size();
+		}
+		return nbSoldat;
+	}
+	
+	public int getNbrUniteCavalierTotal() {
+		int nbSoldat=0;
+		for (Territoire t : listeTerritoire) {
+			nbSoldat+=t.getListeUniteCavalier().size();
+		}
+		return nbSoldat;
+	}
+	
+	public int getNbrUniteCanonTotal() {
+		int nbSoldat=0;
+		for (Territoire t : listeTerritoire) {
+			nbSoldat+=t.getListeUniteCanon().size();
+		}
+		return nbSoldat;
+	}
+	
+	
+	public int getNbrTotalUnite() {
+		int nbTotal=0;
+		nbTotal+=this.getNbrUniteSoldatTotal();
+		nbTotal+=this.getNbrUniteCavalierTotal();
+		nbTotal+=this.getNbrUniteCanonTotal();
+		return nbTotal;
+	}
+	
+	public void incrementerNbrTerritoireConquisDernierTour() {
+		this.nbTerritoireCaptureTourPrecedent++;
+	}
+	
+	public void reinitialiserNbrTerritoireConquisDernierTour() {
+		this.nbTerritoireCaptureTourPrecedent=0;
+	}
+	
 	public void ajouterPointUniteJoueur(int pUniteAjouter) {
 		if(pUniteAjouter>0) {
 			this.pointUniteJoueur+=pUniteAjouter;

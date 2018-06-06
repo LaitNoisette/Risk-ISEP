@@ -153,6 +153,13 @@ public class FXMLDocumentController implements Initializable {
 	private Text Info_TerritoryPlayer_NbUnity__3;
 	@FXML
 	private Text Info_TerritoryPlayer_NameUnity__3;
+	
+	
+	//Menu attaque
+	@FXML
+	private ScrollPane ScrollPaneAddAttack;
+	@FXML
+	private GridPane GridPaneMoveUnity;
 
 	private boolean isAnimationEnded = false;
 	private boolean isPanelOpened = false;

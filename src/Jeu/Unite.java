@@ -40,6 +40,17 @@ public class Unite {
 		return this.cout;
 	}
 	
+	public int getPuissanceBataille() {
+		return this.puissanceBataille;
+	}
+	
+	public int getPrioriteDEF() {
+		return this.prioriteDEF;
+	}
+	
+	public int getPrioriteATT() {
+		return this.prioriteATT;
+	}
 	public void setPuissanceBataille(int puissanceBataille) {
 		this.puissanceBataille=puissanceBataille;
 	}
@@ -64,18 +75,26 @@ public class Unite {
 			return false;
 		}
 	}
+	
+	public void ajouterUniteConqueranteTerritoire(Territoire tConquis) {
+		this.diminuerDeplacementUnite();
+		tConquis.getListeTypeUnite(this.getNom()).add(this);
+	}
 
 	
 	public static Unite nouveauSoldat() {
-		return new Unite("Machine Gun", 1, 1, 6, 2, 1, 2);
+		//On changera le nom plus tard faut que je reverifie dans toute les classes ou ce nom est utilise en dur Machine Gun
+		return new Unite("Soldat", 1, 1, 6, 2, 1, 2);
 	}
 
 	public static Unite nouveauCavalier() {
-		return new Unite("Modern Armor", 3, 2, 7, 1, 3, 3);
+		//On changera le nom plus tard faut que je reverifie dans toute les classes ou ce nom est utilise en dur Modern Armor
+		return new Unite("Cavalier", 3, 2, 7, 1, 3, 3);
 	}
 
 	public static Unite nouveauCanon() {
-		return new Unite("Modern AT", 7, 4, 9, 3, 2, 1);
+		//On changera le nom plus tard faut que je reverifie dans toute les classes ou ce nom est utilise en dur Modern AT
+		return new Unite("Canon", 7, 4, 9, 3, 2, 1);
 	}
 
 }

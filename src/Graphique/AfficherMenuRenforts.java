@@ -124,7 +124,7 @@ public class AfficherMenuRenforts extends FXMLDocumentController{
 					t.getStyleClass().add("CursorHand");
 					GridPaneAddBackupsManual.getRowConstraints().get(h*5+1+i).setPrefHeight(40);
 					//t.setId("Williamsburg__Region__"+h);
-					t.setId(territoire.getNom()+"__"+territoire.getRegion().getNom()+"__"+h);
+					t.setId(territoire.getNom()+"__"+territoire.getRegion().getNom().trim()+"__"+h);
 					//System.out.println(t.getId());
 					AnchorPane ContainerSVG = AfficherMenuRenforts.controller.getContainerSVG();
 					StackPane InfoTerritory = AfficherMenuRenforts.controller.getInfoTerritory();
@@ -193,14 +193,14 @@ public class AfficherMenuRenforts extends FXMLDocumentController{
 							t2.getStyleClass().add("AddUnityLabel");
 							//t2.setId("NomTerritoire__Region__"+h+"__Unite__"+j+"__Label");	
 							
-							t2.setId(territoire.getNom()+"__"+territoire.getRegion().getNom()+"__"+h+"__"+uReference.getNom()+"__"+j+"__Label");
+							t2.setId(territoire.getNom()+"__"+territoire.getRegion().getNom().trim()+"__"+h+"__"+uReference.getNom().trim()+"__"+j+"__Label");
 							//System.out.println(t2.getId());
 						}
 						else if (j==1) {
 							t2.setText("+");
 							t2.getStyleClass().add("buttonPlusAddUnity");
 							//t2.setId("NomTerritoire__Region__"+h+"__Unite__"+j+"__Plus");
-							t2.setId(territoire.getNom()+"__"+territoire.getRegion().getNom()+"__"+h+"__"+uReference.getNom()+"__"+j+"__Plus");
+							t2.setId(territoire.getNom()+"__"+territoire.getRegion().getNom().trim()+"__"+h+"__"+uReference.getNom().trim()+"__"+j+"__Plus");
 							//System.out.println(t2.getId());
 						}
 						else {
@@ -208,7 +208,7 @@ public class AfficherMenuRenforts extends FXMLDocumentController{
 							GridPane.setMargin(t2, new Insets(0, 0, 0, 20));
 							t2.getStyleClass().add("AddUnityLabel");
 							//t2.setId("NomTerritoire__Region__"+h+"__Unite__"+j+"__Nb");
-							t2.setId(territoire.getNom()+"__"+territoire.getRegion().getNom()+"__"+h+"__"+uReference.getNom()+"__"+j+"__Nb");
+							t2.setId(territoire.getNom().trim()+"__"+territoire.getRegion().getNom().trim()+"__"+h+"__"+uReference.getNom().trim()+"__"+j+"__Nb");
 							//System.out.println(t2.getId());
 						}
 						GridPane.setConstraints(t2, j, h*5+1+i);	
