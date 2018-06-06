@@ -172,6 +172,8 @@ public class FXMLDocumentController implements Initializable {
 	private boolean InitPane = false;
 
 	private boolean renfort = true;
+	
+	private int time1 = 8000, time2=1;
 
 	private Partie partie;
 	public static Partie partieController;
@@ -196,12 +198,12 @@ public class FXMLDocumentController implements Initializable {
 	        video.getChildren().add(mediaViewIndex);
 	        
 	        //TitleHome.setLayoutX(-500);
-	        FadeTransition ft = new FadeTransition(Duration.millis(8000), TitleHome);
+	        FadeTransition ft = new FadeTransition(Duration.millis(time2), TitleHome);
  	        ft.setFromValue(0);
  	        ft.setToValue(1);
  	        ft.play();	        
 
-    		TranslateTransition tt = new TranslateTransition(Duration.millis(8000), TitleHome);
+    		TranslateTransition tt = new TranslateTransition(Duration.millis(time2), TitleHome);
 	        tt.setByY(-275);
 	        tt.play();
 	        
@@ -445,7 +447,7 @@ public class FXMLDocumentController implements Initializable {
 		Info_TerritoryPlayer_NbUnity__3
 				.setText("" + FXMLDocumentController.partieController.getJoueurEnCours().getListeUniteCanon().size());
 		AfficherMenuRenforts afficherMenuRenforts = new AfficherMenuRenforts(AfficherMenuRenforts.controller = this,
-				Info_TerritoryPlayer, ScrollPaneAddBackups, Info_TerritoryPlayer_GridPane, Body.getPrefHeight());
+				Info_TerritoryPlayer, ScrollPaneAddBackups, Info_TerritoryPlayer_GridPane, Body.getPrefHeight()-header.getPrefHeight());
 
 		// Si le joueur actuel clique sur son icône et que c'est le moment des renforts,
 		// il peut en ajouter
@@ -594,6 +596,7 @@ public class FXMLDocumentController implements Initializable {
 
 		// Placement du menu d'informations du joueur actuel
 		Info_TerritoryPlayer.setLayoutX((double) BodyMap.getPrefWidth() - Info_TerritoryPlayer.getPrefWidth());
+		System.out.println(BodyMap.getPrefWidth()+ " "+ Info_TerritoryPlayer.getPrefWidth() + " " + Info_TerritoryPlayer.getLayoutX());
 
 		// Initialisation de l'affichage des menus
 		Info_Territory.setLayoutX(0);
@@ -669,7 +672,7 @@ public class FXMLDocumentController implements Initializable {
 	}
 	
 	private void setVisibleInit() {
-		LancerPartie.setVisible(false);
+		LancerPartie.setVisible(this.InitPane);
 		
 		Info_Territory_Attack.setVisible(this.InitPane);
 		Info_Territory.setVisible(this.InitPane);

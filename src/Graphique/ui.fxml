@@ -1,21 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
+<?import javafx.scene.input.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.web.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ColorPicker?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.Slider?>
-<?import javafx.scene.control.SplitMenuButton?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.input.KeyCodeCombination?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -27,7 +35,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane id="BorderPane" fx:id="Body" maxHeight="1080.0" maxWidth="1920.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Graphique.FXMLDocumentController">
+<BorderPane id="BorderPane" fx:id="Body" maxHeight="1080.0" maxWidth="1920.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Graphique.FXMLDocumentController">
 <!-- <fx:root maxHeight="1080.0" maxWidth="1920.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" type="BorderPane" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Graphique.FXMLDocumentController"> -->
    <center>
       <Pane id="pane" fx:id="BodyMap" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1025.0" prefWidth="1920.0" BorderPane.alignment="CENTER">
@@ -722,32 +730,32 @@
                         <Circle fx:id="IconPlayer13" fill="DODGERBLUE" onMouseClicked="#onMouseClickedPaneOpenInfoPlayerHandler" radius="110.0" stroke="BLACK" strokeType="INSIDE" styleClass="CirclePlayer" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
                         <Circle fx:id="IconPlayer14" fill="DODGERBLUE" onMouseClicked="#onMouseClickedPaneOpenInfoPlayerHandler" radius="110.0" stroke="BLACK" strokeType="INSIDE" styleClass="CirclePlayer" GridPane.columnIndex="4" GridPane.halignment="CENTER" />
                         <Circle fx:id="IconPlayer15" fill="DODGERBLUE" onMouseClicked="#onMouseClickedPaneOpenInfoPlayerHandler" radius="110.0" stroke="BLACK" strokeType="INSIDE" styleClass="CirclePlayer" GridPane.columnIndex="5" GridPane.halignment="CENTER" />
-                        <ImageView fx:id="IconPlayerIndex__1" fitHeight="220.0" fitWidth="250.0" onMouseClicked="#onMouseClickedPaneOpenInfoPlayerHandler" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER">
+                        <ImageView fx:id="IconPlayerIndex__1" fitHeight="220.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER">
                            <image>
                               <Image url="@../resources/img/player/Player__1.png" />
                            </image>
                         </ImageView>
-                        <ImageView fx:id="IconPlayerIndex__2" fitHeight="220.0" fitWidth="250.0" onMouseClicked="#onMouseClickedPaneOpenInfoPlayerHandler" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                        <ImageView fx:id="IconPlayerIndex__2" fitHeight="220.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                            <image>
                               <Image url="@../resources/img/player/Player__2.png" />
                            </image>
                         </ImageView>
-                        <ImageView fx:id="IconPlayerIndex__3" fitHeight="220.0" fitWidth="250.0" onMouseClicked="#onMouseClickedPaneOpenInfoPlayerHandler" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER">
+                        <ImageView fx:id="IconPlayerIndex__3" fitHeight="220.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER">
                            <image>
                               <Image url="@../resources/img/player/Player__3.png" />
                            </image>
                         </ImageView>
-                        <ImageView fx:id="IconPlayerIndex__4" fitHeight="220.0" fitWidth="250.0" onMouseClicked="#onMouseClickedPaneOpenInfoPlayerHandler" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER">
+                        <ImageView fx:id="IconPlayerIndex__4" fitHeight="220.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER">
                            <image>
                               <Image url="@../resources/img/player/Player__4.png" />
                            </image>
                         </ImageView>
-                        <ImageView fx:id="IconPlayerIndex__5" fitHeight="220.0" fitWidth="250.0" onMouseClicked="#onMouseClickedPaneOpenInfoPlayerHandler" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.halignment="CENTER">
+                        <ImageView fx:id="IconPlayerIndex__5" fitHeight="220.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.halignment="CENTER">
                            <image>
                               <Image url="@../resources/img/player/Player__5.png" />
                            </image>
                         </ImageView>
-                        <ImageView fx:id="IconPlayerIndex__6" fitHeight="220.0" fitWidth="250.0" onMouseClicked="#onMouseClickedPaneOpenInfoPlayerHandler" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.halignment="CENTER">
+                        <ImageView fx:id="IconPlayerIndex__6" fitHeight="220.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.halignment="CENTER">
                            <image>
                               <Image url="@../resources/img/player/Player__6.png" />
                            </image>
