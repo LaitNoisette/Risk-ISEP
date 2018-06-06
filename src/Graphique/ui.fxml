@@ -99,15 +99,15 @@
                   <SVGPath fx:id="Somerville__311111" content="M275.1,309.9c2.6,1.3,2.9,4.2,4.9,5.6c0,2.1,0.3,4.2-1.2,5.8c1,1.3,2.3,0.3,3.3,1.3c1.3,1.2,1.2,3,1.6,4.3c0.7,2.4,0.2,5.3,0.2,7.9c0,1.7-2.5,2.1-2.2,4.2c-3.2-2.1-1-5.2-1.9-7.7c-1.3-1.4-2.6-3-3.9-4.5c1.1-1.7,1.3,1,2.4,0.3c0.6-0.4,1.6-0.1,2.5-0.1c0.7-1.9,0.3-3.4-1.6-4c-5.2-1.7-5.7-6.1-6.1-10.5C272.9,311.1,273.8,310.5,275.1,309.9z" layoutX="1351.0" layoutY="532.0" onMouseClicked="#handleMouseAction" onMouseEntered="#onMouseEnteredTerritoryHandler" onMouseExited="#onMouseExitedTerritoryHandler" styleClass="Territory" />
                   <SVGPath fx:id="Somerville__311112" content="M240.9,382.2c0,2.3,0,3.9,0,5.7c-3,1-5.9,2-8.9,3c-0.2-1.7,1-2.2,1.9-3.2c0-1.9,0-4,0-6.2c0.7-0.2,1.3-0.4,1.9-0.7c0.1-0.9,0.3-1.8,0.4-2.8c0.6,0.1,1.1,0.1,1.5,0.4C239.3,379.2,238.9,381.7,240.9,382.2z" layoutX="1343.0" layoutY="562.0" onMouseClicked="#handleMouseAction" onMouseEntered="#onMouseEnteredTerritoryHandler" onMouseExited="#onMouseExitedTerritoryHandler" styleClass="Territory" />
                   <SVGPath fx:id="Somerville__3111121" content="M295.3,384.4c-3.5,4.6-3.9,4.7-6.3,1.3C291.8,384.5,293.1,384.2,295.3,384.4z" layoutX="1337.0" layoutY="540.0" onMouseClicked="#handleMouseAction" onMouseEntered="#onMouseEnteredTerritoryHandler" onMouseExited="#onMouseExitedTerritoryHandler" styleClass="Territory" />
-                  <AnchorPane fx:id="TourSuivant" layoutX="1711.0" layoutY="103.0" prefHeight="61.0" prefWidth="195.0">
-                     <children>
-                        <Button id="ButtonTourSuivant" fx:id="ButtonTourSuivant" alignment="CENTER" layoutX="23.0" layoutY="9.0" mnemonicParsing="false" onAction="#onActionTourSuivantHandler" prefHeight="28.0" prefWidth="152.0" text="Tour Suivant" textFill="#436578">
-                           <font>
-                              <Font name="Segoe UI Bold" size="20.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </AnchorPane>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="TourSuivant" layoutX="1730.0" layoutY="125.0" prefHeight="61.0" prefWidth="195.0">
+               <children>
+                  <Button id="ButtonTourSuivant" fx:id="ButtonTourSuivant" alignment="CENTER" layoutX="23.0" layoutY="9.0" mnemonicParsing="false" onAction="#onActionTourSuivantHandler" prefHeight="28.0" prefWidth="152.0" text="Tour Suivant" textFill="#436578">
+                     <font>
+                        <Font name="Segoe UI Bold" size="20.0" />
+                     </font>
+                  </Button>
                </children>
             </AnchorPane>
             <GridPane fx:id="IconPlayers" layoutX="1270.0" prefHeight="97.0" prefWidth="650.0">
@@ -662,7 +662,7 @@
                         </Text>
                      </children>
                   </StackPane>
-                  <GridPane id="MainMenu" layoutY="463.0" prefHeight="580.0" prefWidth="1920.0">
+                  <GridPane id="MainMenu" fx:id="GridPaneMenuIndex" layoutY="463.0" prefHeight="580.0" prefWidth="1920.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="320.0" minWidth="320.0" prefWidth="320.0" />
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="320.0" minWidth="320.0" prefWidth="320.0" />
@@ -680,25 +680,12 @@
                     </rowConstraints>
                      <children>
                         <ColorPicker fx:id="ColorPickerIndex__3" onAction="#onActionColorPickerIndexHandler" styleClass="CursorHand" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                        <SplitMenuButton fx:id="SplitMenuButtonIndex__4" mnemonicParsing="false" onAction="#onSplitMenuButtonIndexHandler" styleClass="CursorHand" text="Choisir Icône..." GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4">
-                          <items>
-                            <MenuItem mnemonicParsing="false" text="Action 1">
-                                 <graphic>
-                                    <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../resources/img/player/Player__1.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                              </MenuItem>
-                            <MenuItem mnemonicParsing="false" text="Action 2" />
-                          </items>
-                        </SplitMenuButton>
+                        <SplitMenuButton fx:id="SplitMenuButtonIndex__4" mnemonicParsing="false" styleClass="CursorHand" text="Choisir Icône..." GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
                         <ColorPicker fx:id="ColorPickerIndex__2" onAction="#onActionColorPickerIndexHandler" styleClass="CursorHand" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                         <ColorPicker fx:id="ColorPickerIndex__1" onAction="#onActionColorPickerIndexHandler" styleClass="CursorHand" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                         <ColorPicker fx:id="ColorPickerIndex__5" onAction="#onActionColorPickerIndexHandler" styleClass="CursorHand" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                         <ColorPicker fx:id="ColorPickerIndex__4" onAction="#onActionColorPickerIndexHandler" styleClass="CursorHand" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                        <ColorPicker fx:id="ColorPickerIndex__5" onAction="#onActionColorPickerIndexHandler" styleClass="CursorHand" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                        <ColorPicker fx:id="ColorPickerIndex__6" onAction="#onActionColorPickerIndexHandler" styleClass="CursorHand" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                         <TextField fx:id="PseudoTextFieldIndex__1" onAction="#onActionPseudoTextFieldHandler" promptText="Pseudo" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets left="50.0" right="50.0" />
@@ -724,12 +711,12 @@
                            <GridPane.margin>
                               <Insets left="50.0" right="50.0" />
                            </GridPane.margin></TextField>
-                        <Circle fx:id="IconPlayer1" fill="DODGERBLUE" onMouseClicked="#onMouseClickedPaneOpenInfoPlayerHandler" radius="110.0" stroke="BLACK" strokeType="INSIDE" styleClass="CirclePlayer" GridPane.halignment="CENTER" />
-                        <Circle fx:id="IconPlayer11" fill="DODGERBLUE" onMouseClicked="#onMouseClickedPaneOpenInfoPlayerHandler" radius="110.0" stroke="BLACK" strokeType="INSIDE" styleClass="CirclePlayer" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                        <Circle fx:id="IconPlayer12" fill="DODGERBLUE" onMouseClicked="#onMouseClickedPaneOpenInfoPlayerHandler" radius="110.0" stroke="BLACK" strokeType="INSIDE" styleClass="CirclePlayer" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
-                        <Circle fx:id="IconPlayer13" fill="DODGERBLUE" onMouseClicked="#onMouseClickedPaneOpenInfoPlayerHandler" radius="110.0" stroke="BLACK" strokeType="INSIDE" styleClass="CirclePlayer" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
-                        <Circle fx:id="IconPlayer14" fill="DODGERBLUE" onMouseClicked="#onMouseClickedPaneOpenInfoPlayerHandler" radius="110.0" stroke="BLACK" strokeType="INSIDE" styleClass="CirclePlayer" GridPane.columnIndex="4" GridPane.halignment="CENTER" />
-                        <Circle fx:id="IconPlayer15" fill="DODGERBLUE" onMouseClicked="#onMouseClickedPaneOpenInfoPlayerHandler" radius="110.0" stroke="BLACK" strokeType="INSIDE" styleClass="CirclePlayer" GridPane.columnIndex="5" GridPane.halignment="CENTER" />
+                        <Circle fx:id="CircleIconPlayerIndex__1" fill="DODGERBLUE" onMouseClicked="#onMouseClickedPaneOpenInfoPlayerHandler" radius="110.0" stroke="BLACK" strokeType="INSIDE" styleClass="CirclePlayer" GridPane.halignment="CENTER" />
+                        <Circle fx:id="CircleIconPlayerIndex__2" fill="DODGERBLUE" onMouseClicked="#onMouseClickedPaneOpenInfoPlayerHandler" radius="110.0" stroke="BLACK" strokeType="INSIDE" styleClass="CirclePlayer" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                        <Circle fx:id="CircleIconPlayerIndex__3" fill="DODGERBLUE" onMouseClicked="#onMouseClickedPaneOpenInfoPlayerHandler" radius="110.0" stroke="BLACK" strokeType="INSIDE" styleClass="CirclePlayer" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+                        <Circle fx:id="CircleIconPlayerIndex__4" fill="DODGERBLUE" onMouseClicked="#onMouseClickedPaneOpenInfoPlayerHandler" radius="110.0" stroke="BLACK" strokeType="INSIDE" styleClass="CirclePlayer" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
+                        <Circle fx:id="CircleIconPlayerIndex__5" fill="DODGERBLUE" onMouseClicked="#onMouseClickedPaneOpenInfoPlayerHandler" radius="110.0" stroke="BLACK" strokeType="INSIDE" styleClass="CirclePlayer" GridPane.columnIndex="4" GridPane.halignment="CENTER" />
+                        <Circle fx:id="CircleIconPlayerIndex__6" fill="DODGERBLUE" onMouseClicked="#onMouseClickedPaneOpenInfoPlayerHandler" radius="110.0" stroke="BLACK" strokeType="INSIDE" styleClass="CirclePlayer" GridPane.columnIndex="5" GridPane.halignment="CENTER" />
                         <ImageView fx:id="IconPlayerIndex__1" fitHeight="220.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER">
                            <image>
                               <Image url="@../resources/img/player/Player__1.png" />
@@ -766,76 +753,11 @@
                         <Text fx:id="PseudoTextIndex__4" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="LabelPseudoIndex" text="Pseudo 4" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                         <Text fx:id="PseudoTextIndex__6" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="LabelPseudoIndex" text="Pseudo 6" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                         <Text fx:id="PseudoTextIndex__5" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="LabelPseudoIndex" text="Pseudo 5" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                        <SplitMenuButton fx:id="SplitMenuButtonIndex__1" mnemonicParsing="false" onAction="#onSplitMenuButtonIndexHandler" styleClass="CursorHand" text="Choisir Icône..." GridPane.halignment="CENTER" GridPane.rowIndex="4">
-                           <items>
-                              <MenuItem mnemonicParsing="false" text="Action 1">
-                                 <graphic>
-                                    <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../resources/img/player/Player__1.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                              </MenuItem>
-                              <MenuItem mnemonicParsing="false" text="Action 2" />
-                           </items>
-                        </SplitMenuButton>
-                        <SplitMenuButton fx:id="SplitMenuButtonIndex__2" mnemonicParsing="false" onAction="#onSplitMenuButtonIndexHandler" styleClass="CursorHand" text="Choisir Icône..." GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
-                           <items>
-                              <MenuItem mnemonicParsing="false" text="Action 1">
-                                 <graphic>
-                                    <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../resources/img/player/Player__1.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                              </MenuItem>
-                              <MenuItem mnemonicParsing="false" text="Action 2" />
-                           </items>
-                        </SplitMenuButton>
-                        <SplitMenuButton fx:id="SplitMenuButtonIndex__3" mnemonicParsing="false" onAction="#onSplitMenuButtonIndexHandler" styleClass="CursorHand" text="Choisir Icône..." GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
-                           <items>
-                              <MenuItem mnemonicParsing="false" text="Action 1">
-                                 <graphic>
-                                    <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../resources/img/player/Player__1.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                              </MenuItem>
-                              <MenuItem mnemonicParsing="false" text="Action 2" />
-                           </items>
-                        </SplitMenuButton>
-                        <SplitMenuButton fx:id="SplitMenuButtonIndex__5" mnemonicParsing="false" onAction="#onSplitMenuButtonIndexHandler" styleClass="CursorHand" text="Choisir Icône..." GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="4">
-                           <items>
-                              <MenuItem mnemonicParsing="false" text="Action 1">
-                                 <graphic>
-                                    <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../resources/img/player/Player__1.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                              </MenuItem>
-                              <MenuItem mnemonicParsing="false" text="Action 2" />
-                           </items>
-                        </SplitMenuButton>
-                        <SplitMenuButton fx:id="SplitMenuButtonIndex__6" mnemonicParsing="false" onAction="#onSplitMenuButtonIndexHandler" styleClass="CursorHand" text="Choisir Icône..." GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="4">
-                           <items>
-                              <MenuItem mnemonicParsing="false" text="Action 1">
-                                 <graphic>
-                                    <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../resources/img/player/Player__1.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                              </MenuItem>
-                              <MenuItem mnemonicParsing="false" text="Action 2" />
-                           </items>
-                        </SplitMenuButton>
+                        <SplitMenuButton fx:id="SplitMenuButtonIndex__1" mnemonicParsing="false" styleClass="CursorHand" text="Choisir Icône..." GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                        <SplitMenuButton fx:id="SplitMenuButtonIndex__2" mnemonicParsing="false" styleClass="CursorHand" text="Choisir Icône..." GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                        <SplitMenuButton fx:id="SplitMenuButtonIndex__3" mnemonicParsing="false" styleClass="CursorHand" text="Choisir Icône..." GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                        <SplitMenuButton fx:id="SplitMenuButtonIndex__5" mnemonicParsing="false" styleClass="CursorHand" text="Choisir Icône..." GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                        <SplitMenuButton fx:id="SplitMenuButtonIndex__6" mnemonicParsing="false" styleClass="CursorHand" text="Choisir Icône..." GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
                      </children>
                   </GridPane>
                   <AnchorPane fx:id="LancerPartie" layoutX="660.0" layoutY="325.0" prefHeight="161.0" prefWidth="646.0">
