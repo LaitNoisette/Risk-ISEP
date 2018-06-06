@@ -329,6 +329,7 @@ public class FXMLDocumentController implements Initializable {
 	 */
 	@FXML
 	private void handleButtonAttackAction(ActionEvent event) {
+		//Gerer cas proprietaire ou non du territoire
 		if (FXMLDocumentController.territoireSelectionne.getProprietaire()
 				.equals(FXMLDocumentController.partieController.getJoueurEnCours())) {
 			Info_Territory_Attack.setVisible(true);
@@ -383,15 +384,15 @@ public class FXMLDocumentController implements Initializable {
 
 		Info_TerritoryPlayer_NameUnity__1.setText(Unite.nouveauSoldat().getNom());
 		Info_TerritoryPlayer_NbUnity__1
-				.setText("" + FXMLDocumentController.partieController.getJoueurEnCours().getListeUniteSoldat().size());
+				.setText("" + FXMLDocumentController.partieController.getJoueurEnCours().getNbrUniteSoldatTotal());
 
 		Info_TerritoryPlayer_NameUnity__2.setText(Unite.nouveauCavalier().getNom());
 		Info_TerritoryPlayer_NbUnity__2.setText(
-				"" + FXMLDocumentController.partieController.getJoueurEnCours().getListeUniteCavalier().size());
+				"" + FXMLDocumentController.partieController.getJoueurEnCours().getNbrUniteCavalierTotal());
 
 		Info_TerritoryPlayer_NameUnity__3.setText(Unite.nouveauCanon().getNom());
 		Info_TerritoryPlayer_NbUnity__3
-				.setText("" + FXMLDocumentController.partieController.getJoueurEnCours().getListeUniteCanon().size());
+				.setText("" + FXMLDocumentController.partieController.getJoueurEnCours().getNbrUniteCanonTotal());
 		AfficherMenuRenforts afficherMenuRenforts = new AfficherMenuRenforts(AfficherMenuRenforts.controller = this,
 				Info_TerritoryPlayer, ScrollPaneAddBackups, Info_TerritoryPlayer_GridPane, Body.getPrefHeight()-header.getPrefHeight());
 
@@ -486,7 +487,7 @@ public class FXMLDocumentController implements Initializable {
 	 */
 	@FXML
 	private void onActionTourSuivantHandler() {
-		// SALUT FRANCK TU PEUX RAJOUTER CE QUE TU VEUX ICI BISOUS
+		FXMLDocumentController.partieController.gererFinTour();	
 	}
 	
 	/**
