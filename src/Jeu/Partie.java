@@ -164,6 +164,8 @@ public class Partie {
 	}
 	
 	public void gererFinTour() {
+		//Le joueur ne peut pas passer le premier tour tant qu'il n'a pas respecte les conditions
+				if(!this.joueurEnCours.getPremierTourJoueur()) {
 		this.joueurFinPartie();
 		finPartie=this.joueurPossedeTouteLaCarte();
 		if(!finPartie) {
@@ -173,6 +175,7 @@ public class Partie {
 			this.reinitialiserNbrTerritoireConquisJoueur();
 			this.gererTourJoueur();
 		}
+				}
 	}
 	
 	//Test si il ne reste qu'un unique joueur
