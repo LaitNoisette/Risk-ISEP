@@ -217,7 +217,7 @@
 	-fx-background-color: #21323C;
 }
 
-#ButtonTourSuivant:hover, .ButtonLancerPartie:hover {
+#ButtonTourSuivant:hover, #ButtonLancerPartie:hover {
 	-fx-background-color: #436578;
 }
 
