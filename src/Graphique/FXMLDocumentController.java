@@ -779,8 +779,8 @@ public class FXMLDocumentController implements Initializable {
 		
 		// Spécification du MenuItem
 		MenuItem menuItem = new MenuItem("Icône "+idImg, imageView);
-		menuItem.setId("MenuItemIndex__"+idImg);
 		splitMenuButton.getItems().add(menuItem);
+		menuItem.setId("MenuItemIndex__"+idImg);
 		
 		// Ajout d'un évènement pour récupérer la valeur choisie par l'utilisateur et changer l'aperçu
 		menuItem.setOnAction(new EventHandler<ActionEvent>() {

@@ -135,8 +135,7 @@ public class AfficherMenuRenforts extends FXMLDocumentController{
 			GridPane.setConstraints(ButtonValider, 0, 0);
 			GridPane.setColumnSpan(ButtonValider, 3);
 			GridPane.setHalignment(ButtonValider, HPos.CENTER);
-			GridPaneAddBackupsManual.getChildren().add(ButtonValider);		
-			
+			GridPaneAddBackupsManual.getChildren().add(ButtonValider);					
 		}
 		
 		GridPaneAddBackupsManual.getRowConstraints().get(0).setPrefHeight(35);
