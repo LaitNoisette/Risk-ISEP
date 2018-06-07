@@ -47,10 +47,47 @@
 	-fx-text-fill: #d00000;
 }
 
+.menu-item .label {
+    -fx-text-fill: #dedebc;
+}
+
 .menu-bar .menu-button:hover, .menu-bar .menu-button:focused, .menu-bar .menu-button:showing, .menu-item:focused {  
     -fx-background-color: #436578;
 }
 
+.button {
+	-fx-background-color: #dedebc;
+	-fx-text-fill: #21323C;
+	-fx-cursor: hand;
+}
+
+.button:hover {
+	-fx-background-color:  #f8f8d1;
+}
+
+.text-input{
+	-fx-background-color: #21323C;
+	-fx-prompt-text-fill: #dedebc;
+	-fx-text-fill: #dedebc;
+}
+
+.split-menu-button .label {
+	 -fx-background-color: #21323C;
+    -fx-text-fill: #dedebc;
+    }
+
+.split-menu-button .arrow {
+    -fx-background-color: #dedebc;
+    }
+    
+.split-menu-button .arrow-button {
+    -fx-background-color: #21323C ;
+}
+
+.split-menu-button .button{
+	-fx-background-color: #21323C;
+	-fx-cursor: hand;
+}
 
 #InfoTerritory {
 	-fx-border-color : #7D7E76;
@@ -180,7 +217,7 @@
 	-fx-background-color: #21323C;
 }
 
-#ButtonTourSuivant:hover, ButtonLancerPartie:hover {
+#ButtonTourSuivant:hover, #ButtonLancerPartie:hover {
 	-fx-background-color: #436578;
 }
 

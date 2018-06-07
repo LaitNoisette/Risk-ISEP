@@ -552,7 +552,7 @@
                                        </font>
                                     </Text>
                                     <Separator prefHeight="1.0" prefWidth="185.0" styleClass="SeparatorInfoPlayer" GridPane.columnSpan="3" GridPane.rowIndex="1" />
-                                    <Button fx:id="ButtonValider" mnemonicParsing="false" text="Valider" GridPane.columnSpan="3" GridPane.halignment="CENTER" />
+                                    <Button fx:id="ButtonValider" mnemonicParsing="false" text="Valider" textFill="#f8f8d1" GridPane.columnSpan="3" GridPane.halignment="CENTER" />
                                  </children>
                                  <columnConstraints>
                                     <ColumnConstraints hgrow="NEVER" maxWidth="291.0" minWidth="10.0" prefWidth="284.0" />
@@ -668,7 +668,7 @@
                     </rowConstraints>
                      <children>
                         <ColorPicker fx:id="ColorPickerIndex__3" onAction="#onActionColorPickerIndexHandler" styleClass="CursorHand" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                        <SplitMenuButton fx:id="SplitMenuButtonIndex__4" mnemonicParsing="false" styleClass="CursorHand" text="Choisir Icône..." GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                        <SplitMenuButton fx:id="SplitMenuButtonIndex__4" mnemonicParsing="false" styleClass="SplitMenuButton" text="Choisir Icône..." GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
                         <ColorPicker fx:id="ColorPickerIndex__2" onAction="#onActionColorPickerIndexHandler" styleClass="CursorHand" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                         <ColorPicker fx:id="ColorPickerIndex__1" onAction="#onActionColorPickerIndexHandler" styleClass="CursorHand" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                         <ColorPicker fx:id="ColorPickerIndex__5" onAction="#onActionColorPickerIndexHandler" styleClass="CursorHand" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
@@ -741,11 +741,11 @@
                         <Text fx:id="PseudoTextIndex__4" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="LabelPseudoIndex" text="Pseudo 4" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                         <Text fx:id="PseudoTextIndex__6" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="LabelPseudoIndex" text="Pseudo 6" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                         <Text fx:id="PseudoTextIndex__5" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="LabelPseudoIndex" text="Pseudo 5" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                        <SplitMenuButton fx:id="SplitMenuButtonIndex__1" mnemonicParsing="false" styleClass="CursorHand" text="Choisir Icône..." GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                        <SplitMenuButton fx:id="SplitMenuButtonIndex__2" mnemonicParsing="false" styleClass="CursorHand" text="Choisir Icône..." GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                        <SplitMenuButton fx:id="SplitMenuButtonIndex__3" mnemonicParsing="false" styleClass="CursorHand" text="Choisir Icône..." GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                        <SplitMenuButton fx:id="SplitMenuButtonIndex__5" mnemonicParsing="false" styleClass="CursorHand" text="Choisir Icône..." GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                        <SplitMenuButton fx:id="SplitMenuButtonIndex__6" mnemonicParsing="false" styleClass="CursorHand" text="Choisir Icône..." GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                        <SplitMenuButton fx:id="SplitMenuButtonIndex__1" mnemonicParsing="false" styleClass="SplitMenuButton" text="Choisir Icône..." GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                        <SplitMenuButton fx:id="SplitMenuButtonIndex__2" mnemonicParsing="false" styleClass="SplitMenuButton" text="Choisir Icône..." GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                        <SplitMenuButton fx:id="SplitMenuButtonIndex__3" mnemonicParsing="false" styleClass="SplitMenuButton" text="Choisir Icône..." GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                        <SplitMenuButton fx:id="SplitMenuButtonIndex__5" mnemonicParsing="false" styleClass="SplitMenuButton" text="Choisir Icône..." GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                        <SplitMenuButton fx:id="SplitMenuButtonIndex__6" mnemonicParsing="false" styleClass="SplitMenuButton" text="Choisir Icône..." GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
                      </children>
                   </GridPane>
                   <AnchorPane fx:id="LancerPartie" layoutX="660.0" layoutY="325.0" prefHeight="161.0" prefWidth="646.0">
@@ -757,6 +757,15 @@
                         </Button>
                      </children>
                   </AnchorPane>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="PaneTourSuivantNomJoueur" prefHeight="540.0" prefWidth="1920.0">
+               <children>
+                  <Text fx:id="TextPlayerFinTour" fill="#dedebc" layoutY="500.0" strokeType="OUTSIDE" strokeWidth="0.0" text="[Pseudo], à toi de jouer !" textAlignment="CENTER" wrappingWidth="1920.0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="96.0" />
+                     </font>
+                  </Text>
                </children>
             </AnchorPane>
          </children>
