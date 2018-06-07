@@ -22,6 +22,7 @@ public class Unite {
 		this.prioriteATT = prioATT;
 		this.prioriteDEF = prioDEF;
 		this.mvtTour = mvtTour;
+		this.mvtTourReel=this.mvtTour;
 	}
 	
 	public String getNom() {

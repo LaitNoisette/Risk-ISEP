@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+import Jeu.Bataille;
 import Jeu.Partie;
 import Jeu.Territoire;
 import Jeu.Unite;
@@ -161,6 +162,7 @@ public class FXMLDocumentController implements Initializable {
 	public static Partie partieController;
 	// Permet de stocker le territoire sur lequel on a a clique
 	public static Territoire territoireSelectionne;
+	public static Bataille batailleJeu;
 	
 	// Id utilisé pour gérer le hover
 	String idMouseEnteredTerritory;
@@ -349,6 +351,7 @@ public class FXMLDocumentController implements Initializable {
 		Info_Territory_Attack.setVisible(true);
 		
 		if (ButtonAttack.getText().equals("Attaquer")) {
+			FXMLDocumentController.batailleJeu=new Bataille(FXMLDocumentController.territoireSelectionne);
 			AfficherMenuRenforts afficherMenuAttack = new AfficherMenuRenforts(AfficherMenuRenforts.controller = this,
 					Info_Territory_Attack, ScrollPaneAddAttack, Info_TerritoryAttack_GridPane, Body.getPrefHeight()-header.getPrefHeight(), false, true, false);
 			

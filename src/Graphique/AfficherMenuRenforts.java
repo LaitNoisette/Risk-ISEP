@@ -146,6 +146,7 @@ public class AfficherMenuRenforts extends FXMLDocumentController{
 			public void handle(ActionEvent event) {
 				System.out.println("fedlsk");
 				// SALUT FRANCK
+				FXMLDocumentController.batailleJeu.jouerBataille();
 			}		
 		});
 		
@@ -346,9 +347,33 @@ public class AfficherMenuRenforts extends FXMLDocumentController{
 								}
 								if (isPaneAttack) {
 									//System.out.println("2");
+									//System.out.println("Deplacement pris en compte");
+									Node node = (Node) event.getSource();
+									String ajouterUniteClickId=node.getId();
+									
+									String[] formatDataAddUnity = ajouterUniteClickId.split("__");
+									
+									Territoire territoireOrigineUnite=FXMLDocumentController.partieController.getCarte().recupererTerritoireNOM(formatDataAddUnity[0]);
+									
+									FXMLDocumentController.batailleJeu.setTerritoireAtt(territoireOrigineUnite);
+									FXMLDocumentController.batailleJeu.ajouterUniteAttaque(formatDataAddUnity[3]);
+									
 								}
 								if (isPaneMoove) {
 									//System.out.println("3");
+									//
+									
+									System.out.println("Deplacement pris en compte");
+									Node node = (Node) event.getSource();
+									String ajouterUniteClickId=node.getId();
+									
+									String[] formatDataAddUnity = ajouterUniteClickId.split("__");
+									
+									System.out.println(FXMLDocumentController.territoireSelectionne.getNom());
+									
+									Territoire territoireOrigineUnite=FXMLDocumentController.partieController.getCarte().recupererTerritoireNOM(formatDataAddUnity[0]);
+									
+									territoireOrigineUnite.deplacementUniteTerritoire(FXMLDocumentController.territoireSelectionne, formatDataAddUnity[3]);
 								}
 								
 								

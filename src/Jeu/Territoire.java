@@ -147,16 +147,27 @@ public class Territoire {
 		}
 	}
 	
-	
-	
 	//Deplace une unite entre deux territoire
-	public void deplacementUniteTerritoire(Territoire tDestination, Unite uDeplacer) {
-		if(uDeplacer.deplacementUnitePossible()) {
-			uDeplacer.diminuerDeplacementUnite();
-			tDestination.accueillirUnite(uDeplacer);
-			this.retirerUniteReserve(uDeplacer);
+	public void deplacementUniteTerritoire(Territoire tDestination, String typeUnite) {
+		Unite uDeplacer=this.recupererUniteDeplacer(typeUnite);
+		if(uDeplacer!=null) {
+			if(uDeplacer.deplacementUnitePossible()) {
+				uDeplacer.diminuerDeplacementUnite();
+				tDestination.accueillirUnite(uDeplacer);
+				this.retirerUniteReserve(uDeplacer);
+			}
 		}
-		
+	}
+	
+	public Unite recupererUniteDeplacer(String typeUnite) {
+		Unite uDeplacer=null;
+		Set<Unite> listeUnite =this.getListeTypeUnite(typeUnite);
+		for (Unite unite : listeUnite) {
+			if(unite.deplacementUnitePossible()) {
+				uDeplacer=unite;
+			}
+		}
+		return uDeplacer;
 	}
 	
 	//Joueur conquiert un territoire ennemi

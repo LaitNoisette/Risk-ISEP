@@ -6,12 +6,12 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Bataille {
 
-	private Territoire territoireDEF;
+	private Territoire territoireDEF=null;
 	private Unite def1=null;
 	private Unite def2=null;
 
 	// private Joueur joueurAtt;
-	private Territoire territoireATT;
+	private Territoire territoireATT=null;
 	private Unite att1 = null;
 	private Unite att2 = null;
 	private Unite att3 = null;
@@ -29,6 +29,17 @@ public class Bataille {
 		this.territoireATT = tAtt;
 		this.territoireDEF = tDEF;
 	}
+	
+	public Bataille(Territoire tDEF) {
+		this.territoireDEF=tDEF;
+	}
+	
+	public void setTerritoireAtt(Territoire tAtt) {
+		if(this.territoireATT==null) {
+			this.territoireATT=tAtt;
+		}
+		
+	}
 
 	// Gestion des unités de l'attaquant en fonction
 	public void ajouterUniteAttaque(String typeUnite) {
@@ -41,26 +52,32 @@ public class Bataille {
 			if (listeUnite != null) {
 				Iterator<Unite> listeUniteIterator = listeUnite.iterator();
 				if (territoireATT.getNbrTotalUniteTerritoire() > 1) {
-					while (listeUniteIterator.hasNext()) {
+					while (listeUniteIterator.hasNext() && ajout1UniteEnCours) {
+						if(listeUniteIterator.hasNext()) {
+													
 						Unite u = listeUniteIterator.next();
 						if (u.deplacementUnitePossible()) {
 							if (this.att1 == null && ajout1UniteEnCours) {
 								this.setAtt1(u);
-								listeUnite.remove(u);
+								System.out.println("ATT 1 :"+u.getNom());
+								//listeUnite.remove(u);
 								listeUniteIterator.remove();
 								ajout1UniteEnCours = false;
 							} else if (this.att2 == null && ajout1UniteEnCours) {
 								this.setAtt2(u);
+								System.out.println("ATT 2 :"+u.getNom());
 								listeUnite.remove(u);
-								listeUniteIterator.remove();
+								//listeUniteIterator.remove();
 								ajout1UniteEnCours = false;
 							} else if (this.att3 == null && ajout1UniteEnCours) {
 								this.setAtt3(u);
+								System.out.println("ATT 3 :"+u.getNom());
 								listeUnite.remove(u);
-								listeUniteIterator.remove();
+								//listeUniteIterator.remove();
 								ajout1UniteEnCours = false;
 							}
 						}
+					}
 					}
 				}
 			}
@@ -84,8 +101,9 @@ public class Bataille {
 						
 							if (this.def1 == null && ajout1UniteEnCours) {
 								this.def1=u;
+								
 								listeUnite.remove(u);
-								listeUniteIterator.remove();
+								//listeUniteIterator.remove();
 								ajout1UniteEnCours = false;
 							} 
 						
@@ -106,8 +124,9 @@ public class Bataille {
 						
 							if (this.def1 == null && ajout1UniteEnCours) {
 								this.def1=u;
+								System.out.println("DEF é :"+u.getNom());
 								listeUnite.remove(u);
-								listeUniteIterator.remove();
+								//listeUniteIterator.remove();
 								ajout1UniteEnCours = false;
 							}
 						
@@ -205,7 +224,8 @@ public class Bataille {
 						
 					}
 				}
-		
+				System.out.println("DEF 1 :"+this.def1.getNom());
+				System.out.println("DEF 2 : "+this.def2.getNom());
 		
 	}
 
@@ -431,8 +451,25 @@ public class Bataille {
 	public void jouerBataille() {
 		this.ajouterUniteDefense();
 		this.puissanceUniteBataille();
+		System.out.println("--- Unité avant tri ---");
+		System.out.println("ATT 1 :"+this.att1.getNom()+" Puissance : "+this.att1.getPuissanceBataille());
+		System.out.println("ATT 2 :"+this.att2.getNom()+" Puissance : "+this.att2.getPuissanceBataille());
+		System.out.println("ATT 3 :"+this.att3.getNom()+" Puissance : "+this.att3.getPuissanceBataille());
+		
+		System.out.println("DEF 1 :"+this.def1.getNom()+" Puissance : "+this.def1.getPuissanceBataille());
+		System.out.println("DEF 2 :"+this.def2.getNom()+" Puissance : "+this.def2.getPuissanceBataille());
+		
 		this.trierDefenseur();
 		this.trierAttaquant();
+		
+		System.out.println("--- Unité après tri ---");
+		System.out.println("ATT 1 :"+this.att1.getNom()+" Puissance : "+this.att1.getPuissanceBataille());
+		System.out.println("ATT 2 :"+this.att2.getNom()+" Puissance : "+this.att2.getPuissanceBataille());
+		System.out.println("ATT 3 :"+this.att3.getNom()+" Puissance : "+this.att3.getPuissanceBataille());
+		
+		System.out.println("DEF 1 :"+this.def1.getNom()+" Puissance : "+this.def1.getPuissanceBataille());
+		System.out.println("DEF 2 :"+this.def2.getNom()+" Puissance : "+this.def2.getPuissanceBataille());
+		
 		if(!victoireAttaquant()) {
 			if(this.att1!=null && this.def1!=null) {
 				if(this.batailleUnite(this.att1, this.def1)) {
