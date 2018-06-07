@@ -488,6 +488,9 @@ public class FXMLDocumentController implements Initializable {
 	@FXML
 	private void onActionTourSuivantHandler() {
 		FXMLDocumentController.partieController.gererFinTour();	
+		
+		// Changement du nom du joueur dans les menus
+		Info_TerritoryPlayer_Pseudo.setText(FXMLDocumentController.partieController.getJoueurEnCours().getNom());
 	}
 	
 	/**

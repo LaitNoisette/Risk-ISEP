@@ -94,9 +94,11 @@ public class Partie {
 		//Le joueur ne peut pas passer le premier tour tant qu'il n'a pas respecte les conditions
 		if(!this.joueurEnCours.getPremierTourJoueur()) {
 			
-		
+		System.out.println("Joueur Avant passer tour "+this.getJoueurEnCours().getNom());
 		if(this.tourJoueur.hasNext()) {
+			System.out.println("Le joueur va passer son tour !");
 			this.joueurEnCours=this.tourJoueur.next();
+			System.out.println("Joueur Avant passer tour "+this.getJoueurEnCours().getNom());
 		}
 		else {
 			if(this.listeJoueurs.size()>1) {
@@ -164,8 +166,9 @@ public class Partie {
 	}
 	
 	public void gererFinTour() {
+		
 		//Le joueur ne peut pas passer le premier tour tant qu'il n'a pas respecte les conditions
-				if(!this.joueurEnCours.getPremierTourJoueur()) {
+				if(this.joueurEnCours.conditionFinPremierTour()) {
 					System.out.println("Le joueur peut passer son tour !");
 		this.joueurFinPartie();
 		finPartie=this.joueurPossedeTouteLaCarte();

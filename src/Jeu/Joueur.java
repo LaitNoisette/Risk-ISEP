@@ -151,7 +151,7 @@ public class Joueur {
 			return true;
 		}
 		//Verifie si le joueur peut passer son premier tour
-		this.conditionFinPremierTour();
+		//this.conditionFinPremierTour();
 		return false;
 		//this.listeUnite.add(Unite.nouveauSoldat());
 	}

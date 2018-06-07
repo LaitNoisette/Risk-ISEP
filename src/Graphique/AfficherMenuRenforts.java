@@ -1,5 +1,6 @@
 package Graphique;
 
+import java.util.EventObject;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -203,19 +204,32 @@ public class AfficherMenuRenforts extends FXMLDocumentController{
 							t2.getStyleClass().add("buttonPlusAddUnity");
 							//t2.setId("NomTerritoire__Region__"+h+"__Unite__"+j+"__Plus");
 							t2.setId(territoire.getNom()+"__"+territoire.getRegion().getNom().trim()+"__"+h+"__"+uReference.getNom().trim()+"__"+j+"__Plus");
-
+/*
 							String[] formatDataAddUnity = t2.getId().split("__");
 							int indice=0;
 							for (String string : formatDataAddUnity) {
 								System.out.println(indice+" : "+string);
 								indice++;
 							}
-
+*/
 							t2.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 								@Override
 								public void handle(MouseEvent event) {
 									// COUCOU FRANCK C'EST POUR TOI ICI <3
+									Node node = (Node) event.getSource();
+									String ajouterUniteClickId=node.getId();
+									
+									String[] formatDataAddUnity = ajouterUniteClickId.split("__");
+									/*
+									int indice=0;
+									for (String string : formatDataAddUnity) {
+										System.out.println(indice+" : "+string);
+										indice++;
+									}
+									*/
+								Territoire territoireAjoutUnite=	FXMLDocumentController.partieController.getCarte().recupererTerritoireNOM(formatDataAddUnity[0]);
+								territoireAjoutUnite.ajouterUnite(formatDataAddUnity[3]);
 								}
 					        });
 
