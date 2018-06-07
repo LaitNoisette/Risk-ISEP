@@ -759,6 +759,15 @@
                   </AnchorPane>
                </children>
             </AnchorPane>
+            <AnchorPane fx:id="PaneTourSuivantNomJoueur" prefHeight="540.0" prefWidth="1920.0">
+               <children>
+                  <Text fx:id="TextPlayerFinTour" fill="#dedebc" layoutY="500.0" strokeType="OUTSIDE" strokeWidth="0.0" text="[Pseudo], à toi de jouer !" textAlignment="CENTER" wrappingWidth="1920.0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="96.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
          </children>
       </Pane>
    </center>

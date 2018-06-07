@@ -70,7 +70,7 @@ public class FXMLDocumentController implements Initializable {
 	@FXML
 	private Pane BodyMap;
 	@FXML
-	private AnchorPane ContainerSVG;
+	private AnchorPane ContainerSVG, PaneTourSuivantNomJoueur;
 	@FXML
 	private ScrollPane ListTerritoryAttack, ScrollPaneAddBackups;
 	@FXML
@@ -96,7 +96,7 @@ public class FXMLDocumentController implements Initializable {
 	@FXML
 	private ImageView IconPlayerIndex__1, IconPlayerIndex__2, IconPlayerIndex__3, IconPlayerIndex__4, IconPlayerIndex__5, IconPlayerIndex__6;
 	@FXML 
-	private Text TitleHome;
+	private Text TitleHome, TextPlayerFinTour;
 	
 	//Infos Territoire
 	@FXML
@@ -394,7 +394,7 @@ public class FXMLDocumentController implements Initializable {
 		// Si c'est le panel d'informations du joueur, on réaffiche l'icône pour voir
 		// les informations du joueur
 		if (Objects.equals((String) node.getId(), new String("InfoTerritoryPlayer_CloseButton"))) {
-			TourSuivant.setVisible(false);
+			TourSuivant.setVisible(true);
 			IconPlayers.setVisible(true);
 		}		
 		else if (Objects.equals((String) node.getId(), new String("InfoTerritory_CloseButton")))
@@ -436,7 +436,8 @@ public class FXMLDocumentController implements Initializable {
 
 		// Si le joueur actuel clique sur son icône et que c'est le moment des renforts, il peut en ajouter
 		// et voir un résumé de toutes ses unités ainsi que sa mission secrète
-		if (!ScrollPaneAddBackups.isVisible() && renfort) { // AJOUTER VERIF POUR MISSION SECRETE
+		//if (!ScrollPaneAddBackups.isVisible() && renfort) { 
+		/*if (!ScrollPaneAddBackups.isVisible()) { 
 			afficherMenuRenforts.DisplayInformations();
 		} 
 		// Sinon, on supprime le tableau et on réduit sa taille
@@ -444,7 +445,9 @@ public class FXMLDocumentController implements Initializable {
 			ScrollPaneAddBackups.setVisible(false);
 			AfficherMenuRenforts.deleteRow(Info_TerritoryPlayer_GridPane, row);
 			Info_TerritoryPlayer.setPrefHeight(Info_Territory.getPrefHeight());			
-		}
+		}*/
+		AfficherMenuRenforts.deleteRow(Info_TerritoryPlayer_GridPane, row);
+		afficherMenuRenforts.DisplayInformations();
 	}
 
 	/**
@@ -529,6 +532,23 @@ public class FXMLDocumentController implements Initializable {
 		
 		// Changement du nom du joueur dans les menus
 		Info_TerritoryPlayer_Pseudo.setText(FXMLDocumentController.partieController.getJoueurEnCours().getNom());
+		PaneTourSuivantNomJoueur.setTranslateY(1080);
+		System.out.println(PaneTourSuivantNomJoueur.getLayoutY());
+		PaneTourSuivantNomJoueur.setVisible(true);
+		TextPlayerFinTour.setText(FXMLDocumentController.partieController.getJoueurEnCours().getNom()+", à toi de jouer !");
+		// Transition en fondu des menus
+		TranslateTransition tt = new TranslateTransition(Duration.millis(time1/6), PaneTourSuivantNomJoueur);
+        tt.setByY(-1000);
+        tt.play();
+        
+        // Quand la transition est terminée, on affiche le boutton "LancerPartie"
+        tt.setOnFinished(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				PaneTourSuivantNomJoueur.setVisible(false);
+			}
+        });
 	}
 	
 	/**
@@ -644,6 +664,7 @@ public class FXMLDocumentController implements Initializable {
 	 */
 	private void setVisibleInit() {
 		// Définition de la visiblité de tous les panels
+		PaneTourSuivantNomJoueur.setVisible(false);
 		LancerPartie.setVisible(this.InitPane);	
 		Info_Territory_Attack.setVisible(this.InitPane);
 		Info_Territory.setVisible(this.InitPane);
