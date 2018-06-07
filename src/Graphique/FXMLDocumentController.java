@@ -74,13 +74,13 @@ public class FXMLDocumentController implements Initializable {
 	@FXML
 	private ScrollPane ListTerritoryAttack, ScrollPaneAddBackups;
 	@FXML
-	private GridPane Grid_Info_Territory, Info_TerritoryPlayer_GridPane;
+	private GridPane Grid_Info_Territory, Info_TerritoryPlayer_GridPane, Info_TerritoryAttack_GridPane;
 	@FXML
-	private Button InfoTerritoryPlayer_CloseButton, InfoTerritory_CloseButton, InfoTerritoryAttack_CloseButton;
+	private Button InfoTerritoryPlayer_CloseButton, InfoTerritory_CloseButton, InfoTerritoryAttack_CloseButton, ButtonAttack;
 	@FXML
 	private GridPane IconPlayers;
 	@FXML
-	private GridPane GridPaneAddBackups;
+	private GridPane GridPaneAddBackups,GridPaneAddAttack;
 	@FXML
 	private AnchorPane video;
 	@FXML
@@ -137,10 +137,11 @@ public class FXMLDocumentController implements Initializable {
 	@FXML
 	private Text Info_TerritoryPlayer_NbUnity__3;
 	@FXML
-	private Text Info_TerritoryPlayer_NameUnity__3;
-	
+	private Text Info_TerritoryPlayer_NameUnity__3;	
 	
 	//Menu attaque
+	@FXML
+	private Text Info_TerritoryAttack_NameTerritory;
 	@FXML
 	private ScrollPane ScrollPaneAddAttack;
 	@FXML
@@ -154,7 +155,7 @@ public class FXMLDocumentController implements Initializable {
 	private boolean renfort = true;
 	
 	// Permet de changer le temps des animations pour le déboggage 
-	private int time1 = 8000;
+	private int time1 = 1000; //8000
 
 	private Partie partie;
 	public static Partie partieController;
@@ -225,6 +226,7 @@ public class FXMLDocumentController implements Initializable {
 			setMenuItemIndex(SplitMenuButtonIndex__5, i);
 			setMenuItemIndex(SplitMenuButtonIndex__6, i);
 		}
+				
 	}
 	
 	/********************************************************************************************/
@@ -264,8 +266,20 @@ public class FXMLDocumentController implements Initializable {
 				i++;
 			}
 		}
+		
+		if (FXMLDocumentController.territoireSelectionne.getProprietaire()
+				.equals(FXMLDocumentController.partieController.getJoueurEnCours())) {			
+			ButtonAttack.setText("Déplacement");
+			Info_TerritoryAttack_NameTerritory.setText("Déplacer mes unités");
+		}	
+		else {
+			ButtonAttack.setText("Attaquer");
+			Info_TerritoryAttack_NameTerritory.setText("Attaquer l'ennemi");
+		}
+		
+		Info_Territory_Attack.setVisible(false);
 
-		// On active le panel avec transition
+		// On active le panel
 		if (!Info_Territory.isVisible()) {
 			Info_Territory.setVisible(true);
 			Info_Territory.setLayoutX(0);
@@ -329,11 +343,34 @@ public class FXMLDocumentController implements Initializable {
 	 */
 	@FXML
 	private void handleButtonAttackAction(ActionEvent event) {
+		//AfficherMenuRenforts.deleteRow(Info_TerritoryAttack_GridPane, 4);
+		AfficherMenuRenforts.deleteRow(Info_TerritoryAttack_GridPane, 4);
+			
+		Info_Territory_Attack.setVisible(true);
+		
+		if (ButtonAttack.getText().equals("Attaquer")) {
+			AfficherMenuRenforts afficherMenuAttack = new AfficherMenuRenforts(AfficherMenuRenforts.controller = this,
+					Info_Territory_Attack, ScrollPaneAddAttack, Info_TerritoryAttack_GridPane, Body.getPrefHeight()-header.getPrefHeight(), false, true, false);
+			
+			afficherMenuAttack.DisplayInformations();
+		}
+		else {
+			AfficherMenuRenforts afficherMenuAttack = new AfficherMenuRenforts(AfficherMenuRenforts.controller = this,
+					Info_Territory_Attack, ScrollPaneAddAttack, Info_TerritoryAttack_GridPane, Body.getPrefHeight()-header.getPrefHeight(), false, false, true);
+			afficherMenuAttack.DisplayInformations();
+		}
+		
+		
+	
 		//Gerer cas proprietaire ou non du territoire
-		if (FXMLDocumentController.territoireSelectionne.getProprietaire()
-				.equals(FXMLDocumentController.partieController.getJoueurEnCours())) {
-			Info_Territory_Attack.setVisible(true);
+		/*if (FXMLDocumentController.territoireSelectionne.getProprietaire()
+				.equals(FXMLDocumentController.partieController.getJoueurEnCours())) {			
+			ButtonAttack.setText("Déplacement");
 		}	
+		else {
+			ButtonAttack.setText("Attaquer");
+		}*/
+		
 	}
 
 	/**
@@ -394,7 +431,7 @@ public class FXMLDocumentController implements Initializable {
 		Info_TerritoryPlayer_NbUnity__3
 				.setText("" + FXMLDocumentController.partieController.getJoueurEnCours().getNbrUniteCanonTotal());
 		AfficherMenuRenforts afficherMenuRenforts = new AfficherMenuRenforts(AfficherMenuRenforts.controller = this,
-				Info_TerritoryPlayer, ScrollPaneAddBackups, Info_TerritoryPlayer_GridPane, Body.getPrefHeight()-header.getPrefHeight());
+				Info_TerritoryPlayer, ScrollPaneAddBackups, Info_TerritoryPlayer_GridPane, Body.getPrefHeight()-header.getPrefHeight(), true, false, false);
 
 		// Si le joueur actuel clique sur son icône et que c'est le moment des renforts, il peut en ajouter
 		// et voir un résumé de toutes ses unités ainsi que sa mission secrète
@@ -405,7 +442,7 @@ public class FXMLDocumentController implements Initializable {
 		else {
 			ScrollPaneAddBackups.setVisible(false);
 			AfficherMenuRenforts.deleteRow(Info_TerritoryPlayer_GridPane, row);
-			Info_TerritoryPlayer.setPrefHeight(Info_Territory.getPrefHeight());
+			Info_TerritoryPlayer.setPrefHeight(Info_Territory.getPrefHeight());			
 		}
 	}
 
