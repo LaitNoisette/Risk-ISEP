@@ -195,6 +195,7 @@ public class AfficherMenuRenforts extends FXMLDocumentController{
 							//t2.setId("NomTerritoire__Region__"+h+"__Unite__"+j+"__Label");	
 							
 							t2.setId(territoire.getNom()+"__"+territoire.getRegion().getNom().trim()+"__"+h+"__"+uReference.getNom().trim()+"__"+j+"__Label");
+							
 							//System.out.println(t2.getId());
 						}
 						else if (j==1) {
@@ -202,6 +203,12 @@ public class AfficherMenuRenforts extends FXMLDocumentController{
 							t2.getStyleClass().add("buttonPlusAddUnity");
 							//t2.setId("NomTerritoire__Region__"+h+"__Unite__"+j+"__Plus");
 							t2.setId(territoire.getNom()+"__"+territoire.getRegion().getNom().trim()+"__"+h+"__"+uReference.getNom().trim()+"__"+j+"__Plus");
+							String[] formatDataAddUnity = t2.getId().split("__");
+							int indice=0;
+							for (String string : formatDataAddUnity) {
+								System.out.println(indice+" : "+string);
+								indice++;
+							}
 							//System.out.println(t2.getId());
 						}
 						else {
