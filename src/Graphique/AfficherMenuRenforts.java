@@ -1,5 +1,6 @@
 package Graphique;
 
+import java.util.EventObject;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -134,16 +135,28 @@ public class AfficherMenuRenforts extends FXMLDocumentController{
 		}
 		if(this.isPaneAttack) {
 			// SALUT FRANCK FOR A CHANGER
-			for (Territoire territoire : FXMLDocumentController.partieController.getJoueurEnCours().getListeTerritoire()) {		
-				setListOfTerritory(GridPaneAddBackupsManual, territoire, h);
-				h++;
+			for (Territoire territoire : FXMLDocumentController.territoireSelectionne.getAdjacenceListeTerritoire()) {		
+				if(territoire.getProprietaire().equals(FXMLDocumentController.partieController.getJoueurEnCours())) {
+					setListOfTerritory(GridPaneAddBackupsManual, territoire, h);
+					h++;
+				}
+				
 			}
 		}
 		if(this.isPaneMoove) {
 			// SALUT FRANCK, FOR A CHANGER
+			/*
 			for (Territoire territoire : FXMLDocumentController.partieController.getJoueurEnCours().getListeTerritoire()) {
 				setListOfTerritory(GridPaneAddBackupsManual, territoire, h);
 				h++;
+			}
+			*/
+			for (Territoire territoire : FXMLDocumentController.territoireSelectionne.getAdjacenceListeTerritoire()) {		
+				if(territoire.getProprietaire().equals(FXMLDocumentController.partieController.getJoueurEnCours())) {
+					setListOfTerritory(GridPaneAddBackupsManual, territoire, h);
+					h++;
+				}
+				
 			}
 		}
 		//GridPaneAddBackupsManual.setGridLinesVisible(true);
@@ -257,19 +270,15 @@ public class AfficherMenuRenforts extends FXMLDocumentController{
 						t2.setId(territoire.getNom()+"__"+territoire.getRegion().getNom().trim()+"__"+h+"__"+uReference.getNom().trim()+"__"+j+"__Label");
 						//System.out.println(t2.getId());
 					}
-					else if (j==1) {
-						t2.setText("+");
-						t2.getStyleClass().add("buttonPlusAddUnity");
-						//t2.setId("NomTerritoire__Region__"+h+"__Unite__"+j+"__Plus");
-						t2.setId(territoire.getNom()+"__"+territoire.getRegion().getNom().trim()+"__"+h+"__"+uReference.getNom().trim()+"__"+j+"__Plus");
-						
-						String[] formatDataAddUnity = t2.getId().split("__");
-							int indice=0;
-							for (String string : formatDataAddUnity) {
-								System.out.println(indice+" : "+string);
-								indice++;
-							}
-						
+						else if (j==1) {
+							t2.setText("+");
+							t2.getStyleClass().add("buttonPlusAddUnity");
+							//t2.setId("NomTerritoire__Region__"+h+"__Unite__"+j+"__Plus");
+							t2.setId(territoire.getNom()+"__"+territoire.getRegion().getNom().trim()+"__"+h+"__"+uReference.getNom().trim()+"__"+j+"__Plus");
+/*
+							String[] formatDataAddUnity = t2.getId().split("__");
+*/
+							
 						t2.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 							@Override
@@ -277,14 +286,31 @@ public class AfficherMenuRenforts extends FXMLDocumentController{
 								event.getSource().getClass();
 								if (isPaneBackup) {
 								// SALUT FRANCK C'EST POUR TOI ICI <3
-									System.out.println("1");
+									//System.out.println("1");
+									// COUCOU FRANCK C'EST POUR TOI ICI <3
+									Node node = (Node) event.getSource();
+									String ajouterUniteClickId=node.getId();
+									
+									String[] formatDataAddUnity = ajouterUniteClickId.split("__");
+									/*
+									int indice=0;
+									for (String string : formatDataAddUnity) {
+										System.out.println(indice+" : "+string);
+										indice++;
+									}
+									*/
+								Territoire territoireAjoutUnite=FXMLDocumentController.partieController.getCarte().recupererTerritoireNOM(formatDataAddUnity[0]);
+								territoireAjoutUnite.ajouterUnite(formatDataAddUnity[3]);
 								}
 								if (isPaneAttack) {
-									System.out.println("2");
+									//System.out.println("2");
 								}
 								if (isPaneMoove) {
-									System.out.println("3");
+									//System.out.println("3");
 								}
+								
+								
+								
 							}
 				        });
 						//System.out.println(t2.getId());

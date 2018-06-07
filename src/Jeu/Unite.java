@@ -96,5 +96,7 @@ public class Unite {
 		//On changera le nom plus tard faut que je reverifie dans toute les classes ou ce nom est utilise en dur Modern AT
 		return new Unite("Canon", 7, 4, 9, 3, 2, 1);
 	}
+	
+	
 
 }

@@ -108,6 +108,19 @@ public class Territoire {
 		
 	}
 	
+	public void ajouterUnite(String unite) {
+		
+		if(unite.equals(Unite.nouveauSoldat().getNom())) {
+			this.ajouterUniteSoldat();
+		}
+		else if(unite.equals(Unite.nouveauCavalier().getNom())) {
+			this.ajouterUniteCavalier();
+		}
+		else if(unite.equals(Unite.nouveauCanon().getNom())){
+			this.ajouterUniteCanon();
+		}
+	}
+	
 	//Place unite dans la bonne liste
 	public void accueillirUnite(Unite u) {
 		if(u.getNom().equals("Soldat")) {
@@ -155,8 +168,9 @@ public class Territoire {
 		}
 	}
 	
-	public boolean getAdjacenceListeTerritoire(Territoire t) {
-		return this.territoireAdjacent.contains(t);
+	public Set<Territoire> getAdjacenceListeTerritoire(/*Territoire t*/) {
+		//return this.territoireAdjacent.contains(t);
+		return this.territoireAdjacent;
 	}
 	
 	
