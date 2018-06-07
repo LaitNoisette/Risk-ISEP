@@ -155,7 +155,7 @@ public class FXMLDocumentController implements Initializable {
 	private boolean renfort = true;
 	
 	// Permet de changer le temps des animations pour le déboggage 
-	private int time1 = 1000; //8000
+	private int time1 = 8000; //8000
 
 	private Partie partie;
 	public static Partie partieController;
@@ -358,9 +358,7 @@ public class FXMLDocumentController implements Initializable {
 			AfficherMenuRenforts afficherMenuAttack = new AfficherMenuRenforts(AfficherMenuRenforts.controller = this,
 					Info_Territory_Attack, ScrollPaneAddAttack, Info_TerritoryAttack_GridPane, Body.getPrefHeight()-header.getPrefHeight(), false, false, true);
 			afficherMenuAttack.DisplayInformations();
-		}
-		
-		
+		}		
 	
 		//Gerer cas proprietaire ou non du territoire
 		/*if (FXMLDocumentController.territoireSelectionne.getProprietaire()

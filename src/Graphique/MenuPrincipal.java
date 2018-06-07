@@ -40,8 +40,7 @@ public class MenuPrincipal extends Application {
 	public MenuPrincipal() {
 		this.resolutionHeight = 1080;
 		this.resolutionWidth=1920;
-	}
-	
+	}	
 	
 	public static FXMLDocumentController controller;
 	public static Partie partie;
@@ -80,7 +79,7 @@ public class MenuPrincipal extends Application {
         scene.setCamera(camera);*/
 	    
 		scene.getStylesheets().add("Graphique/style.css"); 
-	    stage.setTitle("FXML Welcome");
+	    stage.setTitle("Risk'ISEP");
 	    stage.setScene(scene);
 	    
 	    //stage.getIcons().add(new Image(Graphique.class.getResourceAsStream("file:background_ocean.png")));

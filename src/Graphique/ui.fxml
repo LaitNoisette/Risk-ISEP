@@ -785,11 +785,11 @@
          <left>
             <MenuBar prefHeight="37.0" prefWidth="686.0" styleClass="button_header" BorderPane.alignment="CENTER">
               <menus>
-                <Menu mnemonicParsing="false" styleClass="button_header_menu" text="Menu">
+                <Menu mnemonicParsing="false" text="Menu">
                   <items>
                         <MenuItem fx:id="CenterMapButton" mnemonicParsing="false" onAction="#onActionCenterMapButtonHandler" text="Recentrer la carte" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                    <MenuItem fx:id="closeGame" mnemonicParsing="false" onAction="#closeGameAction" styleClass="menuItem" text="Quitter le jeu">
+                    <MenuItem fx:id="closeGame" mnemonicParsing="false" onAction="#closeGameAction" text="Quitter le jeu">
                            <accelerator>
                               <KeyCodeCombination alt="UP" code="A" control="ANY" meta="UP" shift="UP" shortcut="UP" />
                            </accelerator>
