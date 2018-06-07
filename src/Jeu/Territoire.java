@@ -168,8 +168,9 @@ public class Territoire {
 		}
 	}
 	
-	public boolean getAdjacenceListeTerritoire(Territoire t) {
-		return this.territoireAdjacent.contains(t);
+	public Set<Territoire> getAdjacenceListeTerritoire(/*Territoire t*/) {
+		//return this.territoireAdjacent.contains(t);
+		return this.territoireAdjacent;
 	}
 	
 	
