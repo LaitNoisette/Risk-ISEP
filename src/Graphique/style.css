@@ -1,10 +1,11 @@
 .context-menu {
     -fx-skin: "com.sun.javafx.scene.control.skin.ContextMenuSkin";
-    -fx-background-color: black;
+    -fx-text-fill: #dedebc;
+    -fx-background-color: #21323C;
     -fx-background-insets: 0, 1, 2;
     -fx-background-radius: 0 6 6 6, 0 5 5 5, 0 4 4 4;
 /*    -fx-padding: 0.666667em 0.083333em 0.666667em 0.083333em;  8 1 8 1 */
-    -fx-padding: 0.333333em 0.083333em 0.666667em 0.083333em; /* 4 1 8 1 */
+	-fx-padding: 0.333333em 0.083333em 0.666667em 0.083333em; /* 4 1 8 1 */
 }
 
 .CursorHand {
@@ -20,14 +21,8 @@
 }
 
 .header, .menuColor {
-	/*-fx-background-color : #21323C;*/
 	-fx-background-color: rgba(33,50,60,0.97);
-	/*-fx-opacity : 0.2;*/
 }
-
-/*.Territory:hover {
- 	-fx-effect:innershadow(one-pass-box, #a3a3a3, 50, 0, 0, 0);
-}*/
 
 #ContainerSVG {
 	-fx-background-image: url("../resources/img/background/BackgroundOcean.gif");
@@ -41,25 +36,23 @@
     -fx-background-color: transparent;
     -fx-font-family:"TW Century MT", Helvetica, Arial, sans-serif;
     -fx-font-size: 1.2em; /* 12 */
-    -fx-text-fill: #FFFFFF;
+    -fx-text-fill: #dedebc;
 }
+
 .button_header .label {
-	-fx-text-fill: #FFFFFF;
+	-fx-text-fill: #dedebc;
 }
 
-.menuItem {
-	-fx-background-color : #7D7E76;
-	-fx-border-color : #7D7E76;
-	/*-fx-padding : 0;*/
+.button_header:focused {
+	-fx-text-fill: #d00000;
 }
 
-.menuItem .label {
-	-fx-background-color : #7D7E76;
-	-fx-border-width : 0;
+.menu-bar .menu-button:hover, .menu-bar .menu-button:focused, .menu-bar .menu-button:showing, .menu-item:focused {  
+    -fx-background-color: #436578;
 }
+
 
 #InfoTerritory {
-	/*-fx-border-color : #7D7E76;*/
 	-fx-border-color : #7D7E76;
 	-fx-border-width : 3,3,0,0;
 	-fx-border-insets : 8,8,8,8;

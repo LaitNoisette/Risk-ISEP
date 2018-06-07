@@ -393,8 +393,10 @@ public class FXMLDocumentController implements Initializable {
 
 		// Si c'est le panel d'informations du joueur, on réaffiche l'icône pour voir
 		// les informations du joueur
-		if (Objects.equals((String) node.getId(), new String("InfoTerritoryPlayer_CloseButton")))
+		if (Objects.equals((String) node.getId(), new String("InfoTerritoryPlayer_CloseButton"))) {
+			TourSuivant.setVisible(false);
 			IconPlayers.setVisible(true);
+		}		
 		else if (Objects.equals((String) node.getId(), new String("InfoTerritory_CloseButton")))
 			Info_Territory_Attack.setVisible(false);
 	}
@@ -410,6 +412,7 @@ public class FXMLDocumentController implements Initializable {
 		Info_TerritoryPlayer.setVisible(true);
 		// On rend invisible l'Anchor Pane contenant les icônes des joueurs
 		node.getParent().setVisible(false);
+		TourSuivant.setVisible(false);
 
 		// Informations du joueurs modifiées dans l'interface
 		Info_TerritoryPlayer_NbTerritory.setText("Territoires contrôlés : "

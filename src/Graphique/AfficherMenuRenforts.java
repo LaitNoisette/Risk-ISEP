@@ -6,13 +6,18 @@ import java.util.Set;
 
 import Jeu.Territoire;
 import Jeu.Unite;
+import javafx.animation.FadeTransition;
+import javafx.animation.Timeline;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
 import javafx.scene.input.MouseEvent;
@@ -22,6 +27,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 /**
  * Affiche tous les renforts que le joueur doit placer sur les territoires qu'il possède
@@ -99,18 +105,51 @@ public class AfficherMenuRenforts extends FXMLDocumentController{
 		RowConstraints row2 = new RowConstraints();
 		GridPaneAddBackupsManual.getRowConstraints().addAll(row1,row2);
 		
+		Button ButtonValider = new Button();
+		
 		// Configuration des labels de la première ligne qui ont une position fixe
+		if (this.isPaneAttack) {
+			ButtonValider.setText("Valider mon attaque");
+		}
+		else if (this.isPaneMoove) {
+			ButtonValider.setText("Valider mon déplacement");
+		}
+
 		if (this.isPaneBackup) {
 			Labelr0c0.setText("Nombre de points disponibles :");
-			//Labelr0c3.setText("[Nb]");
 			Labelr0c3.setText(""+FXMLDocumentController.partieController.getJoueurEnCours().getPointUnite()+"");
+			Labelr0c0.getStyleClass().add("firstRowAddUnityLabel");
+			Labelr0c3.getStyleClass().addAll("firstRowAddUnityLabel", "firstRowAddUnityNumber");
+
+			GridPane.setConstraints(Labelr0c0, 0, 0);
+			GridPane.setColumnSpan(Labelr0c0, 2);
+			GridPane.setMargin(Labelr0c0, new Insets(0, 0, 0, 20));	
+			GridPane.setConstraints(Labelr0c3, 2, 0);
+			GridPane.setColumnSpan(Labelr0c3, 1);
+			GridPane.setMargin(Labelr0c3, new Insets(0, 0, 0, 20));
+			
+			GridPaneAddBackupsManual.getChildren().add(Labelr0c0);		
+			GridPaneAddBackupsManual.getChildren().add(Labelr0c3);
 		}
-		else {
-			Labelr0c0.setText("Nombre d'unités disponibles :");
-			// SALUT FRANCK, unités disponibles pour le déplacement
+		else if (this.isPaneMoove || this.isPaneAttack) {
+			GridPane.setConstraints(ButtonValider, 0, 0);
+			GridPane.setColumnSpan(ButtonValider, 3);
+			GridPane.setHalignment(ButtonValider, HPos.CENTER);
+			GridPaneAddBackupsManual.getChildren().add(ButtonValider);		
+			
 		}
 		
-		Labelr0c0.getStyleClass().add("firstRowAddUnityLabel");
+		GridPaneAddBackupsManual.getRowConstraints().get(0).setPrefHeight(35);
+		
+		ButtonValider.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				System.out.println("fedlsk");
+				// SALUT FRANCK
+			}		
+		});
+		
+		/*Labelr0c0.getStyleClass().add("firstRowAddUnityLabel");
 		Labelr0c3.getStyleClass().addAll("firstRowAddUnityLabel", "firstRowAddUnityNumber");
 
 		GridPane.setConstraints(Labelr0c0, 0, 0);
@@ -121,8 +160,11 @@ public class AfficherMenuRenforts extends FXMLDocumentController{
 		GridPane.setMargin(Labelr0c3, new Insets(0, 0, 0, 20));
 		
 		GridPaneAddBackupsManual.getChildren().add(Labelr0c0);		
-		GridPaneAddBackupsManual.getChildren().add(Labelr0c3);			
-		GridPaneAddBackupsManual.getRowConstraints().get(0).setPrefHeight(35);
+		GridPaneAddBackupsManual.getChildren().add(Labelr0c3);*/
+		
+		//ButtonValider.setAlignment(Pos.CENTER);
+		
+		
 		
 		// Pour chaque territoire que le joueur possède, on ajoute les différents éléments du menu
 		
