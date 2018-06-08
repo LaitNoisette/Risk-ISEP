@@ -84,6 +84,8 @@ public class Carte {
 		carteNY.ajouterAdjacenceTerritoireRegionStatenIslandCarteNY();
 		carteNY.ajouterAdjacenceTerritoireRegionBronxCarteNY();
 		carteNY.ajouterAdjacenceTerritoireRegionManhattanCarteNY();
+		carteNY.ajouterAdjacenceTerritoireRegionBrooklynCarteNY();
+		carteNY.ajouterAdjacenceTerritoireRegionQueensCarteNY();
 		
 		for (Region region : carteNY.listeRegion) {
 			if(region.getPlusGrandeRegion()) {

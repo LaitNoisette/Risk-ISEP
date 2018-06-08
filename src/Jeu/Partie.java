@@ -161,6 +161,10 @@ public class Partie {
 		return this.carteJeu;
 	}
 	
+	public Set<Joueur> getListeJoueurActif(){
+		return this.listeJoueurs;
+	}
+	
 	//permet de passer le tour
 	public void gererTourJoueur() {
 		//Le joueur ne peut pas passer le premier tour tant qu'il n'a pas respecte les conditions

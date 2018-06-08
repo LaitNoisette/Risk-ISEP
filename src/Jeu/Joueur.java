@@ -55,7 +55,7 @@ public class Joueur {
 	}
 	
 	public String getCouleur() {
-		return this.getCouleur();
+		return this.couleur;
 	}
 	
 	public int getNbTerritoireCaptureTourPrecedent() {

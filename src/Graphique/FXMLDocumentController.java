@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 import Jeu.Bataille;
+import Jeu.Carte;
 import Jeu.Joueur;
 import Jeu.Partie;
 import Jeu.Territoire;
@@ -540,13 +541,24 @@ public class FXMLDocumentController implements Initializable {
 		// A MODIFIER POUR TOUS LES JOUEURS COUCOU FRANCK
 		ArrayList<Node> nodes = new ArrayList<Node>();			
 		addAllDescendents(ContainerSVG, nodes);	
-		for (Territoire territoire : FXMLDocumentController.partieController.getJoueurEnCours().getListeTerritoire()) {
+		for (Territoire territoire : FXMLDocumentController.partieController.getCarte().getAllTerritoire()) {
 			for (Node n : nodes) {
 				if (n.getId()!=null) {
 					String[] tokens = n.getId().split("__");
 					String prefix = tokens[0];
 					if (prefix.equals(territoire.getNom().replaceAll(" ", "_"))) {
-						n.setStyle("-fx-fill:red");
+						//n.setStyle("-fx-fill:red");
+						//n.setStyle("-fx-fill:rgb(125,126,118)");
+						for (Joueur j : FXMLDocumentController.partieController.getListeJoueurActif()) {
+							Territoire t= FXMLDocumentController.partieController.getCarte().recupererTerritoireNOM(territoire.getNom().replaceAll(" ", "_"));
+							if(t.getProprietaire().equals(j)) {
+								//n.setStyle("-fx-fill:"+FXMLDocumentController.partieController.getJoueurEnCours().getCouleur());
+								n.setStyle("-fx-fill:"+j.getCouleur());
+							}
+							
+						}
+						
+						
 					}
 						
 				}		
@@ -662,45 +674,153 @@ public class FXMLDocumentController implements Initializable {
 	 */
 	@FXML
 	private void onActionLancerPartieHandler() {
+
 		ArrayList<String[]> lJoueur=new ArrayList<String[]>();
 		
 		
 		
-		if(PseudoTextIndex__1.getText()!=null) {
+		if(PseudoTextIndex__1.getText()!=null && !PseudoTextIndex__1.getText().equals("Pseudo 1")) {
 			System.out.println(PseudoTextIndex__1.getText());
-			String[] joueur1Parametre = new String[3];
+			String[] joueurParametre = new String[3];
+			joueurParametre[0]=PseudoTextIndex__1.getText();
+			joueurParametre[1]=this.toRgbString((Color)CircleIconPlayerIndex__1.getStroke());
 			
-			lJoueur.add(joueur1Parametre);
+			System.out.println(joueurParametre[0]+" "+joueurParametre[1]);
+			
+			lJoueur.add(joueurParametre);
 			
 		}
 		
-		if(PseudoTextIndex__2.getText()!=null) {
-			String[] joueur2Parametre = new String[3];
-			lJoueur.add(joueur2Parametre);
+		if(PseudoTextIndex__2.getText()!=null && !PseudoTextIndex__2.getText().equals("Pseudo 2")) {
+			String[] joueurParametre = new String[3];
+			joueurParametre[0]=PseudoTextIndex__2.getText();
+			joueurParametre[1]=this.toRgbString((Color)CircleIconPlayerIndex__2.getStroke());
+			System.out.println(joueurParametre[0]+" "+joueurParametre[1]);
+			lJoueur.add(joueurParametre);
 		}
 		
-		if(PseudoTextIndex__3.getText()!=null) {
-			String[] joueur3Parametre = new String[3];
-			lJoueur.add(joueur3Parametre);
+		if(PseudoTextIndex__3.getText()!=null && !PseudoTextIndex__3.getText().equals("Pseudo 3")) {
+			String[] joueurParametre = new String[3];
+			
+			joueurParametre[0]=PseudoTextIndex__3.getText();
+			joueurParametre[1]=this.toRgbString((Color)CircleIconPlayerIndex__3.getStroke());
+			System.out.println(joueurParametre[0]+" "+joueurParametre[1]);
+			lJoueur.add(joueurParametre);
 
 		}
 		
-		if(PseudoTextIndex__4.getText()!=null) {
-			String[] joueur4Parametre = new String[3];
-			lJoueur.add(joueur4Parametre);
+		if(PseudoTextIndex__4.getText()!=null && !PseudoTextIndex__4.getText().equals("Pseudo 4")) {
+			String[] joueurParametre = new String[3];
+			joueurParametre[0]=PseudoTextIndex__4.getText();
+			joueurParametre[1]=this.toRgbString((Color)CircleIconPlayerIndex__4.getStroke());
+			System.out.println(joueurParametre[0]+" "+joueurParametre[1]);
+			lJoueur.add(joueurParametre);
 
 		}
 		
-		if(PseudoTextIndex__5.getText()!=null) {
-			String[] joueur5Parametre = new String[3];
-			lJoueur.add(joueur5Parametre);
+		if(PseudoTextIndex__5.getText()!=null && !PseudoTextIndex__5.getText().equals("Pseudo 5")) {
+			String[] joueurParametre = new String[3];
+			joueurParametre[0]=PseudoTextIndex__5.getText();
+			joueurParametre[1]=this.toRgbString((Color)CircleIconPlayerIndex__5.getStroke());
+			System.out.println(joueurParametre[0]+" "+joueurParametre[1]);
+			lJoueur.add(joueurParametre);
 		}
 		
-		if(PseudoTextIndex__6.getText()!=null) {
-			String[] joueur6Parametre = new String[3];
-			lJoueur.add(joueur6Parametre);
+		if(PseudoTextIndex__6.getText()!=null && !PseudoTextIndex__6.getText().equals("Pseudo 6")) {
+			String[] joueurParametre = new String[3];
+			joueurParametre[0]=PseudoTextIndex__6.getText();
+			joueurParametre[1]=this.toRgbString((Color)CircleIconPlayerIndex__6.getStroke());
+			System.out.println(joueurParametre[0]+" "+joueurParametre[1]);
+			lJoueur.add(joueurParametre);
 		}
 		
+		/*
+		System.out.println(CircleIconPlayerIndex__1.getStroke());
+		// .setStroke() pour changer couleur
+		System.out.println(PseudoTextIndex__1.getText());
+		System.out.println(IconPlayerIndex__1.getViewport());
+		*/
+		FXMLDocumentController.partieController=new Partie(lJoueur, Carte.CarteNY());
+		
+		// Changement du nom du joueur dans les menus
+		Info_TerritoryPlayer_Pseudo.setText(FXMLDocumentController.partieController.getJoueurEnCours().getNom());
+		
+		// On définit la couleur des territoires appartenant au joueur actuel
+		// A MODIFIER POUR TOUS LES JOUEURS COUCOU FRANCK
+		ArrayList<Node> nodes = new ArrayList<Node>();			
+		addAllDescendents(ContainerSVG, nodes);	
+		/*
+		for (Territoire territoire : FXMLDocumentController.partieController.getJoueurEnCours().getListeTerritoire()) {
+			for (Node n : nodes) {
+				if (n.getId()!=null) {
+					String[] tokens = n.getId().split("__");
+					String prefix = tokens[0];
+					if (prefix.equals(territoire.getNom().replaceAll(" ", "_"))) {
+						//n.setStyle("-fx-fill:red");
+						//n.setStyle("-fx-fill:rgb(125,126,118)");
+						n.setStyle("-fx-fill:"+FXMLDocumentController.partieController.getJoueurEnCours().getCouleur());
+						
+					}
+						
+				}		
+			}
+		}
+*/
+		/*
+		
+		for (Territoire territoire : FXMLDocumentController.partieController.getJoueurEnCours().getListeTerritoire()) {
+			for (Node n : nodes) {
+				if (n.getId()!=null) {
+					String[] tokens = n.getId().split("__");
+					String prefix = tokens[0];
+					if (prefix.equals(territoire.getNom().replaceAll(" ", "_"))) {
+						//n.setStyle("-fx-fill:red");
+						//n.setStyle("-fx-fill:rgb(125,126,118)");
+						for (Joueur j : FXMLDocumentController.partieController.getListeJoueurActif()) {
+							System.out.println(prefix);
+							System.out.println(territoire.getNom().replaceAll(" ", "_"));
+							Territoire t= FXMLDocumentController.partieController.getCarte().recupererTerritoireNOM(territoire.getNom().replaceAll(" ", "_"));
+							
+							if(territoire.getProprietaire().equals(j)) {
+								//n.setStyle("-fx-fill:"+FXMLDocumentController.partieController.getJoueurEnCours().getCouleur());
+								n.setStyle("-fx-fill:"+j.getCouleur());
+							}
+							
+						}
+						
+						
+					}
+						
+				}		
+			}
+		}
+		*/
+		for (Territoire territoire : FXMLDocumentController.partieController.getCarte().getAllTerritoire()) {
+			for (Node n : nodes) {
+				if (n.getId()!=null) {
+					String[] tokens = n.getId().split("__");
+					String prefix = tokens[0];
+					if (prefix.equals(territoire.getNom().replaceAll(" ", "_"))) {
+						//n.setStyle("-fx-fill:red");
+						//n.setStyle("-fx-fill:rgb(125,126,118)");
+						for (Joueur j : FXMLDocumentController.partieController.getListeJoueurActif()) {
+							/*System.out.println(prefix);
+							System.out.println(territoire.getNom().replaceAll(" ", "_"));
+							Territoire t= FXMLDocumentController.partieController.getCarte().recupererTerritoireNOM(territoire.getNom().replaceAll(" ", "_"));
+							*/
+							if(territoire.getProprietaire().equals(j)) {
+								//n.setStyle("-fx-fill:"+FXMLDocumentController.partieController.getJoueurEnCours().getCouleur());
+								n.setStyle("-fx-fill:"+j.getCouleur());
+							}
+							
+						}
+						
+						
+					}
+						
+				}		
+			}
+		}
 		setVisibleInit();
 	}	
 
@@ -794,25 +914,7 @@ public class FXMLDocumentController implements Initializable {
 							// Initialisation premier joueur exemple le nom
 							// this.partieController.getJoueurEnCours().getNom();
 
-							// Changement du nom du joueur dans les menus
-							Info_TerritoryPlayer_Pseudo.setText(FXMLDocumentController.partieController.getJoueurEnCours().getNom());
-							
-							// On définit la couleur des territoires appartenant au joueur actuel
-							// A MODIFIER POUR TOUS LES JOUEURS COUCOU FRANCK
-							ArrayList<Node> nodes = new ArrayList<Node>();			
-							addAllDescendents(ContainerSVG, nodes);	
-							for (Territoire territoire : FXMLDocumentController.partieController.getJoueurEnCours().getListeTerritoire()) {
-								for (Node n : nodes) {
-									if (n.getId()!=null) {
-										String[] tokens = n.getId().split("__");
-										String prefix = tokens[0];
-										if (prefix.equals(territoire.getNom().replaceAll(" ", "_"))) {
-											n.setStyle("-fx-fill:red");
-										}
-											
-									}		
-								}
-							}	
+								
 						}
 			        });
 				}

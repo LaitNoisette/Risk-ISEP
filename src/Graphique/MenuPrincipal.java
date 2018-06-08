@@ -98,7 +98,7 @@ public class MenuPrincipal extends Application {
 		*/
 		//System.out.println(p.getCarte().recupererTerritoireNOM("Port Richmond").getNom());
 		
-		FXMLDocumentController.partieController=p;
+		//FXMLDocumentController.partieController=p;
 		System.out.println("cc je compile");
 		Application.launch(MenuPrincipal.class,args);	
 		//MenuPrincipal.controller.setPartie(p);
