@@ -146,7 +146,7 @@ public class AfficherMenuRenforts extends FXMLDocumentController{
 				System.out.println("fedlsk");
 				// SALUT FRANCK
 				FXMLDocumentController.batailleJeu.jouerBataille();
-				FXMLDocumentController.batailleJeu=null;
+				//FXMLDocumentController.batailleJeu=null;
 			}		
 		});
 		
