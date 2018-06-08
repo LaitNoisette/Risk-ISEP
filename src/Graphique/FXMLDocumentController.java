@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 import Jeu.Bataille;
+import Jeu.Joueur;
 import Jeu.Partie;
 import Jeu.Territoire;
 import Jeu.Unite;
@@ -535,6 +536,22 @@ public class FXMLDocumentController implements Initializable {
 		
 		// Changement du nom du joueur dans les menus
 		Info_TerritoryPlayer_Pseudo.setText(FXMLDocumentController.partieController.getJoueurEnCours().getNom());
+		// On définit la couleur des territoires appartenant au joueur actuel
+		// A MODIFIER POUR TOUS LES JOUEURS COUCOU FRANCK
+		ArrayList<Node> nodes = new ArrayList<Node>();			
+		addAllDescendents(ContainerSVG, nodes);	
+		for (Territoire territoire : FXMLDocumentController.partieController.getJoueurEnCours().getListeTerritoire()) {
+			for (Node n : nodes) {
+				if (n.getId()!=null) {
+					String[] tokens = n.getId().split("__");
+					String prefix = tokens[0];
+					if (prefix.equals(territoire.getNom().replaceAll(" ", "_"))) {
+						n.setStyle("-fx-fill:red");
+					}
+						
+				}		
+			}
+		}
 		PaneTourSuivantNomJoueur.setTranslateY(1080);
 		System.out.println(PaneTourSuivantNomJoueur.getLayoutY());
 		PaneTourSuivantNomJoueur.setVisible(true);
@@ -645,6 +662,45 @@ public class FXMLDocumentController implements Initializable {
 	 */
 	@FXML
 	private void onActionLancerPartieHandler() {
+		ArrayList<String[]> lJoueur=new ArrayList<String[]>();
+		
+		
+		
+		if(PseudoTextIndex__1.getText()!=null) {
+			System.out.println(PseudoTextIndex__1.getText());
+			String[] joueur1Parametre = new String[3];
+			
+			lJoueur.add(joueur1Parametre);
+			
+		}
+		
+		if(PseudoTextIndex__2.getText()!=null) {
+			String[] joueur2Parametre = new String[3];
+			lJoueur.add(joueur2Parametre);
+		}
+		
+		if(PseudoTextIndex__3.getText()!=null) {
+			String[] joueur3Parametre = new String[3];
+			lJoueur.add(joueur3Parametre);
+
+		}
+		
+		if(PseudoTextIndex__4.getText()!=null) {
+			String[] joueur4Parametre = new String[3];
+			lJoueur.add(joueur4Parametre);
+
+		}
+		
+		if(PseudoTextIndex__5.getText()!=null) {
+			String[] joueur5Parametre = new String[3];
+			lJoueur.add(joueur5Parametre);
+		}
+		
+		if(PseudoTextIndex__6.getText()!=null) {
+			String[] joueur6Parametre = new String[3];
+			lJoueur.add(joueur6Parametre);
+		}
+		
 		setVisibleInit();
 	}	
 

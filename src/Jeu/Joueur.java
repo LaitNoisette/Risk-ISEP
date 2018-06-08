@@ -21,7 +21,7 @@ public class Joueur {
 	private boolean joueurDetruit = false;
 	private boolean premierTour=true;
 	//private int pointUnite = 0;
-	private Color couleur;
+	private String couleur;
 
 	private int nbTerritoireCaptureTourPrecedent=0;
 	
@@ -37,8 +37,25 @@ public class Joueur {
 		*/
 	}
 	
+	public Joueur(String[] paramJoueur, int nbrArmeeBase) {
+		this.nomJoueur = paramJoueur[0];
+		this.couleur=paramJoueur[1];
+		this.pointUniteJoueur=nbrArmeeBase;
+
+		// Creation de l'armee du joueur
+		/*
+		for (int i = 0; i < nbrArmeeBase; i++) {
+			this.listeUniteSoldat.add(Unite.nouveauSoldat());
+		}
+		*/
+	}
+	
 	public String getNom() {
 		return this.nomJoueur;
+	}
+	
+	public String getCouleur() {
+		return this.getCouleur();
 	}
 	
 	public int getNbTerritoireCaptureTourPrecedent() {

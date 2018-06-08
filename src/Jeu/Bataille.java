@@ -224,8 +224,13 @@ public class Bataille {
 						
 					}
 				}
-				System.out.println("DEF 1 :"+this.def1.getNom());
-				System.out.println("DEF 2 : "+this.def2.getNom());
+				if(this.def1!=null) {
+					System.out.println("DEF 1 :"+this.def1.getNom());
+				}
+				if(this.def2!=null) {
+					System.out.println("DEF 2 : "+this.def2.getNom());
+				}
+				
 		
 	}
 
@@ -373,7 +378,7 @@ public class Bataille {
 				this.def1=this.att2;
 				this.att2=uTemp;
 			}
-			else if(this.att2.getPuissanceBataille()==this.att1.getPuissanceBataille() && this.att2.getPrioriteDEF()<this.att1.getPrioriteDEF()) {
+			else if(this.att2.getPuissanceBataille()==this.att1.getPuissanceBataille() && this.att2.getPrioriteATT()<this.att1.getPrioriteATT()) {
 				Unite uTemp=this.att1;
 				this.att1=this.att2;
 				this.att2=uTemp;
@@ -478,8 +483,7 @@ public class Bataille {
 		System.out.println("ATT 2 :"+this.att2.getNom()+" Puissance : "+this.att2.getPuissanceBataille());
 		System.out.println("ATT 3 :"+this.att3.getNom()+" Puissance : "+this.att3.getPuissanceBataille());
 		
-		System.out.println("DEF 1 :"+this.def1.getNom()+" Puissance : "+this.def1.getPuissanceBataille());
-		System.out.println("DEF 2 :"+this.def2.getNom()+" Puissance : "+this.def2.getPuissanceBataille());
+		
 		
 		this.trierDefenseur();
 		this.trierAttaquant();
@@ -489,8 +493,14 @@ public class Bataille {
 		System.out.println("ATT 2 :"+this.att2.getNom()+" Puissance : "+this.att2.getPuissanceBataille());
 		System.out.println("ATT 3 :"+this.att3.getNom()+" Puissance : "+this.att3.getPuissanceBataille());
 		
-		System.out.println("DEF 1 :"+this.def1.getNom()+" Puissance : "+this.def1.getPuissanceBataille());
-		System.out.println("DEF 2 :"+this.def2.getNom()+" Puissance : "+this.def2.getPuissanceBataille());
+		if (this.def1!=null) {
+			System.out.println("DEF 1 :"+this.def1.getNom()+" Puissance : "+this.def1.getPuissanceBataille());
+
+		}
+		if(this.def2!=null) {
+			System.out.println("DEF 2 :"+this.def2.getNom()+" Puissance : "+this.def2.getPuissanceBataille());
+
+		}
 		
 		if(!victoireAttaquant()) {
 			if(this.att1!=null && this.def1!=null) {
@@ -526,6 +536,10 @@ public class Bataille {
 				this.gererUniteVictoireDefenseurPostBataille();
 			}
 			
+		}
+		else if(victoireAttaquant()) {
+			this.territoireDEF.conquerirTerritoire(this.territoireATT.getProprietaire());
+			this.gererUniteVictoireAttaquantPostBataille();
 		}
 		
 		//Parcourir chaque attaquant et prendre le plus puissant avec la priorité la plus faible
