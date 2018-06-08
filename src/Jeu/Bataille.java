@@ -479,19 +479,44 @@ public class Bataille {
 		this.ajouterUniteDefense();
 		this.puissanceUniteBataille();
 		System.out.println("--- Unité avant tri ---");
-		System.out.println("ATT 1 :"+this.att1.getNom()+" Puissance : "+this.att1.getPuissanceBataille());
-		System.out.println("ATT 2 :"+this.att2.getNom()+" Puissance : "+this.att2.getPuissanceBataille());
-		System.out.println("ATT 3 :"+this.att3.getNom()+" Puissance : "+this.att3.getPuissanceBataille());
+		if(this.att1!=null) {
+			System.out.println("ATT 1 :"+this.att1.getNom()+" Puissance : "+this.att1.getPuissanceBataille());
+
+		}
+		if(this.att2!=null) {
+			System.out.println("ATT 2 :"+this.att2.getNom()+" Puissance : "+this.att2.getPuissanceBataille());
+
+		}
+		if(this.att3!=null) {
+			System.out.println("ATT 3 :"+this.att3.getNom()+" Puissance : "+this.att3.getPuissanceBataille());
+
+		}
 		
-		
+		if (this.def1!=null) {
+			System.out.println("DEF 1 :"+this.def1.getNom()+" Puissance : "+this.def1.getPuissanceBataille());
+
+		}
+		if(this.def2!=null) {
+			System.out.println("DEF 2 :"+this.def2.getNom()+" Puissance : "+this.def2.getPuissanceBataille());
+
+		}
 		
 		this.trierDefenseur();
 		this.trierAttaquant();
 		
 		System.out.println("--- Unité après tri ---");
-		System.out.println("ATT 1 :"+this.att1.getNom()+" Puissance : "+this.att1.getPuissanceBataille());
-		System.out.println("ATT 2 :"+this.att2.getNom()+" Puissance : "+this.att2.getPuissanceBataille());
-		System.out.println("ATT 3 :"+this.att3.getNom()+" Puissance : "+this.att3.getPuissanceBataille());
+		if(this.att1!=null) {
+			System.out.println("ATT 1 :"+this.att1.getNom()+" Puissance : "+this.att1.getPuissanceBataille());
+
+		}
+		if(this.att2!=null) {
+			System.out.println("ATT 2 :"+this.att2.getNom()+" Puissance : "+this.att2.getPuissanceBataille());
+
+		}
+		if(this.att3!=null) {
+			System.out.println("ATT 3 :"+this.att3.getNom()+" Puissance : "+this.att3.getPuissanceBataille());
+
+		}
 		
 		if (this.def1!=null) {
 			System.out.println("DEF 1 :"+this.def1.getNom()+" Puissance : "+this.def1.getPuissanceBataille());
