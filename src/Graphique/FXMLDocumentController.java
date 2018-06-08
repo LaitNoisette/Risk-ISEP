@@ -645,6 +645,11 @@ public class FXMLDocumentController implements Initializable {
 	 */
 	@FXML
 	private void onActionLancerPartieHandler() {
+		System.out.println(CircleIconPlayerIndex__1.getStroke());
+		// .setStroke() pour changer couleur
+		System.out.println(PseudoTextIndex__1.getText());
+		System.out.println(IconPlayerIndex__1.getViewport());
+	
 		setVisibleInit();
 	}	
 
