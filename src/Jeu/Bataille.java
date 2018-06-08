@@ -96,7 +96,7 @@ public class Bataille {
 			// Unite ajoute en attaque
 			if (listeUnite != null) {
 				Iterator<Unite> listeUniteIterator = listeUnite.iterator();
-					while (listeUniteIterator.hasNext()) {
+					while (listeUniteIterator.hasNext() && ajout1UniteEnCours) {
 						Unite u = listeUniteIterator.next();
 						
 							if (this.def1 == null && ajout1UniteEnCours) {
@@ -119,7 +119,7 @@ public class Bataille {
 			// Unite ajoute en attaque
 			if (listeUnite != null) {
 				Iterator<Unite> listeUniteIterator = listeUnite.iterator();
-					while (listeUniteIterator.hasNext()) {
+					while (listeUniteIterator.hasNext() && ajout1UniteEnCours) {
 						Unite u = listeUniteIterator.next();
 						
 							if (this.def1 == null && ajout1UniteEnCours) {
@@ -142,13 +142,13 @@ public class Bataille {
 			// Unite ajoute en attaque
 			if (listeUnite != null) {
 				Iterator<Unite> listeUniteIterator = listeUnite.iterator();
-					while (listeUniteIterator.hasNext()) {
+					while (listeUniteIterator.hasNext() && ajout1UniteEnCours ) {
 						Unite u = listeUniteIterator.next();
 						
 							if (this.def1 == null && ajout1UniteEnCours) {
 								this.def1=u;
 								listeUnite.remove(u);
-								listeUniteIterator.remove();
+								//listeUniteIterator.remove();
 								ajout1UniteEnCours = false;
 							} 
 						
@@ -166,13 +166,13 @@ public class Bataille {
 					// Unite ajoute en attaque
 					if (listeUnite != null) {
 						Iterator<Unite> listeUniteIterator = listeUnite.iterator();
-							while (listeUniteIterator.hasNext()) {
+							while (listeUniteIterator.hasNext() && ajout1UniteEnCours) {
 								Unite u = listeUniteIterator.next();
 								
 									if (this.def2 == null && ajout1UniteEnCours) {
 										this.def2=u;
 										listeUnite.remove(u);
-										listeUniteIterator.remove();
+										//listeUniteIterator.remove();
 										ajout1UniteEnCours = false;
 									} 
 								
@@ -188,13 +188,13 @@ public class Bataille {
 					// Unite ajoute en attaque
 					if (listeUnite != null) {
 						Iterator<Unite> listeUniteIterator = listeUnite.iterator();
-							while (listeUniteIterator.hasNext()) {
+							while (listeUniteIterator.hasNext() && ajout1UniteEnCours) {
 								Unite u = listeUniteIterator.next();
 								
 									if (this.def2 == null && ajout1UniteEnCours) {
 										this.def2=u;
 										listeUnite.remove(u);
-										listeUniteIterator.remove();
+										//listeUniteIterator.remove();
 										ajout1UniteEnCours = false;
 									}
 								
@@ -210,13 +210,13 @@ public class Bataille {
 					// Unite ajoute en attaque
 					if (listeUnite != null) {
 						Iterator<Unite> listeUniteIterator = listeUnite.iterator();
-							while (listeUniteIterator.hasNext()) {
+							while (listeUniteIterator.hasNext() && ajout1UniteEnCours) {
 								Unite u = listeUniteIterator.next();
 								
 									if (this.def2 == null && ajout1UniteEnCours) {
 										this.def2=u;
 										listeUnite.remove(u);
-										listeUniteIterator.remove();
+										//listeUniteIterator.remove();
 										ajout1UniteEnCours = false;
 									} 
 								
@@ -262,24 +262,24 @@ public class Bataille {
 	
 	public void puissanceUniteBataille() {
 		if(this.att1!=null) {
-			this.att1.setPuissanceBataille(calculPuissance(this.att1.getPuissanceMin(), this.att1.getPuissanceMax()));
+			this.att1.setPuissanceBataille(this.calculPuissance(this.att1.getPuissanceMin(), this.att1.getPuissanceMax()));
 		}
 		
 		if(this.att2!=null) {
-			this.att2.setPuissanceBataille(calculPuissance(this.att2.getPuissanceMin(), this.att2.getPuissanceMax()));
+			this.att2.setPuissanceBataille(this.calculPuissance(this.att2.getPuissanceMin(), this.att2.getPuissanceMax()));
 		}
 		
 		if(this.att3!=null) {
-			this.att3.setPuissanceBataille(calculPuissance(this.att3.getPuissanceMin(), this.att3.getPuissanceMax()));
+			this.att3.setPuissanceBataille(this.calculPuissance(this.att3.getPuissanceMin(), this.att3.getPuissanceMax()));
 		}
 		
 		
 		if(this.def1!=null) {
-			this.def1.setPuissanceBataille(calculPuissance(this.def1.getPuissanceMin(), this.def1.getPuissanceMax()));
+			this.def1.setPuissanceBataille(this.calculPuissance(this.def1.getPuissanceMin(), this.def1.getPuissanceMax()));
 		}
 		
 		if(this.def2!=null) {
-			this.def2.setPuissanceBataille(calculPuissance(this.def2.getPuissanceMin(), this.def2.getPuissanceMax()));
+			this.def2.setPuissanceBataille(this.calculPuissance(this.def2.getPuissanceMin(), this.def2.getPuissanceMax()));
 		}
 	}
 	
@@ -342,22 +342,29 @@ public class Bataille {
 			while(!triFini) {
 				triFini=true;
 				for(int i=0;i<(listeUniteATT.length-1);i++) {
-					if(listeUniteATT[i+1].getPuissanceBataille()>listeUniteATT[i].getPuissanceBataille()) {
-						Unite uTemp=listeUniteATT[i+1];
-						listeUniteATT[i+1]=listeUniteATT[i];
-						listeUniteATT[i]=uTemp;
-						triFini=false;
-					}
-					//Puissance equivalente on prend la priorite la plus basse
-					else if(listeUniteATT[i+1].getPuissanceBataille()==listeUniteATT[i].getPuissanceBataille() && listeUniteATT[i+1].getPrioriteATT()<listeUniteATT[i].getPrioriteATT()) {
-						Unite uTemp=listeUniteATT[i+1];
-						listeUniteATT[i+1]=listeUniteATT[i];
-						listeUniteATT[i]=uTemp;
-						triFini=false;
-					}
+					int j=i+1;
+					
+						if(listeUniteATT[j].getPuissanceBataille()>listeUniteATT[i].getPuissanceBataille()) {
+							Unite uTemp=listeUniteATT[j];
+							listeUniteATT[j]=listeUniteATT[i];
+							listeUniteATT[i]=uTemp;
+							triFini=false;
+						}
+						//Puissance equivalente on prend la priorite la plus basse
+						else if(listeUniteATT[i].getPuissanceBataille()==listeUniteATT[j].getPuissanceBataille() && listeUniteATT[j].getPrioriteATT()<listeUniteATT[i].getPrioriteATT()) {
+							Unite uTemp=listeUniteATT[j];
+							listeUniteATT[j]=listeUniteATT[i];
+							listeUniteATT[i]=uTemp;
+							triFini=false;
+						}
+					
+					
 					
 				}
 			}
+			this.att1=listeUniteATT[0];
+			this.att2=listeUniteATT[1];
+			this.att3=listeUniteATT[2];
 			
 		}
 		else if(this.att2!=null) {
@@ -389,7 +396,8 @@ public class Bataille {
 		if(att.getPuissanceBataille()==def.getPuissanceBataille()) {
 		Set<Unite> listeUniteATT=this.territoireATT.getListeTypeUnite(att.getNom());
 		if(listeUniteATT.contains(att)) {
-			listeUniteATT.remove(att);
+			
+			//listeUniteATT.remove(att);
 		}
 		return false;
 		
@@ -397,14 +405,14 @@ public class Bataille {
 		else if(att.getPuissanceBataille()>def.getPuissanceBataille()) {
 			Set<Unite> listeUniteATT=this.territoireDEF.getListeTypeUnite(def.getNom());
 			if(listeUniteATT.contains(def)) {
-				listeUniteATT.remove(def);
+				//listeUniteATT.remove(def);
 			}
 			return true;
 		}
 		else {
 			Set<Unite> listeUniteATT=this.territoireATT.getListeTypeUnite(att.getNom());
 			if(listeUniteATT.contains(att)) {
-				listeUniteATT.remove(att);
+				//listeUniteATT.remove(att);
 			}
 			return false;
 		}
@@ -427,24 +435,38 @@ public class Bataille {
 	
 	public void gererUniteVictoireDefenseurPostBataille() {
 		if(this.att1!=null) {
-			this.att1.ajouterUniteConqueranteTerritoire(this.territoireATT);
+			//this.att1.ajouterUniteConqueranteTerritoire(this.territoireATT);
+			Set<Unite> tLUnite=this.territoireATT.getListeTypeUnite(this.att1.getNom());
+			tLUnite.add(this.att1);
+			this.att1=null;
 		}
 		
 		if(this.att2!=null) {
-			this.att2.ajouterUniteConqueranteTerritoire(this.territoireATT);
-
+			//this.att2.ajouterUniteConqueranteTerritoire(this.territoireATT);
+			Set<Unite> tLUnite=this.territoireATT.getListeTypeUnite(this.att2.getNom());
+			tLUnite.add(this.att2);
+			this.att2=null;
 		}
 		
 		if(this.att3!=null) {
-			this.att3.ajouterUniteConqueranteTerritoire(this.territoireATT);
+			//this.att3.ajouterUniteConqueranteTerritoire(this.territoireATT);
+			Set<Unite> tLUnite=this.territoireATT.getListeTypeUnite(this.att3.getNom());
+			tLUnite.add(this.att3);
+			this.att3=null;
 		}
 		
 		if(this.def1!=null) {
-			this.def1.ajouterUniteConqueranteTerritoire(this.territoireDEF);
+			//this.def1.ajouterUniteConqueranteTerritoire(this.territoireDEF);
+			Set<Unite> tLUnite=this.territoireDEF.getListeTypeUnite(this.def1.getNom());
+			tLUnite.add(this.def1);
+			this.def1=null;
 		}
 		
 		if(this.def2!=null) {
-			this.def1.ajouterUniteConqueranteTerritoire(this.territoireDEF);
+			//this.def1.ajouterUniteConqueranteTerritoire(this.territoireDEF);
+			Set<Unite> tLUnite=this.territoireDEF.getListeTypeUnite(this.def2.getNom());
+			tLUnite.add(this.def2);
+			this.def2=null;
 		}
 	}
 
@@ -473,20 +495,25 @@ public class Bataille {
 		if(!victoireAttaquant()) {
 			if(this.att1!=null && this.def1!=null) {
 				if(this.batailleUnite(this.att1, this.def1)) {
+					System.out.println("Victoire attaquant");
 					this.def1=null;
 					
 				}
 				else {
+					System.out.println("Victoire défenseur");
 					this.att1=null;
 				}
 			}
 			
 			if(this.att2!=null && this.def2!=null) {
 				if(this.batailleUnite(this.att2, this.def2)) {
+					System.out.println("Victoire attaquant");
 					this.def2=null;
 					
 				}
 				else {
+					System.out.println("Victoire défenseur");
+
 					this.att2=null;
 				}
 			}

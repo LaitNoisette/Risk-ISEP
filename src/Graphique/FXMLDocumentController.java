@@ -415,8 +415,8 @@ public class FXMLDocumentController implements Initializable {
 		Info_TerritoryPlayer.setVisible(true);
 		// On rend invisible l'Anchor Pane contenant les icônes des joueurs
 		node.getParent().setVisible(false);
-		TourSuivant.setVisible(false);
-
+		//TourSuivant.setVisible(false);
+		TourSuivant.setVisible(true);
 		// Informations du joueurs modifiées dans l'interface
 		Info_TerritoryPlayer_NbTerritory.setText("Territoires contrôlés : "
 				+ FXMLDocumentController.partieController.getJoueurEnCours().getListeTerritoire().size());
