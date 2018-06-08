@@ -172,6 +172,8 @@ public class FXMLDocumentController implements Initializable {
 			new Media(getClass().getResource("../resources/video/backgroundLaunch.mp4").toExternalForm()));
     MediaView mediaViewIndex = new MediaView(playerIndex);
     
+    String ListURLImage[] = new String[6];
+    
     /********************************************************************************************/
 	/********************************************************************************************/
 	/********************************************************************************************/
@@ -648,7 +650,7 @@ public class FXMLDocumentController implements Initializable {
 		System.out.println(CircleIconPlayerIndex__1.getStroke());
 		// .setStroke() pour changer couleur
 		System.out.println(PseudoTextIndex__1.getText());
-		System.out.println(IconPlayerIndex__1.getViewport());
+		System.out.println(ListURLImage[0]);
 	
 		setVisibleInit();
 	}	
@@ -817,31 +819,36 @@ public class FXMLDocumentController implements Initializable {
             	MenuItem menuItemEvent = (MenuItem) event.getSource();
         		String numberImg = menuItemEvent.getId().replace("MenuItemIndex__", "");
         		
-        		String idSelectedNode = splitMenuButton.getId().replace("SplitMenuButtonIndex__", "");       	    		
+        		String idSelectedNode = splitMenuButton.getId().replace("SplitMenuButtonIndex__", "");    
         		
-        		Image imageSelected = new Image("./resources/img/player/Player__"+numberImg+".png");
+        		String path = "./resources/img/player/Player__"+numberImg+".png";
         		
-        		System.out.println(idSelectedNode);      				
+        		Image imageSelected = new Image(path);  				
         		
         		switch(idSelectedNode) {
 	        		case "1":
-	        			System.out.println(imageSelected);
 	        			IconPlayerIndex__1.setImage(imageSelected);
+	        			ListURLImage[0]=path;
 	        			break;		
 	        		case "2":
 	        			IconPlayerIndex__2.setImage(imageSelected);
+	        			ListURLImage[1]=path;
 	        			break;	
 	        		case "3":
 	        			IconPlayerIndex__3.setImage(imageSelected);
+	        			ListURLImage[2]=path;
 	        			break;	
 	        		case "4":
 	        			IconPlayerIndex__4.setImage(imageSelected);
+	        			ListURLImage[3]=path;
 	        			break;	
 	        		case "5":
 	        			IconPlayerIndex__5.setImage(imageSelected);
+	        			ListURLImage[4]=path;
 	        			break;	
 	        		case "6":
 	        			IconPlayerIndex__6.setImage(imageSelected);
+	        			ListURLImage[5]=path;
 	        			break;	
         		}
             }
